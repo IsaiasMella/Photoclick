@@ -1,0 +1,29 @@
+---
+/**
+ * ThemeScript.astro — Script BLOQUEANTE en el <head>, antes del CSS.
+ *
+ * Evita el "flash" de tema (FOUC): si el tema se aplicara después de pintar,
+ * quien eligió tema claro vería un parpadeo oscuro en cada carga. Por eso
+ * es un script en línea (is:inline → Astro no lo empaqueta ni lo difiere)
+ * y mínimo: lee localStorage y pone data-theme en <html> antes del primer
+ * pintado.
+ *
+ * También agrega la clase .js-reveal: recién ahí se ocultan los elementos
+ * .wow para animarlos (ver animations.css). Si este script no corre, nada
+ * queda oculto.
+ *
+ * Next.js: equivale a un script en línea con dangerouslySetInnerHTML en app/layout.tsx
+ * (lo que hace `next-themes` por dentro).
+ */
+---
+
+<script is:inline>
+  (function () {
+    var d = document.documentElement;
+    try {
+      var t = localStorage.getItem('theme');
+      if (t === 'light' || t === 'dark') d.dataset.theme = t;
+    } catch (e) {}
+    if (!window.matchMedia('(prefers-reduced-motion: reduce)').matches) d.classList.add('js-reveal');
+  })();
+</script>

@@ -42,3 +42,20 @@ select:focus-visible,
 		scroll-behavior: auto !important;
 	}
 }
+
+/* Enlace "Saltar al contenido": invisible hasta que recibe foco con Tab. */
+.skip-link:focus {
+	position: fixed;
+	top: var(--space-2);
+	left: var(--space-2);
+	z-index: 2000;
+	width: auto;
+	height: auto;
+	padding: var(--space-2) var(--space-4);
+	margin: 0;
+	clip: auto;
+	white-space: normal;
+	background: var(--accent);
+	color: var(--on-accent);
+	border-radius: var(--radius-md);
+}

@@ -1,0 +1,202 @@
+[
+  {
+    "id": "general-1",
+    "group": "General",
+    "groupAccent": "questions",
+    "groupOrder": 1,
+    "order": 1,
+    "question": "Do you travel for destination weddings?",
+    "answer": "We recommend booking at least 3-6 months in advance to secure your preferred date, especially during peak wedding seasons.",
+    "featured": true
+  },
+  {
+    "id": "general-2",
+    "group": "General",
+    "groupAccent": "questions",
+    "groupOrder": 1,
+    "order": 2,
+    "question": "How far in advance should we book?",
+    "answer": "We recommend booking at least 3-6 months in advance to secure your preferred date, especially during peak wedding seasons.",
+    "featured": true
+  },
+  {
+    "id": "general-3",
+    "group": "General",
+    "groupAccent": "questions",
+    "groupOrder": 1,
+    "order": 3,
+    "question": "What is included in your photography packages?",
+    "answer": "We recommend booking at least 3-6 months in advance to secure your preferred date, especially during peak wedding seasons.",
+    "featured": true
+  },
+  {
+    "id": "general-4",
+    "group": "General",
+    "groupAccent": "questions",
+    "groupOrder": 1,
+    "order": 4,
+    "question": "How long does it take to deliver photos?",
+    "answer": "We recommend booking at least 3-6 months in advance to secure your preferred date, especially during peak wedding seasons.",
+    "featured": true
+  },
+  {
+    "id": "customization-1",
+    "group": "Customization",
+    "groupAccent": "questions",
+    "groupOrder": 2,
+    "order": 1,
+    "question": "Can we customize our photography package?",
+    "answer": "Yes, we offer a range of photography styles including candid, traditional, cinematic, and fine-art to suit different preferences and wedding themes.",
+    "featured": false
+  },
+  {
+    "id": "customization-2",
+    "group": "Customization",
+    "groupAccent": "questions",
+    "groupOrder": 2,
+    "order": 2,
+    "question": "Do you offer different photography styles?",
+    "answer": "Yes, we offer a range of photography styles including candid, traditional, cinematic, and fine-art to suit different preferences and wedding themes.",
+    "featured": false
+  },
+  {
+    "id": "customization-3",
+    "group": "Customization",
+    "groupAccent": "questions",
+    "groupOrder": 2,
+    "order": 3,
+    "question": "Can we suggest our own shoot ideas or themes?",
+    "answer": "Yes, we offer a range of photography styles including candid, traditional, cinematic, and fine-art to suit different preferences and wedding themes.",
+    "featured": false
+  },
+  {
+    "id": "customization-4",
+    "group": "Customization",
+    "groupAccent": "questions",
+    "groupOrder": 2,
+    "order": 4,
+    "question": "Can we choose specific photographers from your team?",
+    "answer": "Yes, we offer a range of photography styles including candid, traditional, cinematic, and fine-art to suit different preferences and wedding themes.",
+    "featured": false
+  },
+  {
+    "id": "safety-and-security-1",
+    "group": "Safety & security",
+    "groupAccent": "questions",
+    "groupOrder": 3,
+    "order": 1,
+    "question": "How do you ensure our photos are safe?",
+    "answer": "Yes, we securely maintain backups of all wedding photos even after final delivery to ensure your memories remain safe. We typically retain these backups for a specific period if needed.",
+    "featured": false
+  },
+  {
+    "id": "safety-and-security-2",
+    "group": "Safety & security",
+    "groupAccent": "questions",
+    "groupOrder": 3,
+    "order": 2,
+    "question": "Do you keep a backup of photos after delivery?",
+    "answer": "Yes, we securely maintain backups of all wedding photos even after final delivery to ensure your memories remain safe. We typically retain these backups for a specific period if needed.",
+    "featured": false
+  },
+  {
+    "id": "safety-and-security-3",
+    "group": "Safety & security",
+    "groupAccent": "questions",
+    "groupOrder": 3,
+    "order": 3,
+    "question": "Will our photos be shared publicly?",
+    "answer": "Yes, we securely maintain backups of all wedding photos even after final delivery to ensure your memories remain safe. We typically retain these backups for a specific period if needed.",
+    "featured": false
+  },
+  {
+    "id": "safety-and-security-4",
+    "group": "Safety & security",
+    "groupAccent": "questions",
+    "groupOrder": 3,
+    "order": 4,
+    "question": "How do you handle equipment failures?",
+    "answer": "Yes, we securely maintain backups of all wedding photos even after final delivery to ensure your memories remain safe. We typically retain these backups for a specific period if needed.",
+    "featured": false
+  },
+  {
+    "id": "support-and-1",
+    "group": "Support &",
+    "groupAccent": "service",
+    "groupOrder": 4,
+    "order": 1,
+    "question": "Will your team assist us during the shoot?",
+    "answer": "Yes, absolutely. We believe clear and open communication is an essential part of creating a smooth and enjoyable wedding photography experience.",
+    "featured": false
+  },
+  {
+    "id": "support-and-2",
+    "group": "Support &",
+    "groupAccent": "service",
+    "groupOrder": 4,
+    "order": 2,
+    "question": "Can we contact you anytime before the wedding?",
+    "answer": "Yes, absolutely. We believe clear and open communication is an essential part of creating a smooth and enjoyable wedding photography experience.",
+    "featured": false
+  },
+  {
+    "id": "support-and-3",
+    "group": "Support &",
+    "groupAccent": "service",
+    "groupOrder": 4,
+    "order": 3,
+    "question": "Do you provide support after the wedding?",
+    "answer": "Yes, absolutely. We believe clear and open communication is an essential part of creating a smooth and enjoyable wedding photography experience.",
+    "featured": false
+  },
+  {
+    "id": "support-and-4",
+    "group": "Support &",
+    "groupAccent": "service",
+    "groupOrder": 4,
+    "order": 4,
+    "question": "Q4. How should I store my watch when not in use?",
+    "answer": "Yes, absolutely. We believe clear and open communication is an essential part of creating a smooth and enjoyable wedding photography experience.",
+    "featured": false
+  },
+  {
+    "id": "technical-and-1",
+    "group": "Technical &",
+    "groupAccent": "maintenance",
+    "groupOrder": 5,
+    "order": 1,
+    "question": "Will your team assist us during the shoot?",
+    "answer": "Yes, absolutely. We believe clear and open communication is an essential part of creating a smooth and enjoyable wedding photography experience.",
+    "featured": false
+  },
+  {
+    "id": "technical-and-2",
+    "group": "Technical &",
+    "groupAccent": "maintenance",
+    "groupOrder": 5,
+    "order": 2,
+    "question": "Can we contact you anytime before the wedding?",
+    "answer": "Yes, absolutely. We believe clear and open communication is an essential part of creating a smooth and enjoyable wedding photography experience.",
+    "featured": false
+  },
+  {
+    "id": "technical-and-3",
+    "group": "Technical &",
+    "groupAccent": "maintenance",
+    "groupOrder": 5,
+    "order": 3,
+    "question": "Do you provide support after the wedding?",
+    "answer": "Yes, absolutely. We believe clear and open communication is an essential part of creating a smooth and enjoyable wedding photography experience.",
+    "featured": false
+  },
+  {
+    "id": "technical-and-4",
+    "group": "Technical &",
+    "groupAccent": "maintenance",
+    "groupOrder": 5,
+    "order": 4,
+    "question": "Q4. How should I store my watch when not in use?",
+    "answer": "Yes, absolutely. We believe clear and open communication is an essential part of creating a smooth and enjoyable wedding photography experience.",
+    "featured": false
+  }
+]

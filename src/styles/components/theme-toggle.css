@@ -1,0 +1,51 @@
+/* ==========================================================================
+   theme-toggle.css — Botón flotante de tema (añadido, no existe en el original).
+   Mismo lenguaje visual que el resto: vidrio (--surface + blur) y borde.
+   ========================================================================== */
+
+.theme-toggle {
+	position: fixed;
+	left: var(--space-4);
+	bottom: var(--space-4);
+	z-index: 100;
+	display: grid;
+	place-items: center;
+	width: 44px;  /* 44 px: tamaño mínimo de objetivo táctil recomendado (WCAG 2.5.5) */
+	height: 44px;
+	padding: 0;
+	border: 1px solid var(--border);
+	border-radius: var(--radius-full);
+	background: var(--surface);
+	backdrop-filter: blur(var(--blur-sm));
+	color: var(--accent);
+	cursor: pointer;
+	transition: all var(--duration-base) var(--ease-in-out);
+}
+
+.theme-toggle:hover {
+	background: var(--accent);
+	color: var(--on-accent);
+}
+
+.theme-toggle svg {
+	width: 20px;
+	height: 20px;
+	fill: none;
+	stroke: currentColor;
+	stroke-width: 1.8;
+	stroke-linecap: round;
+}
+
+.theme-toggle .theme-toggle-moon {
+	fill: currentColor;
+	stroke: none;
+}
+
+.theme-toggle-sun,
+:root[data-theme="light"] .theme-toggle-moon {
+	display: none;
+}
+
+:root[data-theme="light"] .theme-toggle-sun {
+	display: block;
+}

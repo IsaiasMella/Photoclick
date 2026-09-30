@@ -1,0 +1,72 @@
+---
+/**
+ * PageHeader.astro — Cabecera de las páginas internas: foto de fondo con
+ * parallax, <h1> con una palabra en cursiva (<span>) y breadcrumb.
+ *
+ * Uso:
+ *   <PageHeader title="About" accent="us" crumbs={[{ label: 'About Us' }]} />
+ *   <PageHeader title="How to pose…"><div class="post-single-meta">…</div></PageHeader>
+ *
+ * Si se pasa contenido por slot, reemplaza al breadcrumb (así lo hace el
+ * detalle de un post, que muestra autor y fecha).
+ *
+ * El fondo se optimiza con getImage() (AVIF/WebP) y llega al CSS por
+ * custom properties; ver src/lib/background-image.ts.
+ */
+import { backgroundImageStyle } from '@/lib/background-image';
+import bg from '@/assets/images/page-header-bg.jpg';
+import { routes } from '@/data/site';
+
+interface Crumb {
+  label: string;
+  href?: string;
+}
+interface Props {
+  title: string;
+  /** Palabra(s) final(es) en cursiva de acento: el <span> del original. */
+  accent?: string;
+  /** Migas después de "Home". La última es la página actual (sin enlace). */
+  crumbs?: Crumb[];
+}
+
+const { title, accent, crumbs = [] } = Astro.props;
+const style = await backgroundImageStyle('page-header', bg);
+---
+
+<div class="page-header dark-section parallaxie" style={style}>
+  <div class="container">
+    <div class="row">
+      <div class="col-lg-12">
+        <div class="page-header-box">
+          <h1 class="text-anime-style-2" data-cursor="-opaque">
+            {title}{accent && <> <span>{accent}</span></>}
+          </h1>
+          {
+            Astro.slots.has('default') ? (
+              <slot />
+            ) : (
+              <nav class="wow fadeInUp" aria-label="Breadcrumb">
+                <ol class="breadcrumb">
+                  <li class="breadcrumb-item">
+                    <a href={routes.home}>Home</a>
+                  </li>
+                  {crumbs.map((c) =>
+                    c.href ? (
+                      <li class="breadcrumb-item">
+                        <a href={c.href}>{c.label}</a>
+                      </li>
+                    ) : (
+                      <li class="breadcrumb-item active" aria-current="page">
+                        {c.label}
+                      </li>
+                    ),
+                  )}
+                </ol>
+              </nav>
+            )
+          }
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

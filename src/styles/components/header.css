@@ -266,7 +266,9 @@ header.main-header .header-sticky.active {
 	transition: all var(--duration-fast) var(--ease-out);
 }
 
-.slicknav_open > a .slicknav_arrow:after {
+/* Original: ".slicknav_open > a .slicknav_arrow:after". La fila ahora es un
+   <button class="slicknav_row"> (ver Header.astro), por eso el selector cambia. */
+.slicknav_open > .slicknav_row .slicknav_arrow:after {
 	transform: translateY(-50%) rotate(-180deg);
 	color: var(--on-image);
 }

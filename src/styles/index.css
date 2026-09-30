@@ -52,5 +52,8 @@
 @import "./components/page-contact.css";
 @import "./components/page-404.css";
 
+/* Añadidos (no existen en el original) */
+@import "./components/theme-toggle.css";
+
 /* Añadido (no existe en el original): foco visible para teclado. Va último para ganarle a "a:focus { outline: 0 }" de base.css. */
 @import "./a11y.css";

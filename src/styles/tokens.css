@@ -126,6 +126,7 @@
 	--duration-slower: 0.6s;
 	--duration-spin: 1.5s;             /* anillo del preloader */
 	--duration-rotate-slow: 20s;       /* círculo "Book your date" */
+	--duration-reveal: 1s;             /* aparición al scroll (.wow.animated) */
 	--ease-in-out: ease-in-out;
 	--ease-out: ease-out;
 	--ease-linear: linear;

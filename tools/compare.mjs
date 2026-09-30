@@ -57,6 +57,9 @@ async function shoot(browser, url, width, file) {
   // (original) y reveal-on-scroll (nuevo) dejan ocultos los elementos que no
   // "vio" durante el scroll rápido; eso es ruido, no diferencia de diseño.
   await page.addStyleTag({ content: '.wow{visibility:visible!important;animation:none!important;opacity:1!important}' });
+  // Elementos que NO existen en el original: el botón de tema (añadido, D1) y
+  // la barra de desarrollo de Astro (solo en `astro dev`).
+  await page.addStyleTag({ content: '.theme-toggle,astro-dev-toolbar{display:none!important}' });
   await page.waitForTimeout(300);
   const height = await page.evaluate(() => document.documentElement.scrollHeight);
   await page.screenshot({ path: file, fullPage: true, animations: 'disabled' });

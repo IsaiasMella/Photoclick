@@ -251,3 +251,12 @@
 		display: none;
 	}
 }
+
+/* --- Añadido: fondo optimizado más liviano en celular (ver src/lib/background-image.ts).
+   Si el componente no pasó la variable, se usa la de escritorio o el JPG original. --- */
+/* --bp-sm */
+@media only screen and (max-width: 767px) {
+	.hero {
+		background-image: var(--hero-bg-image-sm, var(--hero-bg-image, url('../../assets/images/hero-bg-image.jpg')));
+	}
+}

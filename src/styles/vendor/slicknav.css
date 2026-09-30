@@ -188,3 +188,52 @@
 	padding: 7px 12px;
 	height: 44px;
 }
+
+/* --------------------------------------------------------------------------
+   Añadido: en el original, la fila con submenú era un <a> dentro de otro <a>
+   (HTML inválido que SlickNav armaba por JS). Ahora es un <button>: acá se le
+   quita el estilo nativo del navegador para que herede el de .slicknav_row.
+   Va en este archivo (antes que header.css) para que las reglas del autor
+   sigan ganando.
+   -------------------------------------------------------------------------- */
+/* :where() deja la especificidad en 0: así cualquier regla del autor sobre
+   .slicknav_row (color, tamaño, padding) sigue ganando, igual que con el <a>. */
+:where(.slicknav_nav button.slicknav_row) {
+	display: block;
+	width: 100%;
+	text-align: left;
+	background: none;
+	border: 0;
+	font: inherit;
+	cursor: pointer;
+}
+
+/* El texto de la fila era un <a class="nav-link"> que recibía las reglas del
+   autor para "li a". Como <span>, hereda todo de la fila y se neutraliza
+   .nav-link de Bootstrap (padding, color y tamaño propios). */
+:where(.slicknav_nav .slicknav_item) > span.nav-link {
+	display: inline;
+	padding: 0;
+	margin: 0;
+	font-size: inherit;
+	font-weight: inherit;
+	line-height: inherit;
+	/* Color propio (no heredado), como tenía el <a> interno: el hover de la
+	   fila no lo cambia; solo cambia al pasar sobre el texto mismo. */
+	color: var(--on-accent);
+}
+
+:where(.slicknav_nav .slicknav_item) > span.nav-link:hover {
+	color: var(--on-image);
+}
+
+/* Estado cerrado (lo alterna src/scripts/mobile-menu.ts). */
+.slicknav_nav.slicknav_hidden,
+.slicknav_nav ul.slicknav_hidden {
+	display: none;
+}
+
+/* Sin JavaScript: el botón es un enlace a #mobile-menu y :target lo muestra. */
+.slicknav_nav:target {
+	display: block;
+}

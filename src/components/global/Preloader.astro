@@ -1,0 +1,45 @@
+---
+/**
+ * Preloader.astro — Pantalla de carga con el anillo giratorio.
+ *
+ * Decisión D2 del plan. El original lo ocultaba en window "load", es decir,
+ * cuando terminaba de bajar la ÚLTIMA imagen del sitio: esa era la causa
+ * principal del LCP de 8,3 s. Acá:
+ *   - se va en cuanto el HTML está listo (script de módulo = DOMContentLoaded),
+ *     con el mismo fundido de 600 ms;
+ *   - sin JavaScript no se muestra nunca (<noscript>);
+ *   - si el JS falla a mitad de camino, una animación CSS lo oculta sola
+ *     a los 3 s (ver "preloader-failsafe" en preloader.css).
+ * Se apaga del todo con site.preloader = false.
+ */
+import { site } from '@/data/site';
+import loader from '@/assets/images/loader.svg';
+---
+
+{
+  site.preloader && (
+    <>
+      <div class="preloader" aria-hidden="true">
+        <div class="loading-container">
+          <div class="loading" />
+          <div id="loading-icon">
+            <img src={loader.src} width={loader.width} height={loader.height} alt="" />
+          </div>
+        </div>
+      </div>
+      <noscript>
+        <style>{'.preloader{display:none}'}</style>
+      </noscript>
+    </>
+  )
+}
+
+<script>
+  import { durations } from '@/scripts/motion';
+
+  const el = document.querySelector<HTMLElement>('.preloader');
+  if (el) {
+    el.classList.add('is-loaded');
+    setTimeout(() => el.remove(), durations.preloaderFade);
+  }
+</script>

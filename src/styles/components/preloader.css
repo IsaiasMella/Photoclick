@@ -58,3 +58,24 @@
 		transform: rotate(360deg);
 	}
 }
+
+/* --- Añadido (decisión D2): fundido de salida y red de seguridad. --- */
+
+/* Lo agrega Preloader.astro cuando el HTML está listo (antes: jQuery fadeOut(600)). */
+.preloader.is-loaded {
+	opacity: 0;
+	visibility: hidden;
+	transition: opacity var(--duration-slower) var(--ease-linear), visibility 0s var(--duration-slower);
+}
+
+/* Si el JS no llega a correr, el preloader se va solo a los 3 s: nunca tapa el sitio para siempre. */
+.preloader {
+	animation: preloader-failsafe 0s 3s forwards;
+}
+
+@keyframes preloader-failsafe {
+	to {
+		visibility: hidden;
+		opacity: 0;
+	}
+}

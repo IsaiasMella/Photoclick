@@ -1,0 +1,56 @@
+[
+  {
+    "id": "neha-and-rahul-joshi",
+    "name": "Neha & Rahul Joshi",
+    "role": "Happy Couple",
+    "quote": "“We couldn't have asked for photographers. They made us feel comfortable captured everything simply perfect beautifully!”",
+    "avatar": "../assets/images/author-1.jpg",
+    "rating": 5,
+    "order": 1
+  },
+  {
+    "id": "vikram-and-sneha-trivedi",
+    "name": "Vikram & Sneha Trivedi",
+    "role": "Married Couple",
+    "quote": "“We couldn't have asked for photographers. They made us feel comfortable captured everything simply perfect beautifully!”",
+    "avatar": "../assets/images/author-2.jpg",
+    "rating": 5,
+    "order": 2
+  },
+  {
+    "id": "riya-and-aarav-patel",
+    "name": "Riya & Aarav Patel",
+    "role": "Wedding Clients",
+    "quote": "“We couldn't have asked for photographers. They made us feel comfortable captured everything simply perfect beautifully!”",
+    "avatar": "../assets/images/author-3.jpg",
+    "rating": 5,
+    "order": 3
+  },
+  {
+    "id": "aarav-and-priya-sharma",
+    "name": "Aarav & Priya Sharma",
+    "role": "Just Married",
+    "quote": "“We couldn't have asked for photographers. They made us feel comfortable captured everything simply perfect beautifully!”",
+    "avatar": "../assets/images/author-4.jpg",
+    "rating": 5,
+    "order": 4
+  },
+  {
+    "id": "karan-and-ananya-verma",
+    "name": "Karan & Ananya Verma",
+    "role": "Lovely Couple",
+    "quote": "“We couldn't have asked for photographers. They made us feel comfortable captured everything simply perfect beautifully!”",
+    "avatar": "../assets/images/author-5.jpg",
+    "rating": 5,
+    "order": 5
+  },
+  {
+    "id": "aditya-and-isha-verma",
+    "name": "Aditya & Isha Verma",
+    "role": "Newlyweds Couple",
+    "quote": "“We couldn't have asked for photographers. They made us feel comfortable captured everything simply perfect beautifully!”",
+    "avatar": "../assets/images/author-6.jpg",
+    "rating": 5,
+    "order": 6
+  }
+]

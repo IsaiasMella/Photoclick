@@ -1,0 +1,63 @@
+---
+/**
+ * Icon.astro — Ícono de Font Awesome como SVG en línea, generado al compilar.
+ *
+ * Reemplaza a <i class="fa-solid fa-star"></i> + la fuente de íconos.
+ * Mantiene el MISMO elemento <i> y las mismas clases del original para que
+ * el CSS del autor (".team-item-social-list ul li a i { … }") siga aplicando;
+ * solo cambia el contenido: un <svg> en lugar de un glifo de fuente.
+ *
+ * Al navegador no llega JavaScript ni fuentes: únicamente el <path>.
+ * React/Next: equivale a importar un ícono de `react-icons` como componente
+ * de servidor.
+ */
+import {
+  faStar,
+  faAngleLeft,
+  faAngleRight,
+} from '@fortawesome/free-solid-svg-icons';
+import { faPaperPlane, faUser, faClock } from '@fortawesome/free-regular-svg-icons';
+import {
+  faXTwitter,
+  faInstagram,
+  faFacebookF,
+  faPinterestP,
+  faLinkedinIn,
+} from '@fortawesome/free-brands-svg-icons';
+import type { IconDefinition } from '@fortawesome/fontawesome-common-types';
+
+/** Solo los 11 íconos que usa el sitio: agregar uno = importarlo y sumarlo acá. */
+const icons = {
+  'solid:star': faStar,
+  'solid:angle-left': faAngleLeft,
+  'solid:angle-right': faAngleRight,
+  'regular:paper-plane': faPaperPlane,
+  'regular:user': faUser,
+  'regular:clock': faClock,
+  'brands:x-twitter': faXTwitter,
+  'brands:instagram': faInstagram,
+  'brands:facebook-f': faFacebookF,
+  'brands:pinterest-p': faPinterestP,
+  'brands:linkedin-in': faLinkedinIn,
+} satisfies Record<string, IconDefinition>;
+
+export type IconName = keyof typeof icons;
+
+interface Props {
+  name: IconName;
+  /** Clases extra que tenía el <i> del original (p. ej. "fa" en las estrellas). */
+  class?: string;
+  /** Texto para lectores de pantalla. Sin él, el ícono es decorativo. */
+  label?: string;
+}
+
+const { name, class: extra, label } = Astro.props;
+const [style, iconName] = name.split(':') as [string, string];
+const def = icons[name];
+const [width, height, , , path] = def.icon;
+const d = Array.isArray(path) ? path.join(' ') : path;
+---
+
+<i class:list={[extra, `fa-${style}`, `fa-${iconName}`]} aria-hidden={label ? undefined : 'true'} role={label ? 'img' : undefined} aria-label={label}>
+  <svg viewBox={`0 0 ${width} ${height}`} xmlns="http://www.w3.org/2000/svg" focusable="false"><path d={d}></path></svg>
+</i>

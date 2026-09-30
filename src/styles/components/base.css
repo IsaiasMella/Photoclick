@@ -62,6 +62,13 @@ figure {
 
 img {
 	max-width: 100%;
+	/* Añadido: <Image /> de Astro escribe width/height en cada <img> (así el
+	   navegador reserva el espacio antes de que baje la foto: sin saltos de
+	   diseño). Sin height: auto, ese atributo fijaría la altura y anularía el
+	   aspect-ratio/object-fit del autor. Con height: auto se conserva la
+	   proporción reservada Y manda el CSS del autor, igual que en el original
+	   (que no tenía atributos). */
+	height: auto;
 }
 
 a {

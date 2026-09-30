@@ -1,0 +1,23 @@
+[
+  {
+    "id": "pre-wedding-photoshoot-ideas",
+    "title": "Pre-Wedding Photoshoot Ideas",
+    "price": "$150.00",
+    "description": "Creative concepts to make your pre-wedding shoot unique and memorable",
+    "order": 1
+  },
+  {
+    "id": "top-wedding-poses-for-couples",
+    "title": "Top Wedding Poses For Couples",
+    "price": "$75.00",
+    "description": "Explore beautiful poses to capture natural and romantic moments",
+    "order": 2
+  },
+  {
+    "id": "perfect-wedding-day-timeline-guide",
+    "title": "Perfect Wedding Day Timeline Guide",
+    "price": "$55.00",
+    "description": "Plan your day smoothly for stress-free photography coverage",
+    "order": 3
+  }
+]

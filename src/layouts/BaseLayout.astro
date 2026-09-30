@@ -1,0 +1,68 @@
+---
+/**
+ * BaseLayout.astro — Esqueleto de TODAS las páginas: <head>, header, footer.
+ *
+ * Equivalente en Next.js: app/layout.tsx.
+ *
+ * Orden del <head> (importa para el rendimiento):
+ *   1. charset + viewport
+ *   2. ThemeScript: script BLOQUEANTE mínimo, antes del CSS → sin flash de tema
+ *   3. <Font />: preload + @font-face de las fuentes propias → sin flash de fuente
+ *   4. SEO
+ *   5. CSS: Astro lo junta en un archivo por página y lo inserta acá
+ *
+ * Orden de los estilos = orden de los <link> del original (bootstrap →
+ * slicknav → swiper → íconos → animaciones → magnific → cursor → custom).
+ * NO reordenar estos imports: la cascada depende de ese orden.
+ */
+import { Font } from 'astro:assets';
+import ThemeScript from '@/components/global/ThemeScript.astro';
+import Seo, { type SeoProps } from '@/components/global/Seo.astro';
+import Preloader from '@/components/global/Preloader.astro';
+import Header from '@/components/global/Header.astro';
+import Footer from '@/components/global/Footer.astro';
+import ThemeToggle from '@/components/global/ThemeToggle.astro';
+import { site } from '@/data/site';
+
+import '@/styles/vendor/bootstrap.scss';
+import '@/styles/vendor/slicknav.css';
+import 'swiper/css';
+import 'swiper/css/effect-fade';
+import '@/styles/vendor/icons.css';
+import '@/styles/animations.css';
+import '@/styles/vendor/magnific-popup.css';
+import '@/styles/vendor/cursor.css';
+import '@/styles/index.css';
+
+type Props = SeoProps;
+const seo = Astro.props;
+---
+
+<!doctype html>
+<html lang={site.lang}>
+  <head>
+    <meta charset="utf-8" />
+    <!-- El original tenía maximum-scale=1, que impide hacer zoom (falla de accesibilidad WCAG 1.4.4). -->
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <ThemeScript />
+    <Font cssVariable="--font-mona-sans" preload />
+    <Font cssVariable="--font-playfair" preload />
+    <Seo {...seo} />
+    <meta name="author" content="Awaiken" />
+    <link rel="icon" type="image/png" href="/favicon.png" />
+    <link rel="sitemap" href="/sitemap-index.xml" />
+  </head>
+  <body>
+    <a class="sr-only sr-only-focusable skip-link" href="#main">Skip to content</a>
+    <Preloader />
+    <Header />
+    <main id="main">
+      <slot />
+    </main>
+    <Footer />
+    <ThemeToggle />
+    <script>
+      import '@/scripts/global';
+    </script>
+  </body>
+</html>

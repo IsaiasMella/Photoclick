@@ -84,3 +84,12 @@
 		font-size: var(--text-4xl);
 	}
 }
+
+/* --- Añadido: fondo optimizado más liviano en celular (ver src/lib/background-image.ts).
+   Si el componente no pasó la variable, se usa la de escritorio o el JPG original. --- */
+/* --bp-sm */
+@media only screen and (max-width: 767px) {
+	.page-header {
+		background-image: var(--page-header-bg-image-sm, var(--page-header-bg-image, url('../../assets/images/page-header-bg.jpg')));
+	}
+}

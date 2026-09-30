@@ -1,0 +1,58 @@
+/* ==========================================================================
+   icons.css — Íconos SVG en línea (reemplaza a Font Awesome: all.min.css).
+
+   El original cargaba 75 KB de CSS + ~400 KB de fuentes para 11 íconos.
+   Ahora <Icon /> (src/components/global/Icon.astro) escribe el SVG en el HTML
+   al compilar, dentro del mismo <i class="fa-solid fa-star"> del original, así
+   que todas las reglas del autor que apuntan a "… i" siguen aplicando.
+
+   Estas reglas reproducen la caja que Font Awesome 7 le da a cada ícono
+   (inline-block, 1.25em de ancho fijo, line-height 1) para que el tamaño y la
+   posición sean los mismos que con la fuente. Los valores son de FA, no del
+   diseño.
+   ========================================================================== */
+
+:is(.fa, .fa-solid, .fa-regular, .fa-brands) {
+	display: var(--fa-display, inline-block);
+	width: var(--fa-width, 1.25em);
+	line-height: 1;
+	text-align: center;
+	font-style: normal;
+}
+
+/* El SVG ocupa el cuadro "em" completo, igual que el glifo de la fuente:
+   los viewBox de FA cubren todo el em (ascent + descent). */
+:is(.fa, .fa-solid, .fa-regular, .fa-brands) > svg {
+	display: block;
+	height: 1em;
+	width: auto;
+	margin-inline: auto;
+	overflow: visible;
+	fill: currentColor;
+}
+
+/* --------------------------------------------------------------------------
+   Glifos que el CSS del autor pide por `content:` (no por HTML):
+     \f058 check en círculo (listas) · \2b "+" y \f068 "−" (acordeón)
+     \f107 / \f105 flechas de submenú · \f04b "play" (galería de videos)
+   Un <svg> no se puede meter en un ::before, así que se generó un
+   SUBCONJUNTO de la fuente original con solo esos 6 glifos:
+     fa-solid-900.woff2 (150 KB) → fa-solid-900-subset.woff2 (776 B)
+   Comando: pyftsubset fa-solid-900.woff2 --unicodes="U+002B,U+F058,U+F068,
+            U+F107,U+F105,U+F04B" --flavor=woff2 --layout-features='' --no-hinting
+   Se declaran los mismos nombres de familia que usa custom.css
+   ('Font Awesome 7 Free' y 'FontAwesome'), así el CSS del autor no cambia.
+   -------------------------------------------------------------------------- */
+@font-face {
+	font-family: "Font Awesome 7 Free";
+	font-style: normal;
+	font-weight: 900;
+	font-display: block; /* igual que FA: mejor invisible un instante que un cuadrado vacío */
+	src: url("../../assets/fonts/fa-solid-900-subset.woff2") format("woff2");
+}
+
+@font-face {
+	font-family: "FontAwesome";
+	font-display: block;
+	src: url("../../assets/fonts/fa-solid-900-subset.woff2") format("woff2");
+}

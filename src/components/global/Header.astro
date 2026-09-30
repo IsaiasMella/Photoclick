@@ -1,0 +1,127 @@
+---
+/**
+ * Header.astro — Cabecera global: logo, menú principal y menú de celular.
+ *
+ * Marcado y clases idénticos al original. Diferencias a propósito:
+ *
+ * 1. Menú de celular renderizado en el HTML. En el original, el plugin
+ *    SlickNav (jQuery) clonaba el <ul id="menu"> con JS al cargar. Acá el
+ *    mismo DOM (.slicknav_*) sale del servidor, y src/scripts/mobile-menu.ts
+ *    (~1 KB) solo abre y cierra. Resultado: sin jQuery y sin salto de diseño.
+ *    El original usaba un <a> dentro de otro <a> en las filas con submenú
+ *    (HTML inválido); acá la fila es un <button> con un <span> adentro.
+ * 2. aria-current="page" en el enlace activo y aria-expanded en los
+ *    botones, para lectores de pantalla (no cambia el aspecto).
+ * 3. El header "sticky" del original nunca se activaba (su JS busca
+ *    .active-sticky-header y esa clase no está en el HTML). Se respeta ese
+ *    comportamiento: el CSS de .header-sticky.active queda, sin JS.
+ */
+import { Image } from 'astro:assets';
+import logo from '@/assets/images/logo.svg';
+import { mainNav, routes } from '@/data/site';
+
+const current = Astro.url.pathname;
+const isCurrent = (href: string) => href !== '#' && href === current;
+---
+
+<header class="main-header">
+  <div class="header-sticky">
+    <nav class="navbar navbar-expand-lg" aria-label="Main">
+      <div class="container">
+        <a class="navbar-brand" href={routes.home}>
+          <Image src={logo} alt="Photoclick" loading="eager" />
+        </a>
+
+        <div class="collapse navbar-collapse main-menu">
+          <div class="nav-menu-wrapper">
+            <ul class="navbar-nav mr-auto" id="menu">
+              {
+                mainNav.map((item) => (
+                  <li class:list={['nav-item', { submenu: item.children }]}>
+                    <a class="nav-link" href={item.href} aria-current={isCurrent(item.href) ? 'page' : undefined}>
+                      {item.label}
+                    </a>
+                    {item.children && (
+                      <ul>
+                        {item.children.map((child) => (
+                          <li class="nav-item">
+                            <a class="nav-link" href={child.href} aria-current={isCurrent(child.href) ? 'page' : undefined}>
+                              {child.label}
+                            </a>
+                          </li>
+                        ))}
+                      </ul>
+                    )}
+                  </li>
+                ))
+              }
+            </ul>
+          </div>
+
+          <div class="header-btn">
+            <a href={routes.contact} class="btn-default btn-highlighted">Contact Us</a>
+          </div>
+        </div>
+
+        <!-- Botón del menú de celular. Sin JS, #mobile-menu:target lo abre igual. -->
+        <div class="navbar-toggle">
+          <a
+            href="#mobile-menu"
+            role="button"
+            class="slicknav_btn slicknav_collapsed"
+            aria-controls="mobile-menu"
+            aria-expanded="false"
+            aria-label="Open menu"
+          >
+            <span class="slicknav_menutxt"></span>
+            <span class="slicknav_icon slicknav_no-text">
+              <span class="slicknav_icon-bar"></span>
+              <span class="slicknav_icon-bar"></span>
+              <span class="slicknav_icon-bar"></span>
+            </span>
+          </a>
+        </div>
+      </div>
+    </nav>
+
+    <div class="responsive-menu">
+      <div class="slicknav_menu">
+        <ul class="slicknav_nav slicknav_hidden" id="mobile-menu">
+          {
+            mainNav.map((item) =>
+              item.children ? (
+                <li class="nav-item submenu slicknav_collapsed slicknav_parent">
+                  <button type="button" class="slicknav_item slicknav_row" aria-expanded="false">
+                    <span class="nav-link">{item.label}</span>
+                    <span class="slicknav_arrow" aria-hidden="true">
+                      ►
+                    </span>
+                  </button>
+                  <ul class="slicknav_hidden">
+                    {item.children.map((child) => (
+                      <li class="nav-item">
+                        <a class="nav-link" href={child.href}>
+                          {child.label}
+                        </a>
+                      </li>
+                    ))}
+                  </ul>
+                </li>
+              ) : (
+                <li class="nav-item">
+                  <a class="nav-link" href={item.href}>
+                    {item.label}
+                  </a>
+                </li>
+              ),
+            )
+          }
+        </ul>
+      </div>
+    </div>
+  </div>
+</header>
+
+<script>
+  import '@/scripts/mobile-menu';
+</script>

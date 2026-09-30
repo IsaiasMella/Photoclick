@@ -1,0 +1,102 @@
+[
+  {
+    "id": "wedding-1",
+    "filters": [
+      "engagement"
+    ],
+    "image": "../assets/images/gallery-1.jpg",
+    "category": "Pre-Wedding",
+    "title": "Pre-Wedding Photography",
+    "album": "wedding",
+    "order": 1
+  },
+  {
+    "id": "wedding-2",
+    "filters": [
+      "haldi",
+      "engagement"
+    ],
+    "image": "../assets/images/gallery-2.jpg",
+    "category": "Engagement",
+    "title": "Engagement Photography",
+    "album": "wedding",
+    "order": 2
+  },
+  {
+    "id": "wedding-3",
+    "filters": [
+      "haldi",
+      "pre-wedding"
+    ],
+    "image": "../assets/images/gallery-3.jpg",
+    "category": "Haldi Ceremony",
+    "title": "Haldi Ceremony Photography",
+    "album": "wedding",
+    "order": 3
+  },
+  {
+    "id": "wedding-4",
+    "filters": [
+      "pre-wedding"
+    ],
+    "image": "../assets/images/gallery-4.jpg",
+    "category": "Pre-Wedding",
+    "title": "Pre-Wedding Photography",
+    "album": "wedding",
+    "order": 4
+  },
+  {
+    "id": "photo-1",
+    "image": "../assets/images/gallery-1.jpg",
+    "album": "photos",
+    "order": 1
+  },
+  {
+    "id": "photo-2",
+    "image": "../assets/images/gallery-2.jpg",
+    "album": "photos",
+    "order": 2
+  },
+  {
+    "id": "photo-3",
+    "image": "../assets/images/gallery-3.jpg",
+    "album": "photos",
+    "order": 3
+  },
+  {
+    "id": "photo-4",
+    "image": "../assets/images/gallery-4.jpg",
+    "album": "photos",
+    "order": 4
+  },
+  {
+    "id": "photo-5",
+    "image": "../assets/images/gallery-5.jpg",
+    "album": "photos",
+    "order": 5
+  },
+  {
+    "id": "photo-6",
+    "image": "../assets/images/gallery-6.jpg",
+    "album": "photos",
+    "order": 6
+  },
+  {
+    "id": "photo-7",
+    "image": "../assets/images/gallery-7.jpg",
+    "album": "photos",
+    "order": 7
+  },
+  {
+    "id": "photo-8",
+    "image": "../assets/images/gallery-8.jpg",
+    "album": "photos",
+    "order": 8
+  },
+  {
+    "id": "photo-9",
+    "image": "../assets/images/gallery-9.jpg",
+    "album": "photos",
+    "order": 9
+  }
+]

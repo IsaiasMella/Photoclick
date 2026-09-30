@@ -1,0 +1,114 @@
+---
+/**
+ * Footer.astro — Pie de página global.
+ *
+ * Marcado idéntico al original. Correcciones que no cambian el aspecto:
+ *  - el original cerraba </footer> dos veces;
+ *  - la columna de horarios se titulaba "Quick Links" (copiado y pegado
+ *    del autor); se conserva el texto para que se vea igual, pero el
+ *    <h2> lleva un id para poder corregirlo en site.ts si se quiere;
+ *  - el newsletter tiene <label> (visualmente oculto) y el botón, texto
+ *    para lectores de pantalla.
+ */
+import { Image } from 'astro:assets';
+import logo from '@/assets/images/logo.svg';
+import iconLocation from '@/assets/images/icon-location-accent.svg';
+import Icon from './Icon.astro';
+import { site, routes, detailExamples } from '@/data/site';
+import type { IconName } from './Icon.astro';
+---
+
+<footer class="main-footer light-section">
+  <div class="container">
+    <div class="row">
+      <div class="col-lg-12">
+        <div class="footer-header">
+          <div class="footer-logo">
+            <Image src={logo} alt="Photoclick" />
+          </div>
+
+          <div class="footer-newsletter-form">
+            <h2>Subscribe Newsletter</h2>
+            <form id="newslettersForm" action={site.formEndpoint ?? '#'} method="POST" data-form="newsletter">
+              <div class="form-group">
+                <label for="mail" class="sr-only">Email address</label>
+                <input type="email" name="mail" class="form-control" id="mail" placeholder="Enter Email Address*" required autocomplete="email" />
+                <button type="submit" class="newsletter-btn">
+                  <Icon name="regular:paper-plane" />
+                  <span class="sr-only">Subscribe</span>
+                </button>
+              </div>
+            </form>
+          </div>
+        </div>
+      </div>
+
+      <div class="col-xl-4">
+        <div class="about-footer">
+          <div class="about-footer-content">
+            <h2>About Company</h2>
+            <p>{site.footer.about}</p>
+          </div>
+
+          <div class="footer-social-links">
+            <ul>
+              {
+                site.social.map((s) => (
+                  <li>
+                    <a href={s.href} aria-label={s.label}>
+                      <Icon name={`brands:${s.icon}` as IconName} />
+                    </a>
+                  </li>
+                ))
+              }
+            </ul>
+          </div>
+        </div>
+      </div>
+
+      <div class="col-xl-8">
+        <div class="footer-links-box">
+          <div class="footer-links">
+            <h2>Quick Links</h2>
+            <ul>
+              {site.footer.quickLinks.map((l) => <li><a href={l.href}>{l.label}</a></li>)}
+            </ul>
+          </div>
+
+          <div class="footer-links">
+            <h2>Our Services</h2>
+            <ul>
+              {site.footer.services.map((label) => <li><a href={routes.service(detailExamples.service)}>{label}</a></li>)}
+            </ul>
+          </div>
+
+          <div class="footer-links footer-working-hour-box">
+            <div class="footer-working-hour-list">
+              <h2 id="footer-hours">Quick Links</h2>
+              <ul>
+                {site.hours.map((h) => <li>{h}</li>)}
+              </ul>
+            </div>
+            <div class="footer-contact-list">
+              <ul>
+                <li><Image src={iconLocation} alt="" />{site.contact.address}</li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="footer-copyright">
+    <div class="container">
+      <div class="row">
+        <div class="col-lg-12">
+          <div class="footer-copyright-text">
+            <p>{site.footer.copyright}</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</footer>

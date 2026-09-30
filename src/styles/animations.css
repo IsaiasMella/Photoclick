@@ -1,0 +1,41 @@
+/* ==========================================================================
+   animations.css — Animación de aparición al hacer scroll.
+
+   Reemplaza a animate.css (73 KB) + WOW.js: el sitio solo usa fadeInUp.
+   Contrato (el mismo marcado del original):
+     <div class="wow fadeInUp" data-wow-delay="0.2s">
+   src/scripts/reveal-on-scroll.ts agrega .animated cuando el elemento entra
+   en pantalla y aplica el delay.
+
+   Importante — el contenido NUNCA queda oculto si falla el JS:
+   solo se oculta cuando <html> tiene la clase .js-reveal, que agrega el
+   script del <head> (ThemeScript.astro). Sin JS: todo visible y sin animar.
+   ========================================================================== */
+
+@keyframes fadeInUp {
+	0% {
+		opacity: 0;
+		transform: translate3d(0, 40px, 0); /* distancia del original (animate.css) */
+	}
+
+	100% {
+		opacity: 1;
+		transform: none;
+	}
+}
+
+/* Igual que animate.css: el nombre se asigna siempre, pero sin duración no
+   se ve hasta que .animated la agrega. */
+.fadeInUp {
+	animation-name: fadeInUp;
+}
+
+.animated {
+	animation-duration: var(--duration-reveal);
+	animation-fill-mode: both;
+}
+
+.js-reveal .wow:not(.animated) {
+	visibility: hidden;
+	animation-name: none;
+}
