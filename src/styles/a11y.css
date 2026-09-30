@@ -1,0 +1,44 @@
+/* ==========================================================================
+   a11y.css — Accesibilidad añadida sobre el diseño original.
+
+   El original anula el contorno de foco (a:focus { outline: 0 } en base.css),
+   lo que deja a quien navega con teclado sin saber dónde está. :focus-visible
+   solo se activa con teclado (no al hacer clic), así que el diseño no cambia
+   para usuarios de mouse ni en las capturas de comparación.
+   ========================================================================== */
+
+a:focus-visible,
+button:focus-visible,
+input:focus-visible,
+textarea:focus-visible,
+select:focus-visible,
+[tabindex]:focus-visible,
+.accordion-button:focus-visible {
+	outline: 2px solid var(--accent);
+	outline-offset: 3px;
+}
+
+/* Texto solo para lectores de pantalla (equivale a .visually-hidden de Bootstrap). */
+.sr-only {
+	position: absolute;
+	width: 1px;
+	height: 1px;
+	padding: 0;
+	margin: -1px;
+	overflow: hidden;
+	clip: rect(0, 0, 0, 0);
+	white-space: nowrap;
+	border: 0;
+}
+
+/* Quien pide menos movimiento no recibe animaciones de entrada ni rotaciones. */
+@media (prefers-reduced-motion: reduce) {
+	*,
+	*::before,
+	*::after {
+		animation-duration: 0.01ms !important;
+		animation-iteration-count: 1 !important;
+		transition-duration: 0.01ms !important;
+		scroll-behavior: auto !important;
+	}
+}

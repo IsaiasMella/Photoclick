@@ -1,0 +1,86 @@
+/* ==========================================================================
+   page-header.css
+   Cabecera de páginas internas (.page-header): fondo parallax con overlay, h1 y breadcrumb.
+   Origen: custom.css del autor (ver docs/COMPILADO-VS-FUENTE.md).
+   ========================================================================== */
+
+.page-header {
+	position: relative;
+	background-image: var(--page-header-bg-image, url('../../assets/images/page-header-bg.jpg'));
+	background-repeat: no-repeat;
+	background-position: center center;
+	background-size: cover;
+	padding: 280px 0 170px;
+	overflow: hidden;
+}
+
+.page-header:before {
+	content: '';
+	position: absolute;
+	top: 0;
+	right: 0;
+	bottom: 0;
+	left: 0;
+	height: 100%;
+	width: 100%;
+	background: var(--overlay);
+	opacity: 60%;
+	z-index: 1;
+}
+
+.page-header-box {
+	position: relative;
+	z-index: 2;
+}
+
+.page-header-box h1 {
+	display: inline-block;
+	font-size: var(--text-display);
+	letter-spacing: var(--tracking-tight);
+	margin-bottom: var(--space-2);
+	cursor: none;
+}
+
+.page-header-box h1 span {
+	font-family: var(--font-display);
+	font-weight: var(--font-weight-regular);
+	font-style: italic;
+}
+
+.page-header-box ol {
+	margin: 0;
+	padding: 0;
+}
+
+.page-header-box ol li.breadcrumb-item {
+	font-size: var(--text-sm);
+	line-height: normal;
+	text-transform: capitalize;
+	color: var(--on-image);
+}
+
+.page-header-box ol li.breadcrumb-item a,
+.page-header-box ol .breadcrumb-item+.breadcrumb-item::before {
+	color: var(--on-image);
+}
+
+/* --- Responsive (antes en la sección 32 de custom.css) --- */
+
+/* --bp-md */
+@media only screen and (max-width: 991px) {
+	.page-header {
+		padding: 180px 0 var(--space-18);
+	}
+
+	.page-header-box h1 {
+		font-size: var(--text-10xl);
+		margin-bottom: var(--space-2);
+	}
+}
+
+/* --bp-sm */
+@media only screen and (max-width: 767px) {
+	.page-header-box h1 {
+		font-size: var(--text-4xl);
+	}
+}

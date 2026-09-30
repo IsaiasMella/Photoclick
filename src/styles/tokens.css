@@ -1,0 +1,209 @@
+/* ==========================================================================
+   tokens.css — Design tokens de Photoclick.
+
+   Tres niveles (leer de arriba hacia abajo):
+     1. PRIMITIVOS  → valores crudos: paleta y escalas. No se usan directo
+                      en componentes (salvo escalas neutras: espaciado, tipo,
+                      radios, tiempos), solo alimentan a los semánticos.
+     2. SEMÁNTICOS  → el "rol" de cada color (--background, --foreground,
+                      --accent, --border…). Los componentes usan ESTOS.
+                      El tema claro redefine SOLO este nivel.
+     3. COMPONENTE  → únicamente cuando un componente necesita un valor propio
+                      reutilizado en varios archivos (ver final del archivo).
+
+   Mapa desde las variables originales del autor (custom.css §01):
+     --bg-color → --background        --text-color → --foreground
+     --primary-color → --foreground-strong   --accent-color → --accent
+     --secondary-color → --surface    --divider-color → --border
+     --dark-divider-color → --border-subtle  --error-color → --danger
+     --white-color → --on-image | --surface-highlight | --foreground-strong
+                    (el original usaba "white" para tres roles distintos;
+                     se separan para que el tema claro funcione)
+     --black-color → --on-accent (el original lo usaba sin definirlo: bug)
+
+   Detalle y ejemplos de cambio: docs/TOKENS.md
+   ========================================================================== */
+
+:root {
+	/* ------------------------------------------------------------------ */
+	/* 1. PRIMITIVOS                                                       */
+	/* ------------------------------------------------------------------ */
+
+	/* Paleta */
+	--color-white: #FFFFFF;
+	--color-ink-950: #080808;          /* negro cálido del fondo */
+	--color-gold-300: #D9C18A;         /* dorado de acento */
+	--color-red-400: rgb(230, 87, 87);
+	--color-paper-50: #F7F4EE;         /* solo tema claro */
+	--color-gold-500: #A8864A;         /* solo tema claro: dorado más oscuro, 5.9:1 con texto tinta encima */
+
+	/* Transparencias (el original las escribía en hex de 8 dígitos) */
+	--color-white-a00: #FFFFFF00;
+	--color-white-a04: #FFFFFF0A;
+	--color-white-a10: #FFFFFF1A;
+	--color-white-a30: rgba(255, 255, 255, 0.3);
+	--color-white-a80: #FFFFFFCC;
+	--color-ink-a00: rgba(8, 8, 8, 0.00);
+	--color-ink-a04: rgba(8, 8, 8, 0.04);
+	--color-ink-a10: rgba(8, 8, 8, 0.10);
+	--color-ink-a50: rgba(8, 8, 8, 0.50);
+	--color-ink-a56: rgba(8, 8, 8, 0.56);
+	--color-ink-a80: rgba(8, 8, 8, 0.80);
+
+	/* Tipografías (las familias las inyecta la API de fuentes de Astro:
+	   --font-mona-sans y --font-playfair; ver astro.config.mjs) */
+	--font-family-sans: var(--font-mona-sans, "Mona Sans"), sans-serif;
+	--font-family-serif: var(--font-playfair, "Playfair Display"), serif;
+
+	/* Escala tipográfica (px fijos, igual que el original) */
+	--text-xs: 14px;
+	--text-sm: 16px;
+	--text-md: 18px;
+	--text-lg: 20px;
+	--text-xl: 22px;
+	--text-2xl: 24px;
+	--text-3xl: 26px;
+	--text-4xl: 28px;
+	--text-5xl: 30px;
+	--text-6xl: 34px;
+	--text-7xl: 36px;
+	--text-8xl: 40px;
+	--text-9xl: 46px;
+	--text-10xl: 48px;
+	--text-11xl: 52px;
+	--text-display: 76px;              /* h1 del hero */
+
+	--font-weight-regular: 400;
+	--font-weight-medium: 500;
+	--font-weight-semibold: 600;
+	--font-weight-bold: 700;
+	--font-weight-black: 900;
+
+	--leading-none: 1em;
+	--leading-tight: 1.2em;
+	--leading-snug: 1.3em;
+	--leading-normal: 1.4em;
+	--leading-relaxed: 1.5em;
+	--leading-loose: 1.6em;
+
+	--tracking-tight: -0.02em;
+
+	/* Espaciado: --space-N = N × 5px (el original trabaja en múltiplos de 5) */
+	--space-1: 5px;
+	--space-2: 10px;
+	--space-3: 15px;
+	--space-4: 20px;
+	--space-5: 25px;
+	--space-6: 30px;
+	--space-8: 40px;
+	--space-10: 50px;
+	--space-12: 60px;
+	--space-16: 80px;
+	--space-18: 90px;
+	--space-20: 100px;
+	--space-24: 120px;
+
+	/* Radios */
+	--radius-xs: 5px;
+	--radius-sm: 6px;
+	--radius-md: 8px;
+	--radius-lg: 10px;
+	--radius-xl: 14px;                 /* el más usado: tarjetas e imágenes */
+	--radius-2xl: 120px;
+	--radius-pill: 1000px;
+	--radius-full: 50%;
+
+	/* Desenfoque del efecto vidrio (backdrop-filter) */
+	--blur-sm: 10px;
+	--blur-md: 15px;
+	--blur-lg: 30px;
+
+	/* Movimiento */
+	--duration-instant: 0.1s;
+	--duration-fast: 0.3s;
+	--duration-base: 0.4s;             /* transición por defecto de hovers */
+	--duration-slow: 0.5s;
+	--duration-slower: 0.6s;
+	--duration-spin: 1.5s;             /* anillo del preloader */
+	--duration-rotate-slow: 20s;       /* círculo "Book your date" */
+	--ease-in-out: ease-in-out;
+	--ease-out: ease-out;
+	--ease-linear: linear;
+
+	/* Breakpoints (desktop-first, max-width). Las media queries NO aceptan
+	   var(): estos valores se repiten literales en cada @media con un comentario
+	   que nombra el token. Las mismas cifras viven en src/scripts/breakpoints.ts */
+	--bp-xxl: 1440px;
+	--bp-lg: 1024px;
+	--bp-md: 991px;
+	--bp-sm: 767px;
+
+	/* ------------------------------------------------------------------ */
+	/* 2. SEMÁNTICOS — tema oscuro (default, idéntico al original)          */
+	/* ------------------------------------------------------------------ */
+	--background: var(--color-ink-950);
+	--foreground: var(--color-white-a80);        /* texto corrido */
+	--foreground-strong: var(--color-white);     /* títulos, enlaces, íconos */
+	--accent: var(--color-gold-300);
+	--surface: var(--color-white-a04);           /* tarjetas "vidrio" */
+	--border: var(--color-white-a10);
+	--border-subtle: var(--color-white-a00);
+	--danger: var(--color-red-400);
+
+	/* Roles constantes: NO cambian con el tema porque están sobre fotos o
+	   sobre el acento, que son iguales en ambos temas. */
+	--on-accent: var(--color-ink-950);           /* texto sobre dorado/blanco */
+	--on-image: var(--color-white);              /* texto sobre fotografías */
+	--surface-highlight: var(--color-white);     /* relleno de hover de botones */
+	--overlay: var(--color-ink-950);             /* velos sobre fotos */
+	--overlay-0: var(--color-ink-a00);
+	--overlay-50: var(--color-ink-a50);
+	--overlay-56: var(--color-ink-a56);
+	--overlay-80: var(--color-ink-a80);
+
+	--font-body: var(--font-family-sans);
+	--font-display: var(--font-family-serif);
+
+	/* Sin color-scheme: dark a propósito. El original no lo declara, y agregarlo
+	   cambia el color por defecto de controles nativos: rompería la paridad visual. */
+}
+
+/* --------------------------------------------------------------------------
+   Tema claro: redefine SOLO tokens semánticos que dependen del tema.
+   Se activa con <html data-theme="light"> (lo pone el script del <head>
+   antes de pintar; ver src/components/global/ThemeScript.astro).
+   -------------------------------------------------------------------------- */
+:root[data-theme="light"] {
+	--background: var(--color-paper-50);
+	--foreground: rgba(8, 8, 8, 0.72);           /* justificado: contraste AA 7.9:1 sobre papel */
+	--foreground-strong: var(--color-ink-950);
+	--accent: var(--color-gold-500);
+	--surface: var(--color-ink-a04);
+	--border: var(--color-ink-a10);
+	--border-subtle: var(--color-ink-a00);
+	color-scheme: light;
+}
+
+/* --------------------------------------------------------------------------
+   "Islas oscuras": zonas que están SOBRE una fotografía (hero, cabecera de
+   página, tarjetas con texto encima de la imagen…). Ahí el texto tiene que
+   seguir siendo claro aunque el sitio esté en tema claro, así que se vuelven
+   a declarar los semánticos del tema oscuro solo dentro de esos contenedores.
+   Como las custom properties se heredan, todo lo de adentro "ve" el tema
+   oscuro sin tocar una sola regla de componente.
+   -------------------------------------------------------------------------- */
+:root[data-theme="light"] :is(
+	.main-header, .hero, .dark-section, .intro-video, .cta-box,
+	.portfolio-item-content, .why-choose-image-body, .faq-cta-image-box,
+	.package-video-content-box, .gallery-item-content, .team-item-body,
+	.sidebar-cta-box, .video-gallery-image, .contact-form-image-box, .preloader,
+	.main-footer /* el logo es un SVG blanco: el pie queda oscuro en ambos temas */
+) {
+	--background: var(--color-ink-950);
+	--foreground: var(--color-white-a80);
+	--foreground-strong: var(--color-white);
+	--accent: var(--color-gold-300);
+	--surface: var(--color-white-a04);
+	--border: var(--color-white-a10);
+	--border-subtle: var(--color-white-a00);
+}

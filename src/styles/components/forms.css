@@ -1,0 +1,16 @@
+/* ==========================================================================
+   forms.css
+   Mensajes de error de validación de formularios (.help-block.with-errors).
+   Origen: custom.css del autor (ver docs/COMPILADO-VS-FUENTE.md).
+   ========================================================================== */
+
+.help-block.with-errors ul {
+	margin: 0;
+	text-align: left;
+}
+
+.help-block.with-errors ul li {
+	color: var(--danger);
+	font-weight: var(--font-weight-medium);
+	font-size: var(--text-xs);
+}

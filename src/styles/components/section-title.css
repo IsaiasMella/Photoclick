@@ -1,0 +1,181 @@
+/* ==========================================================================
+   section-title.css
+   Encabezados de sección reutilizables: .section-row, .section-title (subtítulo con icono + h1/h2 con <span> en cursiva de acento) y .section-btn.
+   Origen: custom.css del autor (ver docs/COMPILADO-VS-FUENTE.md).
+   ========================================================================== */
+
+.light-section {
+	background-color: var(--surface);
+	backdrop-filter: blur(var(--blur-lg));
+	-webkit-backdrop-filter: blur(var(--blur-lg));
+}
+
+.section-row {
+	margin-bottom: var(--space-16);
+}
+
+.section-row .section-title {
+	margin-bottom: 0;
+}
+
+.section-row .section-title.section-title-center {
+	width: 100%;
+	max-width: 700px;
+	margin: 0 auto;
+	text-align: center;
+}
+
+.section-btn {
+	text-align: right;
+}
+
+.section-content-btn .section-btn {
+	margin-top: var(--space-6);
+	text-align: left;
+}
+
+.section-title-content p {
+	margin-bottom: var(--space-4);
+}
+
+.section-title-content p:last-child {
+	margin-bottom: 0;
+}
+
+.section-title {
+	margin-bottom: var(--space-8);
+}
+
+.section-sub-heading .section-sub-title,
+.section-title .section-sub-title {
+	position: relative;
+	display: inline-block;
+	font-size: var(--text-xs);
+	font-weight: var(--font-weight-medium);
+	text-transform: capitalize;
+	line-height: var(--leading-none);
+	color: var(--foreground-strong);
+	background-color: var(--surface);
+	backdrop-filter: blur(var(--blur-lg));
+	-webkit-backdrop-filter: blur(var(--blur-lg));
+	border-radius: 100px;
+	padding: var(--space-2) 16px var(--space-2) var(--space-6);
+	margin-bottom: var(--space-3);
+}
+
+.section-sub-heading .section-sub-title::before,
+.section-title .section-sub-title::before {
+	content: '';
+	position: absolute;
+	left: 16px;
+	top: 50%;
+	transform: translateY(-50%);
+	background: var(--accent);
+	border-radius: var(--radius-full);
+	width: 5px;
+	height: 5px;
+}
+
+.section-sub-heading .section-sub-title,
+.section-title.section-sub-heading,
+.section-title.section-sub-heading .section-sub-title {
+	margin-bottom: 0;
+}
+
+.light-section .section-sub-heading .section-sub-title,
+.light-section .section-title .section-sub-title {
+	backdrop-filter: blur(0);
+	-webkit-backdrop-filter: blur(0);
+}
+
+.section-title h1 {
+	font-size: var(--text-display);
+	letter-spacing: var(--tracking-tight);
+	margin-bottom: 0;
+	cursor: none;
+}
+
+.section-title h2 {
+	font-size: var(--text-9xl);
+	letter-spacing: var(--tracking-tight);
+	margin-bottom: 0;
+	cursor: none;
+}
+
+.section-title h1 span,
+.section-title h2 span {
+	font-family: var(--font-display);
+	font-weight: var(--font-weight-regular);
+	font-style: italic;
+}
+
+.section-title p {
+	margin-top: var(--space-4);
+	margin-bottom: 0;
+}
+
+/* --- Responsive (antes en la sección 32 de custom.css) --- */
+
+/* --bp-lg */
+@media only screen and (max-width: 1024px) {
+	.section-content-btn .section-btn {
+		margin-top: var(--space-4);
+	}
+
+	.section-title-content {
+		margin-top: var(--space-2);
+	}
+
+	.section-btn {
+		text-align: left;
+		margin-top: var(--space-3);
+	}
+}
+
+/* --bp-md */
+@media only screen and (max-width: 991px) {
+	.section-row {
+		margin-bottom: var(--space-8);
+	}
+
+	.section-title {
+		margin-bottom: var(--space-6);
+	}
+
+	.section-sub-heading .section-sub-title,
+	.section-title .section-sub-title {
+		padding: 8px 12px 8px 26px;
+	}
+
+	.section-sub-heading .section-sub-title::before,
+	.section-title .section-sub-title::before {
+		left: 12px;
+	}
+
+	.section-title h1 {
+		font-size: var(--text-11xl);
+	}
+
+	.section-title h2 {
+		font-size: var(--text-7xl);
+	}
+
+	.section-title p {
+		margin-top: var(--space-2);
+	}
+}
+
+/* --bp-sm */
+@media only screen and (max-width: 767px) {
+	.section-row {
+		margin-bottom: var(--space-6);
+	}
+
+	.section-title h1 {
+		font-size: var(--text-4xl);
+	}
+
+	.section-title h2 {
+		font-size: var(--text-3xl);
+	}
+}

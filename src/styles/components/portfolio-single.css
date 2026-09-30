@@ -1,0 +1,305 @@
+/* ==========================================================================
+   portfolio-single.css
+   Detalle de proyecto: ficha de categorías, entrada, galería creativa y galería de imágenes.
+   Origen: custom.css del autor (ver docs/COMPILADO-VS-FUENTE.md).
+   ========================================================================== */
+
+.page-portfolio-single {
+	padding: var(--space-24) 0;
+}
+
+.portfolio-category-item-list {
+	padding: var(--space-6);
+}
+
+.portfolio-category-item {
+	display: flex;
+	flex-wrap: wrap;
+	gap: var(--space-2);
+	border-bottom: 1px solid var(--border);
+	margin-bottom: var(--space-4);
+	padding-bottom: var(--space-4);
+}
+
+.portfolio-category-item:last-child {
+	margin-bottom: 0;
+	padding-bottom: 0;
+	border-bottom: none;
+}
+
+.portfolio-category-item .icon-box img {
+	width: 100%;
+	max-width: 24px;
+}
+
+.portfolio-category-item-content {
+	width: calc(100% - 34px);
+	display: flex;
+	flex-wrap: wrap;
+	align-items: center;
+	justify-content: space-between;
+	gap: var(--space-1);
+}
+
+.portfolio-category-item-content h3,
+.portfolio-category-social-links h3 {
+	font-size: var(--text-sm);
+	line-height: normal;
+}
+
+.portfolio-category-item-content p {
+	margin-bottom: 0;
+}
+
+.portfolio-category-social-links {
+	display: flex;
+	flex-wrap: wrap;
+	align-items: center;
+	gap: var(--space-3);
+	justify-content: space-between;
+	width: 100%;
+}
+
+.page-category-list .portfolio-category-social-links ul {
+	display: flex;
+	flex-wrap: wrap;
+	gap: var(--space-2);
+	padding: 0;
+}
+
+.page-category-list .portfolio-category-social-links ul li {
+	margin: 0;
+	padding: 0;
+	border: none;
+}
+
+.page-category-list .portfolio-category-social-links ul li a {
+	width: 30px;
+	height: 30px;
+	color: var(--foreground-strong);
+	border: 1px solid var(--border);
+	border-radius: var(--radius-full);
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	padding: 0;
+}
+
+.page-category-list .portfolio-category-social-links ul li a:hover {
+	background: var(--accent);
+	color: var(--on-accent);
+}
+
+.page-category-list .portfolio-category-social-links ul li a::before {
+	display: none;
+}
+
+.page-category-list .portfolio-category-social-links ul li a i {
+	font-size: var(--text-xs);
+}
+
+.portfolio-entry {
+	margin-bottom: var(--space-12);
+}
+
+.portfolio-entry p {
+	margin-bottom: var(--space-4);
+}
+
+.portfolio-entry h2 {
+	font-size: var(--text-9xl);
+	margin-bottom: var(--space-4);
+}
+
+.portfolio-entry h2 span {
+	font-family: var(--font-display);
+	font-weight: var(--font-weight-regular);
+	font-style: italic;
+}
+
+.portfolio-entry h3 {
+	font-size: var(--text-lg);
+	line-height: var(--leading-normal);
+	margin-bottom: var(--space-2);
+}
+
+.portfolio-entry p:last-child,
+.portfolio-entry h3:last-child {
+	margin: 0;
+}
+
+.portfolio-entry ul {
+	list-style: none;
+	padding: 0;
+	margin: 0;
+}
+
+.portfolio-entry ul li {
+	position: relative;
+	color: var(--foreground-strong);
+	line-height: var(--leading-relaxed);
+	padding-left: var(--space-5);
+	margin-bottom: var(--space-4);
+}
+
+.portfolio-entry ul li:last-child {
+	margin-bottom: 0;
+}
+
+.portfolio-entry ul li::before {
+	content: '\f058';
+	position: absolute;
+	font-family: 'Font Awesome 7 Free';
+	font-size: var(--text-md);
+	font-weight: var(--font-weight-black);
+	color: var(--accent);
+	top: 0;
+	left: 0;
+}
+
+.portfolio-entry-info,
+.portfolio-creative-box,
+.portfolio-image-gallary-box {
+	margin-top: var(--space-12);
+}
+
+.portfolio-creative-image-list {
+	display: flex;
+	flex-wrap: wrap;
+	gap: var(--space-6);
+	margin: var(--space-8) 0;
+}
+
+.portfolio-creative-image,
+.portfolio-creative-list {
+	width: calc(50% - 15px);
+}
+
+.portfolio-creative-image figure {
+	display: block;
+	height: 100%;
+	border-radius: var(--radius-xl);
+}
+
+.portfolio-creative-image img {
+	width: 100%;
+	height: 100%;
+	aspect-ratio: 1 / 0.775;
+	object-fit: cover;
+	border-radius: var(--radius-xl);
+}
+
+.portfolio-creative-list {
+	align-content: center;
+}
+
+.portfolio-image-gallary-box {
+	display: flex;
+	flex-wrap: wrap;
+	gap: var(--space-6);
+}
+
+.portfolio-image-gallary-item {
+	width: calc(50% - 15px);
+}
+
+.portfolio-image-gallary-item figure {
+	display: block;
+	border-radius: var(--radius-xl);
+}
+
+.portfolio-image-gallary-item img {
+	width: 100%;
+	aspect-ratio: 1 / 0.745;
+	object-fit: cover;
+	border-radius: var(--radius-xl);
+}
+
+/* --- Responsive (antes en la sección 32 de custom.css) --- */
+
+/* --bp-lg */
+@media only screen and (max-width: 1024px) {
+	.portfolio-category-item-list {
+		padding: var(--space-4);
+	}
+
+	.portfolio-category-item {
+		margin-bottom: var(--space-3);
+		padding-bottom: var(--space-3);
+	}
+
+	.portfolio-category-item .icon-box img {
+		max-width: 20px;
+	}
+
+	.portfolio-category-item-content {
+		width: calc(100% - 30px);
+	}
+
+	.portfolio-entry {
+		margin-bottom: var(--space-8);
+	}
+
+	.portfolio-entry-info,
+	.portfolio-creative-box,
+	.portfolio-image-gallary-box {
+		margin-top: var(--space-8);
+	}
+
+	.portfolio-creative-image-list {
+		margin: var(--space-6) 0;
+		gap: var(--space-4);
+	}
+
+	.portfolio-creative-image {
+		width: calc(45% - 10px);
+	}
+
+	.portfolio-creative-list {
+		width: calc(55% - 10px);
+	}
+}
+
+/* --bp-md */
+@media only screen and (max-width: 991px) {
+	.page-portfolio-single {
+		padding: var(--space-12) 0;
+	}
+
+	.portfolio-entry h2 {
+		font-size: var(--text-7xl);
+		margin-bottom: var(--space-3);
+	}
+
+	.portfolio-entry p {
+		margin-bottom: var(--space-3);
+	}
+
+	.portfolio-entry ul li {
+		margin-bottom: var(--space-2);
+	}
+
+	.portfolio-entry ul li::before {
+		font-size: var(--text-sm);
+	}
+}
+
+/* --bp-sm */
+@media only screen and (max-width: 767px) {
+	.portfolio-entry h2 {
+		font-size: var(--text-3xl);
+	}
+
+	.portfolio-creative-image,
+	.portfolio-creative-list {
+		width: 100%;
+	}
+
+	.portfolio-image-gallary-box {
+		gap: var(--space-3);
+	}
+
+	.portfolio-image-gallary-item {
+		width: calc(50% - 7.5px);
+	}
+}

@@ -1,0 +1,271 @@
+/* ==========================================================================
+   why-choose-us.css
+   Sección "Why choose us": imagen con texto destacado y bloque de agenda con dos mini tarjetas.
+   Origen: custom.css del autor (ver docs/COMPILADO-VS-FUENTE.md).
+   ========================================================================== */
+
+.why-choose-us {
+	padding: var(--space-24) 0;
+}
+
+.why-choose-us-box {
+	background-color: var(--surface);
+	backdrop-filter: blur(var(--blur-lg));
+	-webkit-backdrop-filter: blur(var(--blur-lg));
+	border-radius: var(--radius-xl);
+	display: flex;
+	flex-direction: column;
+	justify-content: space-between;
+	gap: var(--space-4);
+	height: calc(100% - 30px);
+	margin-bottom: var(--space-6);
+	padding: var(--space-2);
+	overflow: hidden;
+}
+
+.why-choose-us-box.box-1 {
+	text-align: center;
+}
+
+.why-choose-us-box-content {
+	padding: var(--space-6) var(--space-6) 0;
+}
+
+.why-choose-us-box-content .section-sub-title {
+	backdrop-filter: blur(0);
+	-webkit-backdrop-filter: blur(0);
+	margin-bottom: var(--space-3);
+}
+
+.why-choose-us-box-content h3 {
+	font-size: var(--text-lg);
+}
+
+.why-choose-us-box-content p {
+	margin: var(--space-2) 0 0;
+}
+
+.why-choose-item-image figure {
+	display: block;
+	margin: 0 0 calc(var(--space-8) * -1) 0;
+	border-radius: var(--radius-lg) var(--radius-lg) 0 0;
+}
+
+.why-choose-item-image figure img {
+	width: 100%;
+	aspect-ratio: 1 / 0.692;
+	object-fit: cover;
+	border-radius: var(--radius-lg) var(--radius-lg) 0 0;
+}
+
+.why-choose-image-box {
+	position: relative;
+	align-content: end;
+	border-radius: var(--radius-xl);
+	padding: var(--space-2);
+	height: calc(100% - 30px);
+	margin-bottom: var(--space-6);
+	overflow: hidden;
+}
+
+.why-choose-us-image {
+	position: absolute;
+	top: 0;
+	right: 0;
+	bottom: 0;
+	left: 0;
+	width: 100%;
+	height: 100%;
+}
+
+.why-choose-us-image figure {
+	position: relative;
+	display: block;
+	height: 100%;
+}
+
+.why-choose-us-image figure img {
+	width: 100%;
+	height: 100%;
+	object-fit: cover;
+}
+
+.why-choose-image-body {
+	background: var(--surface);
+	backdrop-filter: blur(var(--blur-sm));
+	-webkit-backdrop-filter: blur(var(--blur-sm));
+	border-radius: var(--radius-lg);
+	padding: var(--space-6);
+	text-align: center;
+	transition: all var(--duration-base) var(--ease-in-out);
+}
+
+.why-choose-body-title {
+	display: flex;
+	align-items: center;
+	justify-content: space-between;
+	gap: var(--space-2);
+	margin-bottom: var(--space-3);
+}
+
+.why-choose-body-title hr {
+	min-width: 30px;
+	border-style: dashed;
+	height: 1px;
+	color: var(--border);
+	flex-grow: 1;
+	margin: 0;
+	opacity: 1;
+}
+
+.why-choose-body-title h3 {
+	font-size: var(--text-lg);
+}
+
+.why-choose-body-content p {
+	color: var(--on-image);
+}
+
+.why-choose-body-content p:last-child {
+	margin: 0;
+}
+
+.why-choose-highlighted-content {
+	background: var(--surface) url('../../assets/images/icon-blockquote-transperant.svg') no-repeat;
+	background-size: 60px auto;
+	background-position: top 15px left 20px;
+	padding: var(--space-6);
+	border-radius: var(--radius-lg);
+}
+
+.why-choose-highlighted-content p {
+	font-weight: var(--font-weight-semibold);
+	color: var(--on-image);
+}
+
+.why-choose-highlighted-content p:last-child {
+	margin: 0;
+}
+
+.why-choose-schedule-body {
+	padding: var(--space-2) var(--space-4) var(--space-4);
+}
+
+.why-choose-schedule-info-item {
+	display: flex;
+	flex-wrap: wrap;
+	align-items: center;
+	gap: var(--space-3);
+	border-bottom: 1px solid var(--border);
+	padding-bottom: var(--space-6);
+	margin-bottom: var(--space-6);
+}
+
+.why-choose-schedule-info-item:last-child {
+	border-bottom: none;
+	padding-bottom: 0;
+	margin-bottom: 0;
+}
+
+.why-choose-schedule-info-image figure {
+	display: block;
+	max-width: 60px;
+	border-radius: var(--radius-full);
+}
+
+.why-choose-schedule-info-image figure img {
+	width: 100%;
+	aspect-ratio: 1 / 1;
+	border-radius: var(--radius-full);
+}
+
+.why-choose-schedule-info-content {
+	width: calc(100% - 75px);
+}
+
+.why-choose-schedule-info-content h3 {
+	font-size: var(--text-lg);
+}
+
+.why-choose-schedule-info-content p {
+	margin: var(--space-1) 0 0;
+}
+
+.why-choose-schedule-btn {
+	margin-top: var(--space-8);
+}
+
+/* --- Responsive (antes en la sección 32 de custom.css) --- */
+
+/* --bp-lg */
+@media only screen and (max-width: 1024px) {
+	/* Cascada: esta regla es de section-title.css pero vive acá porque why-choose-us.css
+	   tiene una regla base de igual especificidad sobre el mismo elemento. En el
+	   original ganaba esta (estaba al final, en la sección 32); si se mueve a
+	   section-title.css, pierde. Verificado con tools/computed-styles.mjs. */
+	.section-sub-heading .section-sub-title,
+	.section-title .section-sub-title {
+		margin-bottom: var(--space-2);
+	}
+}
+
+/* --bp-md */
+@media only screen and (max-width: 991px) {
+	.why-choose-us {
+		padding: var(--space-12) 0;
+	}
+
+	.why-choose-us-box-content {
+		padding: var(--space-3) var(--space-3) 0;
+	}
+
+	.why-choose-image-body {
+		padding: var(--space-3);
+	}
+
+	.why-choose-highlighted-content {
+		padding: var(--space-4);
+		background-size: 50px;
+	}
+
+	.why-choose-schedule-info-item {
+		margin-bottom: var(--space-4);
+		padding-bottom: var(--space-4);
+	}
+
+	.why-choose-schedule-btn {
+		margin-top: var(--space-6);
+	}
+}
+
+/* --bp-sm */
+@media only screen and (max-width: 767px) {
+	.why-choose-us-box-content {
+		padding: var(--space-2) var(--space-2) 0;
+	}
+
+	.why-choose-us-box-content h3 {
+		font-size: var(--text-md);
+	}
+
+	.why-choose-image-box {
+		min-height: 330px;
+	}
+
+	.why-choose-body-title h3 {
+		font-size: var(--text-md);
+	}
+
+	.why-choose-schedule-body {
+		padding: 0 var(--space-2) var(--space-2) var(--space-2);
+	}
+
+	.why-choose-schedule-info-item {
+		padding-bottom: var(--space-4);
+		margin-bottom: var(--space-4);
+	}
+
+	.why-choose-schedule-info-content h3 {
+		font-size: var(--text-md);
+	}
+}

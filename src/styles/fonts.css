@@ -1,0 +1,20 @@
+/* ==========================================================================
+   fonts.css — Tipografías.
+
+   Los @font-face NO se escriben a mano: los genera la API de fuentes de Astro
+   (astro.config.mjs → fonts) y los inyecta <Font /> en el <head> de
+   BaseLayout.astro. Eso resuelve tres problemas del original, que usaba el
+   <link> de Google Fonts:
+     1. Bloqueo de render: el CSS de Google era una petición bloqueante a otro
+        dominio. Ahora las fuentes se sirven desde el mismo sitio con preload.
+     2. Flash de fuente (FOUT) con salto de diseño: Astro genera una fuente de
+        respaldo con métricas ajustadas (size-adjust, ascent-override…) para que
+        el texto ocupe lo mismo antes y después de cargar la fuente real.
+     3. Privacidad: el navegador ya no contacta a Google.
+
+   Variables expuestas: --font-mona-sans y --font-playfair (consumidas por
+   --font-family-sans / --font-family-serif en tokens.css).
+   ========================================================================== */
+
+/* Mona Sans y Playfair son variables: se habilitan todos los pesos que usa
+   el diseño (400–900) con un solo archivo por estilo. */

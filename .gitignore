@@ -1,0 +1,5 @@
+referencia/
+node_modules/
+dist/
+.astro/
+.tmp/

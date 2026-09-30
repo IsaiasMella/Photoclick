@@ -1,0 +1,121 @@
+/* ==========================================================================
+   cta-box.css
+   Caja de llamada a la acción con fondo parallax, datos de contacto y avatares.
+   Origen: custom.css del autor (ver docs/COMPILADO-VS-FUENTE.md).
+   ========================================================================== */
+
+.cta-box {
+	position: relative;
+	background-image: var(--cta-bg-image, url('../../assets/images/cta-box-bg-image.jpg'));
+	background-position: top center;
+	min-height: 800px;
+	align-content: center;
+	padding: var(--space-24) 0;
+}
+
+.cta-box::before {
+	content: '';
+	position: absolute;
+	top: 0;
+	right: 0;
+	bottom: 0;
+	left: 0;
+	height: 100%;
+	width: 100%;
+	background: var(--overlay);
+	opacity: 70%;
+	z-index: 1;
+}
+
+.cta-box .container {
+	position: relative;
+	z-index: 1;
+}
+
+.cta-box-content {
+	max-width: 900px;
+	text-align: center;
+	margin: 0 auto;
+}
+
+.cta-contact-list ul {
+	list-style: none;
+	margin: 0;
+	padding: 0;
+}
+
+.cta-contact-list ul li {
+	font-size: var(--text-2xl);
+	font-weight: var(--font-weight-semibold);
+	color: var(--on-image);
+	line-height: var(--leading-normal);
+	margin-bottom: var(--space-2);
+}
+
+.cta-contact-list ul li:last-child {
+	margin-bottom: 0;
+}
+
+.cta-contact-list ul li a {
+	color: inherit;
+	transition: all var(--duration-base) var(--ease-in-out);
+}
+
+.cta-contact-list ul li a:hover {
+	color: var(--accent);
+}
+
+.cta-content-footer {
+	display: flex;
+	flex-wrap: wrap;
+	align-items: center;
+	justify-content: center;
+	gap: var(--space-4) var(--space-8);
+	border-top: 1px solid var(--border);
+	padding-top: var(--space-8);
+	margin-top: var(--space-16);
+}
+
+.cta-client-box {
+	display: flex;
+	flex-wrap: wrap;
+	align-items: center;
+	gap: var(--space-3);
+}
+
+.cta-client-content {
+	max-width: 210px;
+	text-align: left;
+}
+
+.cta-client-content p {
+	color: var(--on-image);
+	margin: 0;
+}
+
+/* --- Responsive (antes en la sección 32 de custom.css) --- */
+
+/* --bp-md */
+@media only screen and (max-width: 991px) {
+	.cta-box {
+		min-height: 600px;
+		padding: var(--space-12) 0;
+	}
+
+	.cta-contact-list ul li {
+		font-size: var(--text-xl);
+	}
+
+	.cta-content-footer {
+		gap: var(--space-4) var(--space-6);
+		padding-top: var(--space-6);
+		margin-top: var(--space-6);
+	}
+}
+
+/* --bp-sm */
+@media only screen and (max-width: 767px) {
+	.cta-contact-list ul li {
+		font-size: var(--text-md);
+	}
+}

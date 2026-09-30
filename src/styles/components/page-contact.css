@@ -1,0 +1,226 @@
+/* ==========================================================================
+   page-contact.css
+   Página de contacto: imagen + formulario, lista de datos y mapa.
+   Origen: custom.css del autor (ver docs/COMPILADO-VS-FUENTE.md).
+   ========================================================================== */
+
+.page-contact-us {
+	padding: var(--space-24) 0 var(--space-12);
+}
+
+.contact-form-box {
+	background-color: var(--surface);
+	backdrop-filter: blur(var(--blur-lg));
+	-webkit-backdrop-filter: blur(var(--blur-lg));
+	border-radius: var(--radius-xl);
+	display: flex;
+	flex-wrap: wrap;
+	gap: var(--space-2);
+	padding: var(--space-2);
+}
+
+.contact-form-image-box {
+	width: calc(50% - 5px);
+	position: relative;
+	border-radius: var(--radius-lg);
+	min-height: 565px;
+	padding: var(--space-10);
+	overflow: hidden;
+	z-index: 1;
+}
+
+.contact-form-image {
+	position: absolute;
+	top: 0;
+	right: 0;
+	bottom: 0;
+	left: 0;
+	width: 100%;
+	height: 100%;
+}
+
+.contact-form-image figure {
+	position: relative;
+	display: block;
+	height: 100%;
+}
+
+.contact-form-image figure:before {
+	content: '';
+	position: absolute;
+	top: 0;
+	right: 0;
+	bottom: 0;
+	left: 0;
+	width: 100%;
+	height: 100%;
+	background: var(--overlay);
+	opacity: 70%;
+	z-index: 1;
+}
+
+.contact-form-image figure img {
+	width: 100%;
+	height: 100%;
+	object-fit: cover;
+}
+
+.contact-form-content-box {
+	position: relative;
+	height: 100%;
+	display: flex;
+	flex-direction: column;
+	justify-content: space-between;
+	z-index: 1;
+}
+
+.contact-info-list {
+	max-width: 335px;
+}
+
+.contact-info-list ul {
+	list-style: none;
+	padding: 0;
+	margin: 0;
+}
+
+.contact-info-list ul li {
+	display: flex;
+	align-items: center;
+	gap: var(--space-2);
+	line-height: var(--leading-relaxed);
+	font-weight: var(--font-weight-semibold);
+	color: var(--foreground-strong);
+	margin-bottom: var(--space-4);
+}
+
+.contact-info-list ul li:last-child {
+	margin-bottom: 0;
+}
+
+.contact-info-list ul li a {
+	color: inherit;
+	transition: all var(--duration-fast) var(--ease-in-out);
+}
+
+.contact-info-list ul li a:hover {
+	color: var(--accent);
+}
+
+.contact-info-list ul li img {
+	width: 100%;
+	max-width: 20px;
+}
+
+.contact-us-form {
+	width: calc(50% - 5px);
+	padding: var(--space-10);
+}
+
+.contact-form label {
+	font-weight: var(--font-weight-medium);
+	color: var(--foreground-strong);
+	margin-bottom: var(--space-4);
+}
+
+.contact-form .form-control {
+	font-size: var(--text-sm);
+	font-weight: var(--font-weight-regular);
+	line-height: var(--leading-relaxed);
+	color: var(--foreground-strong);
+	background-color: var(--surface);
+	border: none;
+	border-radius: 2px;
+	padding: 13px var(--space-4);
+	box-shadow: none;
+	outline: none;
+}
+
+.contact-form .form-control::placeholder {
+	color: var(--foreground-strong);
+	opacity: 50%;
+}
+
+.google-map {
+	padding: var(--space-12) 0 var(--space-24);
+}
+
+.google-map-iframe {
+	width: 100%;
+	height: 600px;
+}
+
+.google-map-iframe iframe {
+	width: 100%;
+	height: 100%;
+	border-radius: var(--radius-xl);
+	overflow: hidden;
+}
+
+/* --- Responsive (antes en la sección 32 de custom.css) --- */
+
+/* --bp-lg */
+@media only screen and (max-width: 1024px) {
+	.contact-form-image-box,
+	.contact-us-form {
+		padding: var(--space-6);
+	}
+}
+
+/* --bp-md */
+@media only screen and (max-width: 991px) {
+	.page-contact-us {
+		padding: var(--space-12) 0 var(--space-6);
+	}
+
+	.contact-form-image-box {
+		width: 100%;
+		min-height: 400px;
+	}
+
+	.contact-us-form {
+		width: 100%;
+	}
+
+	.contact-info-list ul li {
+		margin-bottom: var(--space-3);
+	}
+
+	.contact-form label {
+		margin-bottom: var(--space-3);
+	}
+
+	.contact-form .form-control {
+		padding: 11px var(--space-3);
+	}
+
+	.google-map {
+		padding: var(--space-6) 0 var(--space-12);
+	}
+
+	.google-map-iframe,
+	.google-map-iframe iframe {
+		height: 450px;
+	}
+}
+
+/* --bp-sm */
+@media only screen and (max-width: 767px) {
+	.contact-form-image-box,
+	.contact-us-form {
+		padding: var(--space-3);
+	}
+
+	.contact-form-image-box {
+		min-height: auto;
+	}
+
+	.contact-info-list ul li {
+		gap: var(--space-2);
+	}
+
+	.google-map-iframe,
+	.google-map-iframe iframe {
+		height: 350px;
+	}
+}

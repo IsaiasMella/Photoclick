@@ -1,0 +1,97 @@
+/* ==========================================================================
+   intro-video.css
+   Bloque de video de fondo con overlay y botón circular de "Play" que abre YouTube en el lightbox.
+   Origen: custom.css del autor (ver docs/COMPILADO-VS-FUENTE.md).
+   ========================================================================== */
+
+.intro-video .container-fluid {
+	padding: 0;
+}
+
+.intro-video-content-box {
+	position: relative;
+}
+
+.intro-video-bg-video {
+	height: 800px;
+}
+
+.intro-video-bg-video::before {
+	content: '';
+	position: absolute;
+	top: 0;
+	right: 0;
+	bottom: 0;
+	left: 0;
+	background: var(--overlay);
+	opacity: 40%;
+	width: 100%;
+	height: 100%;
+	z-index: 1;
+}
+
+.intro-video-bg-video video {
+	width: 100%;
+	height: 100%;
+	object-fit: cover;
+}
+
+.video-play-button {
+	position: absolute;
+	top: 50%;
+	left: 50%;
+	transform: translate(-50%, -50%);
+	z-index: 1;
+}
+
+.video-play-button a {
+	width: 100px;
+	height: 100px;
+	font-size: var(--text-lg);
+	font-weight: var(--font-weight-semibold);
+	text-transform: uppercase;
+	color: var(--on-image);
+	background-color: var(--border);
+	backdrop-filter: blur(var(--blur-md));
+	-webkit-backdrop-filter: blur(var(--blur-md));
+	border-radius: var(--radius-full);
+	display: inline-flex;
+	justify-content: center;
+	align-items: center;
+	transition: all var(--duration-base) var(--ease-in-out);
+	cursor: none;
+}
+
+.video-play-button a:hover {
+	background: var(--surface-highlight);
+	color: var(--on-accent);
+}
+
+/* --- Responsive (antes en la sección 32 de custom.css) --- */
+
+/* --bp-xxl */
+@media only screen and (max-width: 1440px) {
+	.intro-video-bg-video {
+		height: 680px;
+	}
+}
+
+/* --bp-md */
+@media only screen and (max-width: 991px) {
+	.intro-video-bg-video {
+		height: 520px;
+	}
+
+	.video-play-button a {
+		width: 80px;
+		height: 80px;
+		font-size: var(--text-sm);
+	}
+}
+
+/* --bp-sm */
+@media only screen and (max-width: 767px) {
+	.intro-video-bg-video {
+		height: 320px;
+	}
+}

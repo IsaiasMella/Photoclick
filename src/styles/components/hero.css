@@ -1,0 +1,253 @@
+/* ==========================================================================
+   hero.css
+   Hero de las tres home: variante imagen fija, slider con fundido (.hero-slider-layout) y video (.hero-video); círculo "Book your date" giratorio y lista de datos.
+   Origen: custom.css del autor (ver docs/COMPILADO-VS-FUENTE.md).
+   ========================================================================== */
+
+.hero {
+	position: relative;
+	background-image: var(--hero-bg-image, url('../../assets/images/hero-bg-image.jpg'));
+	background-position: center center;
+	background-size: cover;
+	height: 100vh;
+	min-height: 950px;
+	align-content: end;
+	padding: 230px 0 var(--space-12);
+	overflow: hidden;
+}
+
+.hero::before,
+.hero.hero-slider-layout .hero-image-slider .hero-slider-img figure::before {
+	content: '';
+	position: absolute;
+	top: 0;
+	left: 0;
+	right: 0;
+	bottom: 0;
+	background: linear-gradient(180deg, var(--overlay-50) 0%, transparent 15.69%), linear-gradient(180deg, transparent 42.18%, var(--overlay-50) 100.98%);
+	width: 100%;
+	height: 100%;
+	z-index: 1;
+}
+
+.hero.hero-slider-layout::before {
+	display: none;
+}
+
+.hero.hero-video .hero-bg-video {
+	position: absolute;
+	top: 0;
+	right: 0;
+	left: 0;
+	bottom: 0;
+	width: 100%;
+	height: 100%;
+}
+
+.hero.hero-video .hero-bg-video video {
+	width: 100%;
+	height: 100%;
+	object-fit: cover;
+}
+
+.hero.hero-slider-layout {
+	background: none;
+}
+
+.hero.hero-slider-layout .hero-image-slider {
+	position: absolute;
+	top: 0;
+	right: 0;
+	left: 0;
+	bottom: 0;
+	width: 100%;
+	height: 100%;
+}
+
+.hero.hero-slider-layout .hero-image-slider .swiper,
+.hero.hero-slider-layout .hero-image-slider .hero-slider-img,
+.hero.hero-slider-layout .hero-image-slider .hero-slider-img figure {
+	position: relative;
+	height: 100%;
+}
+
+.hero.hero-slider-layout .hero-image-slider .hero-slider-img img {
+	width: 100%;
+	height: 100%;
+	object-fit: cover;
+}
+
+.hero .container {
+	position: relative;
+	z-index: 2;
+}
+
+.hero-content {
+	display: flex;
+	flex-wrap: wrap;
+	align-items: center;
+	gap: var(--space-6);
+}
+
+.hero-content .section-title {
+	width: calc(78% - 15px);
+	margin-bottom: 0;
+}
+
+.book-your-date-circle {
+	width: calc(22% - 15px);
+	text-align: end;
+}
+
+.book-your-date-circle a {
+	display: inline-block;
+	border-radius: var(--radius-full);
+}
+
+.book-your-date-circle a img {
+	width: 100%;
+	max-width: 200px;
+	aspect-ratio: 1 / 1;
+	object-fit: cover;
+	backdrop-filter: blur(var(--blur-sm));
+	-webkit-backdrop-filter: blur(var(--blur-sm));
+	border-radius: var(--radius-full);
+	animation: infiniterotate var(--duration-rotate-slow) infinite var(--ease-linear);
+}
+
+@keyframes infiniterotate {
+	from {
+		transform: rotate(0deg);
+	}
+
+	to {
+		transform: rotate(360deg);
+	}
+}
+
+.book-your-date-circle a:hover img {
+	animation-play-state: paused;
+}
+
+.hero-content-list {
+	border-top: 1px solid var(--border);
+	padding-top: var(--space-10);
+	margin-top: var(--space-10);
+}
+
+.hero-content-list ul {
+	display: flex;
+	flex-wrap: wrap;
+	justify-content: space-between;
+	gap: var(--space-6) var(--space-12);
+	list-style: none;
+	padding: 0;
+	margin: 0;
+}
+
+.hero-content-list ul li {
+	position: relative;
+	width: calc(25% - 45px);
+	line-height: var(--leading-relaxed);
+	color: var(--on-image);
+	padding-left: var(--space-5);
+}
+
+.hero-content-list ul li:before {
+	content: '\f058';
+	position: absolute;
+	font-family: 'Font Awesome 7 Free';
+	font-size: var(--text-md);
+	font-weight: var(--font-weight-black);
+	color: var(--accent);
+	top: 0;
+	left: 0;
+}
+
+.hero-content-list ul li::after {
+	content: ' ';
+	position: absolute;
+	top: 0;
+	right: calc(var(--space-6) * -1);
+	background: var(--border);
+	width: 1px;
+	height: 100%;
+}
+
+.hero-content-list ul li:last-child:after {
+	display: none;
+}
+
+/* --- Responsive (antes en la sección 32 de custom.css) --- */
+
+/* --bp-lg */
+@media only screen and (max-width: 1024px) {
+	.hero {
+		height: auto;
+	}
+
+	.hero-content-list {
+		padding-top: var(--space-6);
+		margin-top: var(--space-6);
+	}
+
+	.hero-content-list ul {
+		gap: var(--space-3) var(--space-4);
+	}
+
+	.hero-content-list ul li {
+		width: calc(50% - 10px);
+	}
+
+	.hero-content-list ul li:nth-child(2n + 2):after {
+		display: none;
+	}
+}
+
+/* --bp-md */
+@media only screen and (max-width: 991px) {
+	.hero {
+		min-height: 760px;
+		padding: 150px 0 var(--space-12);
+	}
+
+	.book-your-date-circle a img {
+		max-width: 130px;
+	}
+
+	.hero-content-list ul li:before {
+		font-size: var(--text-sm);
+	}
+}
+
+/* --bp-sm */
+@media only screen and (max-width: 767px) {
+	.hero-content .section-title,
+	.book-your-date-circle {
+		width: 100%;
+	}
+
+	.hero-content {
+		gap: var(--space-4);
+	}
+
+	.book-your-date-circle {
+		text-align: left;
+	}
+
+	.book-your-date-circle a img {
+		max-width: 90px;
+	}
+
+	.hero-content-list ul {
+		gap: var(--space-2);
+	}
+
+	.hero-content-list ul li {
+		width: 100%;
+	}
+
+	.hero-content-list ul li::after {
+		display: none;
+	}
+}

@@ -1,0 +1,209 @@
+/* ==========================================================================
+   packages.css
+   Sección "Our packages": lista de paquetes con precio y la caja de video con rating.
+   Origen: custom.css del autor (ver docs/COMPILADO-VS-FUENTE.md).
+   ========================================================================== */
+
+.our-packages {
+	padding: var(--space-24) 0;
+}
+
+.our-package-content {
+	height: 100%;
+	align-content: center;
+}
+
+.our-package-content .section-title {
+	border-bottom: 1px solid var(--border);
+	padding-bottom: var(--space-8);
+}
+
+.our-package-item {
+	border-bottom: 1px solid var(--border);
+	padding-bottom: var(--space-8);
+	margin-bottom: var(--space-8);
+}
+
+.our-package-item:last-child {
+	border-bottom: none;
+	padding-bottom: 0;
+	margin-bottom: 0;
+}
+
+.our-package-item-title {
+	display: flex;
+	align-items: center;
+	justify-content: space-between;
+	gap: var(--space-2);
+	margin-bottom: var(--space-4);
+}
+
+.our-package-item-title h3 {
+	font-size: var(--text-lg);
+	width: 100%;
+	max-width: fit-content;
+}
+
+.our-package-item-title hr {
+	height: 1px;
+	min-width: 100px;
+	color: var(--border);
+	border-style: dashed;
+	flex-grow: 1;
+	margin: 0;
+	opacity: 1;
+}
+
+.our-package-item-title span {
+	font-size: var(--text-lg);
+	color: var(--foreground-strong);
+	font-weight: var(--font-weight-semibold);
+	line-height: normal;
+}
+
+.our-package-item-content p {
+	margin-bottom: var(--space-3);
+}
+
+.our-package-item-content p:last-child {
+	margin-bottom: 0;
+}
+
+.package-video-content-box {
+	position: relative;
+	height: 100%;
+	min-height: 650px;
+	border-radius: var(--radius-xl);
+	overflow: hidden;
+	margin: 0 0 0 var(--space-3);
+}
+
+.package-video-content-box::before {
+	content: '';
+	position: absolute;
+	top: 0;
+	right: 0;
+	bottom: 0;
+	left: 0;
+	background: linear-gradient(180deg, var(--overlay-0) 66.85%, var(--overlay) 100%);
+	width: 100%;
+	height: 100%;
+	z-index: 1;
+}
+
+.package-video-box {
+	position: relative;
+	height: 100%;
+}
+
+.package-video-box video {
+	width: 100%;
+	height: 100%;
+	object-fit: cover;
+}
+
+.package-video-rating-box {
+	position: absolute;
+	left: var(--space-8);
+	right: var(--space-8);
+	bottom: var(--space-8);
+	text-align: center;
+	z-index: 1;
+}
+
+.package-video-rating i {
+	font-size: var(--text-lg);
+	color: var(--accent);
+}
+
+.package-video-rating-box p {
+	font-size: var(--text-lg);
+	font-weight: var(--font-weight-semibold);
+	color: var(--on-image);
+	margin: var(--space-3) 0 0;
+}
+
+/* --- Responsive (antes en la sección 32 de custom.css) --- */
+
+/* --bp-lg */
+@media only screen and (max-width: 1024px) {
+	.our-package-content {
+		height: auto;
+		margin-bottom: var(--space-6);
+	}
+
+	.our-package-item {
+		margin-bottom: var(--space-6);
+		padding-bottom: var(--space-6);
+	}
+
+	.package-video-content-box {
+		margin: 0;
+		min-height: auto;
+		height: 530px;
+	}
+}
+
+/* --bp-md */
+@media only screen and (max-width: 991px) {
+	.our-packages {
+		padding: var(--space-12) 0;
+	}
+
+	.our-package-content .section-title {
+		padding-bottom: var(--space-6);
+	}
+
+	.our-package-item-title span {
+		font-size: var(--text-md);
+	}
+
+	.package-video-rating-box {
+		left: var(--space-6);
+		right: var(--space-6);
+		bottom: var(--space-6);
+	}
+
+	.package-video-rating i,
+	.package-video-rating-box p {
+		font-size: var(--text-md);
+	}
+}
+
+/* --bp-sm */
+@media only screen and (max-width: 767px) {
+	.our-package-item {
+		padding-bottom: var(--space-4);
+		margin-bottom: var(--space-4);
+	}
+
+	.our-package-item-title {
+		margin-bottom: var(--space-2);
+	}
+
+	.our-package-item-title h3 {
+		font-size: var(--text-sm);
+	}
+
+	.our-package-item-title span {
+		font-size: var(--text-sm);
+	}
+
+	.our-package-item-title hr {
+		min-width: 40px;
+	}
+
+	.package-video-content-box {
+		height: 360px;
+	}
+
+	.package-video-rating-box {
+		left: var(--space-4);
+		right: var(--space-4);
+		bottom: var(--space-4);
+	}
+
+	.package-video-rating-box p {
+		font-size: var(--text-sm);
+	}
+}

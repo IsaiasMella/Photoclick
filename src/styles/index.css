@@ -1,0 +1,56 @@
+/* ==========================================================================
+   index.css — ÚNICO punto de entrada de estilos del autor.
+
+   El ORDEN de estos @import es el orden de la cascada del custom.css original
+   (secciones 02 → 31). No reordenar: varias reglas tienen igual especificidad y
+   gana la que viene después. Las reglas responsive de la sección 32 ahora viven
+   al final de cada archivo de componente; las pocas que cambiaban de ganador al
+   moverse se ubicaron en el archivo posterior indicado en cada una (ver
+   docs/DECISIONES.md, "Cascada").
+
+   Bootstrap (subconjunto) y el CSS de plugins se importan ANTES desde
+   BaseLayout.astro, igual que los <link> del original.
+   ========================================================================== */
+
+@import "./tokens.css";
+@import "./fonts.css";
+
+@import "./components/base.css";
+@import "./components/buttons.css";
+@import "./components/preloader.css";
+@import "./components/section-title.css";
+@import "./components/forms.css";
+@import "./components/header.css";
+@import "./components/hero.css";
+@import "./components/about-us.css";
+@import "./components/services.css";
+@import "./components/why-choose-us.css";
+@import "./components/intro-video.css";
+@import "./components/portfolio.css";
+@import "./components/packages.css";
+@import "./components/wedding-gallery.css";
+@import "./components/faqs.css";
+@import "./components/testimonials.css";
+@import "./components/cta-box.css";
+@import "./components/blog.css";
+@import "./components/footer.css";
+@import "./components/page-header.css";
+@import "./components/page-about.css";
+@import "./components/team.css";
+@import "./components/page-services.css";
+@import "./components/service-single.css";
+@import "./components/page-blog.css";
+@import "./components/blog-single.css";
+@import "./components/page-portfolio.css";
+@import "./components/portfolio-single.css";
+@import "./components/page-team.css";
+@import "./components/team-single.css";
+@import "./components/page-testimonials.css";
+@import "./components/page-gallery.css";
+@import "./components/page-video-gallery.css";
+@import "./components/page-faqs.css";
+@import "./components/page-contact.css";
+@import "./components/page-404.css";
+
+/* Añadido (no existe en el original): foco visible para teclado. Va último para ganarle a "a:focus { outline: 0 }" de base.css. */
+@import "./a11y.css";

@@ -1,0 +1,309 @@
+/* ==========================================================================
+   services.css
+   Sección "Our services" y tarjeta .service-item (imagen + cabecera con icono), más el texto de pie con avatares de clientes.
+   Origen: custom.css del autor (ver docs/COMPILADO-VS-FUENTE.md).
+   ========================================================================== */
+
+.our-services {
+	padding: var(--space-24) 0;
+}
+
+.service-item {
+	background-color: var(--surface);
+	border-radius: var(--radius-xl);
+	height: calc(100% - 30px);
+	margin-bottom: var(--space-6);
+	padding: var(--space-2);
+	transition: all var(--duration-base) var(--ease-in-out);
+}
+
+.service-item:hover {
+	transform: translateY(-5px);
+}
+
+.service-item-header {
+	padding: var(--space-6);
+	margin-bottom: var(--space-2);
+}
+
+.service-item-header .icon-box {
+	margin-bottom: var(--space-6);
+}
+
+.service-item-header .icon-box img {
+	width: 100%;
+	max-width: 50px;
+}
+
+.service-item-content h2 {
+	font-size: var(--text-lg);
+}
+
+.service-item-content h2 a {
+	color: inherit;
+}
+
+.service-item-content p {
+	margin: var(--space-2) 0 0;
+}
+
+.service-item-image {
+	position: relative;
+}
+
+.service-item-image a {
+	display: block;
+	cursor: none;
+	border-radius: var(--radius-lg);
+	overflow: hidden;
+}
+
+.service-item-image figure {
+	display: block;
+}
+
+.service-item-image figure img {
+	width: 100%;
+	aspect-ratio: 1 / 0.522;
+	object-fit: cover;
+	transition: all var(--duration-slower) var(--ease-in-out);
+}
+
+.service-item:hover .service-item-image figure img {
+	transform: scale(1.04);
+}
+
+.section-footer-text {
+	margin-top: var(--space-6);
+	text-align: center;
+}
+
+.section-footer-text p {
+	color: var(--foreground-strong);
+	margin: 0 0 var(--space-3);
+}
+
+.section-footer-text p span {
+	display: inline-block;
+	font-size: var(--text-xs);
+	font-weight: var(--font-weight-bold);
+	background: var(--accent);
+	color: var(--on-accent);
+	line-height: var(--leading-none);
+	padding: 4px var(--space-2);
+	border-radius: var(--radius-xl);
+	margin-right: var(--space-2);
+}
+
+.section-footer-text p a {
+	display: inline-block;
+	font-weight: var(--font-weight-semibold);
+	text-transform: capitalize;
+	text-decoration: underline;
+	text-underline-offset: 3px;
+	color: var(--accent);
+	transition: all var(--duration-fast) var(--ease-in-out);
+}
+
+.section-footer-text p a:hover {
+	color: var(--foreground-strong);
+}
+
+.section-footer-text ul {
+	width: 100%;
+	padding: 0;
+	margin: 0 0 var(--space-3);
+	list-style: none;
+}
+
+.section-footer-text p:last-child,
+.section-footer-text ul:last-child {
+	margin: 0;
+}
+
+.section-footer-text ul li {
+	display: inline-block;
+	font-weight: var(--font-weight-semibold);
+	line-height: normal;
+	color: var(--foreground-strong);
+	margin-right: var(--space-2);
+}
+
+.section-footer-text ul li:last-child {
+	margin: 0;
+}
+
+.section-footer-text ul.section-footer-border-list li {
+	border-right: 1px solid var(--border);
+	padding-right: var(--space-3);
+}
+
+.section-footer-text ul.section-footer-border-list li:last-child {
+	padding-right: 0;
+	border-right: none;
+}
+
+.section-footer-text ul li i {
+	color: var(--accent);
+}
+
+.section-footer-text ul.section-footer-border-list li b {
+	font-weight: var(--font-weight-semibold);
+	margin-left: var(--space-1);
+}
+
+.section-footer-text.section-footer-contact p {
+	display: flex;
+	flex-wrap: wrap;
+	align-items: center;
+	justify-content: center;
+	gap: var(--space-1);
+}
+
+.section-footer-text.section-footer-contact p span {
+	width: 30px;
+	height: 30px;
+	padding: 0;
+	display: inline-flex;
+	justify-content: center;
+	align-items: center;
+	margin-right: var(--space-2);
+}
+
+.section-footer-text.section-footer-contact p span img {
+	width: 100%;
+	max-width: 16px;
+}
+
+.section-footer-text.section-satisfy-img {
+	display: flex;
+	flex-wrap: wrap;
+	align-items: center;
+	justify-content: center;
+	gap: var(--space-2);
+}
+
+.section-footer-text.section-satisfy-img .satisfy-client-image figure img {
+	max-width: 30px;
+}
+
+.section-footer-text.section-satisfy-img .satisfy-client-image.add-more {
+	width: 32px;
+	height: 32px;
+	margin-left: calc(var(--space-2) * -1);
+}
+
+.section-footer-text.section-satisfy-img .satisfy-client-image.add-more img {
+	width: 100%;
+	max-width: 16px;
+}
+
+.section-footer-text.section-satisfy-img p {
+	margin: 0;
+}
+
+.satisfy-client-images {
+	display: flex;
+	align-items: center;
+}
+
+.satisfy-client-image {
+	position: relative;
+	display: inline-block;
+	margin-left: calc(var(--space-2) * -1);
+	border: 1px solid var(--on-image);
+	border-radius: var(--radius-full);
+	overflow: hidden;
+	z-index: 1;
+}
+
+.satisfy-client-image:first-child {
+	margin-left: 0;
+}
+
+.satisfy-client-image figure {
+	display: block;
+}
+
+.satisfy-client-image figure img {
+	width: 100%;
+	max-width: 44px;
+	border-radius: var(--radius-full);
+}
+
+.satisfy-client-image.add-more {
+	width: 46px;
+	height: 46px;
+	background-color: var(--accent);
+	display: flex;
+	justify-content: center;
+	align-items: center;
+}
+
+.satisfy-client-image.add-more i {
+	font-size: var(--text-lg);
+	color: var(--on-image);
+}
+
+.satisfy-client-image.add-more h3 {
+	font-size: var(--text-sm);
+	line-height: var(--leading-none);
+	color: var(--on-image);
+}
+
+/* --- Responsive (antes en la sección 32 de custom.css) --- */
+
+/* --bp-md */
+@media only screen and (max-width: 991px) {
+	.our-services {
+		padding: var(--space-12) 0;
+	}
+
+	.service-item-header {
+		padding: var(--space-4);
+	}
+
+	.service-item-header .icon-box {
+		margin-bottom: var(--space-4);
+	}
+
+	.service-item-image figure img {
+		aspect-ratio: 1 / 0.65;
+	}
+
+	.section-footer-text {
+		margin-top: var(--space-2);
+	}
+
+	.section-footer-text p,
+	.section-footer-text ul {
+		margin-bottom: var(--space-2);
+	}
+
+	.section-footer-text ul li {
+		margin-right: var(--space-1);
+	}
+
+	.section-footer-text ul.section-footer-border-list li {
+		padding-right: var(--space-2);
+	}
+}
+
+/* --bp-sm */
+@media only screen and (max-width: 767px) {
+	.service-item-header {
+		padding: var(--space-2);
+	}
+
+	.service-item-content h2 {
+		font-size: var(--text-md);
+	}
+
+	.section-footer-text p span {
+		padding: 3px 8px;
+	}
+
+	.section-footer-text ul li {
+		font-size: var(--text-xs);
+	}
+}

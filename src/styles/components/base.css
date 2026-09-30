@@ -1,0 +1,175 @@
+/* ==========================================================================
+   base.css
+   Estilos globales mínimos: html/body, tipografía base, enlaces, imágenes, scrollbar, selección, contenedor/grilla ajustada y utilidades de animación de imagen (image-anime, reveal).
+   Origen: custom.css del autor (ver docs/COMPILADO-VS-FUENTE.md).
+   ========================================================================== */
+
+html,
+body {
+	width: 100%;
+	overflow-x: clip;
+}
+
+body {
+	font-family: var(--font-body);
+	font-size: var(--text-sm);
+	font-weight: var(--font-weight-regular);
+	line-height: var(--leading-none);
+	color: var(--foreground);
+	background-color: var(--background);
+}
+
+::-webkit-scrollbar-track {
+	background-color: var(--foreground-strong);
+	border-left: 1px solid var(--foreground-strong);
+}
+
+::-webkit-scrollbar {
+	width: 7px;
+	background-color: var(--foreground-strong);
+}
+
+::-webkit-scrollbar-thumb {
+	background: var(--accent);
+}
+
+::selection {
+	color: var(--on-accent);
+	background-color: var(--accent);
+	filter: invert(1);
+}
+
+p {
+	line-height: var(--leading-loose);
+	margin-bottom: 1.5em;
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+	font-weight: var(--font-weight-semibold);
+	line-height: var(--leading-tight);
+	color: var(--foreground-strong);
+	margin: 0;
+}
+
+figure {
+	margin: 0;
+}
+
+img {
+	max-width: 100%;
+}
+
+a {
+	text-decoration: none;
+}
+
+a:hover {
+	text-decoration: none;
+	outline: 0;
+}
+
+a:focus {
+	text-decoration: none;
+	outline: 0;
+}
+
+.container {
+	max-width: 1300px;
+}
+
+.container,
+.container-fluid,
+.container-lg,
+.container-md,
+.container-sm,
+.container-xl,
+.container-xxl {
+	padding-right: var(--space-3);
+	padding-left: var(--space-3);
+}
+
+.image-anime {
+	position: relative;
+	overflow: hidden;
+}
+
+.image-anime:after {
+	content: "";
+	position: absolute;
+	width: 200%;
+	height: 0%;
+	left: 50%;
+	top: 50%;
+	background-color: var(--color-white-a30);
+	transform: translate(-50%,-50%) rotate(-45deg);
+	z-index: 1;
+}
+
+.image-anime:hover:after {
+	height: 250%;
+	transition: all var(--duration-slower) var(--ease-linear);
+	background-color: transparent;
+}
+
+.reveal {
+	position: relative;
+	display: -webkit-inline-box;
+	display: -ms-inline-flexbox;
+	display: inline-flex;
+	visibility: hidden;
+	overflow: hidden;
+}
+
+.reveal img {
+	height: 100%;
+	width: 100%;
+	-o-object-fit: cover;
+	object-fit: cover;
+	-webkit-transform-origin: left;
+	transform-origin: left;
+}
+
+.row {
+	margin-right: calc(var(--space-3) * -1);
+	margin-left: calc(var(--space-3) * -1);
+}
+
+.row > * {
+	padding-right: var(--space-3);
+	padding-left: var(--space-3);
+}
+
+.row.no-gutters {
+	margin-right: 0px;
+	margin-left: 0px;
+}
+
+.row.no-gutters > * {
+	padding-right: 0px;
+	padding-left: 0px;
+}
+
+/* --- Responsive (antes en la sección 32 de custom.css) --- */
+
+/* --bp-lg */
+@media only screen and (max-width: 1024px) {
+	.about-footer {
+		margin-bottom: var(--space-6);
+	}
+
+	.what-we-do-content-box {
+		margin-bottom: var(--space-6);
+	}
+}
+
+/* --bp-sm */
+@media only screen and (max-width: 767px) {
+	.about-footer {
+		margin-bottom: var(--space-6);
+	}
+}

@@ -1,0 +1,218 @@
+/* ==========================================================================
+   wedding-gallery.css
+   Galería de bodas filtrable (.our-wedding-gallery-nav + grilla masonry de .gallery-item).
+   Origen: custom.css del autor (ver docs/COMPILADO-VS-FUENTE.md).
+   ========================================================================== */
+
+.our-wedding-gallery {
+	padding: var(--space-24) 0;
+}
+
+.our-wedding-gallery-nav {
+	text-align: center;
+	margin-bottom: var(--space-12);
+}
+
+.our-wedding-gallery-nav ul {
+	list-style: none;
+	text-align: center;
+	display: inline-flex;
+	flex-wrap: wrap;
+	align-items: center;
+	justify-content: center;
+	gap: var(--space-2) var(--space-12);
+	padding: 0;
+	margin: 0;
+}
+
+.our-wedding-gallery-nav ul li {
+	position: relative;
+	color: inherit;
+	font-weight: var(--font-weight-medium);
+	line-height: normal;
+	text-transform: capitalize;
+}
+
+.our-wedding-gallery-nav ul li::before {
+	content: '';
+	position: absolute;
+	top: 50%;
+	right: -34px;
+	transform: translateY(-50%);
+	background-color: var(--border);
+	border-radius: var(--radius-full);
+	height: 8px;
+	width: 8px;
+}
+
+.our-wedding-gallery-nav ul li:last-child::before {
+	display: none;
+}
+
+.our-wedding-gallery-nav ul li a.active-btn,
+.our-wedding-gallery-nav ul li:hover a {
+	color: var(--accent);
+}
+
+.our-wedding-gallery-nav ul li a {
+	color: inherit;
+	transition: all var(--duration-base) var(--ease-in-out);
+}
+
+.gallery-item {
+	position: relative;
+	border-radius: var(--radius-pill);
+	height: calc(100% - 30px);
+	margin-bottom: var(--space-6);
+	overflow: hidden;
+}
+
+.gallery-item-image figure {
+	position: relative;
+	display: block;
+	border-radius: var(--radius-pill);
+}
+
+.gallery-item-image figure::before {
+	content: "";
+	position: absolute;
+	top: 0;
+	right: 0;
+	bottom: 0;
+	left: 0;
+	height: 100%;
+	width: 100%;
+	background-color: var(--overlay);
+	opacity: 0;
+	border-radius: var(--radius-pill);
+	transition: all var(--duration-base) var(--ease-in-out);
+	z-index: 0;
+}
+
+.gallery-item:hover .gallery-item-image figure::before {
+	opacity: 40%;
+}
+
+.gallery-item-image figure img {
+	width: 100%;
+	aspect-ratio: 1 / 1.356;
+	object-fit: cover;
+	border-radius: var(--radius-pill);
+}
+
+.gallery-item-content {
+	position: absolute;
+	top: var(--space-12);
+	left: var(--space-3);
+	right: var(--space-3);
+	bottom: var(--space-12);
+	text-align: center;
+	align-content: center;
+	margin: 0 auto;
+	opacity: 0;
+	transition: all var(--duration-slow) var(--ease-in-out);
+	z-index: 2;
+}
+
+.gallery-item:hover .gallery-item-content {
+	opacity: 1;
+}
+
+.gallery-item-content ul {
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	gap: var(--space-2);
+	list-style: none;
+	margin: 0;
+	padding: 0;
+}
+
+.gallery-item-content ul li {
+	position: relative;
+	display: inline-block;
+	font-size: var(--text-xs);
+	font-weight: var(--font-weight-medium);
+	line-height: var(--leading-relaxed);
+	color: var(--foreground-strong);
+	padding-left: 16px;
+}
+
+.gallery-item-content ul li::before {
+	content: '';
+	position: absolute;
+	top: 50%;
+	left: 0;
+	transform: translateY(-50%);
+	background: var(--accent);
+	border-radius: var(--radius-full);
+	width: 5px;
+	height: 5px;
+}
+
+.gallery-item-content h3 {
+	font-size: var(--text-md);
+	margin-top: var(--space-3);
+}
+
+/* --- Responsive (antes en la sección 32 de custom.css) --- */
+
+/* --bp-md */
+@media only screen and (max-width: 991px) {
+	.our-wedding-gallery {
+		padding: var(--space-12) 0;
+	}
+
+	.our-wedding-gallery-nav {
+		margin-bottom: var(--space-8);
+	}
+
+	.our-wedding-gallery-nav ul {
+		gap: var(--space-2) var(--space-8);
+	}
+
+	.our-wedding-gallery-nav ul li::before {
+		right: -24px;
+	}
+
+	.gallery-item,
+	.gallery-item-image figure,
+	.gallery-item-image figure img,
+	.gallery-item-image figure::before {
+		border-radius: var(--radius-xl);
+	}
+
+	.gallery-item-image figure img {
+		aspect-ratio: 1 / 0.95;
+	}
+
+	.gallery-item-content {
+		top: var(--space-3);
+		bottom: var(--space-3);
+	}
+}
+
+/* --bp-sm */
+@media only screen and (max-width: 767px) {
+	.our-wedding-gallery-nav {
+		margin-bottom: var(--space-5);
+	}
+
+	.our-wedding-gallery-nav ul {
+		gap: var(--space-2) var(--space-6);
+	}
+
+	.our-wedding-gallery-nav ul li::before {
+		right: -18px;
+		width: 6px;
+		height: 6px;
+	}
+
+	.gallery-item-image figure img {
+		aspect-ratio: 1 / 0.81;
+	}
+
+	.gallery-item-content h3 {
+		margin-top: var(--space-2);
+	}
+}

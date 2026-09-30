@@ -1,0 +1,320 @@
+/* ==========================================================================
+   header.css
+   Cabecera: barra fija (.header-sticky con estados .hide/.active), logo, menú principal con submenús y el menú de celular (SlickNav: .slicknav_*).
+   Origen: custom.css del autor (ver docs/COMPILADO-VS-FUENTE.md).
+   ========================================================================== */
+
+header.main-header {
+	position: absolute;
+	top: var(--space-6);
+	left: var(--space-3);
+	right: var(--space-3);
+	z-index: 100;
+}
+
+header.main-header .header-sticky {
+	position: relative;
+	max-width: 1300px;
+	top: 0;
+	border: 1px solid var(--border);
+	background: var(--surface);
+	backdrop-filter: blur(var(--blur-lg));
+	-webkit-backdrop-filter: blur(var(--blur-lg));
+	border-radius: var(--radius-xl);
+	margin: 0 auto;
+	z-index: 100;
+}
+
+header.main-header .header-sticky.hide {
+	transform: translateY(-100%);
+	transition: transform var(--duration-fast) var(--ease-in-out);
+}
+
+header.main-header .header-sticky.active {
+	position: fixed;
+	top: var(--space-3);
+	left: var(--space-3);
+	right: var(--space-3);
+	transform: translateY(0);
+}
+
+.navbar {
+	padding: var(--space-3) 0px;
+	align-items: center;
+}
+
+.navbar-brand {
+	padding: 0;
+	margin: 0;
+}
+
+.main-menu .nav-menu-wrapper {
+	flex: 1;
+	text-align: center;
+	margin: 0 1.042vw;
+}
+
+.main-menu .nav-menu-wrapper > ul {
+	align-items: center;
+	display: inline-flex;
+}
+
+.main-menu ul li {
+	margin: 0 var(--space-2);
+	position: relative;
+}
+
+.main-menu ul li a {
+	font-size: var(--text-sm);
+	font-weight: var(--font-weight-semibold);
+	line-height: var(--leading-tight);
+	padding: 12px var(--space-2) !important;
+	color: var(--on-image);
+	background: transparent;
+	border-radius: 0px;
+	text-transform: capitalize;
+	transition: all var(--duration-fast) var(--ease-in-out);
+}
+
+.main-menu ul li.submenu > a:after {
+	content: '\f107';
+	font-family: 'FontAwesome';
+	font-weight: var(--font-weight-black);
+	font-size: var(--text-sm);
+	margin-left: 8px;
+}
+
+.main-menu ul li a:hover,
+.main-menu ul li a:focus {
+	color: var(--accent);
+}
+
+.main-menu ul ul {
+	visibility: hidden;
+	opacity: 0;
+	transform: scale(1,0.8);
+	transform-origin: top;
+	padding: 0;
+	margin: 0;
+	list-style: none;
+	width: 235px;
+	border-radius: var(--radius-xl);
+	position: absolute;
+	left: 0;
+	top: 100%;
+	background: var(--accent);
+	transition: all var(--duration-fast) var(--ease-in-out);
+	text-align: left;
+}
+
+.main-menu ul li.submenu:first-child ul {
+	width: 235px;
+}
+
+.main-menu ul ul ul {
+	left: 100%;
+	top: 0;
+	text-align: left;
+}
+
+.main-menu ul li:hover > ul {
+	visibility: visible;
+	opacity: 1;
+	transform: scale(1,1);
+	padding: var(--space-1) 0;
+}
+
+.main-menu ul li.submenu ul li.submenu > a:after {
+	content: '\f105';
+	float: right;
+}
+
+.main-menu ul ul li {
+	margin: 0;
+	padding: 0;
+}
+
+.main-menu ul ul li a {
+	color: var(--on-accent);
+	padding: 8px var(--space-4) !important;
+	transition: all var(--duration-fast) var(--ease-in-out);
+}
+
+.main-menu ul ul li a:hover,
+.main-menu ul ul li a:focus {
+	color: var(--foreground-strong);
+	background-color: transparent;
+	padding: 8px var(--space-4) 8px 23px !important;
+}
+
+.main-menu ul li.highlighted-menu {
+	display: none;
+}
+
+.header-btn {
+	line-height: 0;
+}
+
+.responsive-menu,
+.navbar-toggle {
+	display: none;
+}
+
+.responsive-menu {
+	position: relative;
+	top: 0;
+}
+
+.slicknav_btn {
+	background: var(--accent);
+	padding: 0;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	width: 38px;
+	height: 38px;
+	margin: 0;
+	border-radius: var(--radius-sm);
+}
+
+.slicknav_icon .slicknav_icon-bar {
+	display: block;
+	width: 100%;
+	height: 3px;
+	width: 22px;
+	background-color: var(--on-accent);
+	border-radius: var(--radius-sm);
+	margin: 4px auto !important;
+	transition: all var(--duration-instant) var(--ease-in-out);
+}
+
+.slicknav_icon .slicknav_icon-bar:first-child {
+	margin-top: 0 !important;
+}
+
+.slicknav_icon .slicknav_icon-bar:last-child {
+	margin-bottom: 0 !important;
+}
+
+.navbar-toggle a.slicknav_btn.slicknav_open .slicknav_icon span.slicknav_icon-bar:nth-child(1) {
+	transform: rotate(-45deg) translate(-5px, 5px);
+}
+
+.navbar-toggle a.slicknav_btn.slicknav_open .slicknav_icon span.slicknav_icon-bar:nth-child(2) {
+	opacity: 0;
+}
+
+.navbar-toggle a.slicknav_btn.slicknav_open .slicknav_icon span.slicknav_icon-bar:nth-child(3) {
+	transform: rotate(45deg) translate(-5px, -5px);
+}
+
+.slicknav_menu {
+	position: absolute;
+	width: 100%;
+	padding: 0;
+	background: var(--accent);
+}
+
+.slicknav_menu ul {
+	margin: var(--space-1) 0;
+}
+
+.slicknav_menu ul ul {
+	margin: 0;
+}
+
+.slicknav_nav .slicknav_row,
+.slicknav_nav li a {
+	position: relative;
+	font-size: var(--text-sm);
+	font-weight: var(--font-weight-semibold);
+	text-transform: capitalize;
+	padding: 6px var(--space-4);
+	color: var(--on-accent);
+	line-height: normal;
+	margin: 0;
+	border-radius: 0 !important;
+	transition: all var(--duration-fast) var(--ease-in-out);
+}
+
+.slicknav_nav a:hover,
+.slicknav_nav a:focus,
+.slicknav_nav .slicknav_row:hover {
+	background-color: transparent;
+	color: var(--on-image);
+}
+
+.slicknav_menu ul ul li a {
+	padding: 6px var(--space-4) 6px var(--space-6);
+}
+
+.slicknav_arrow {
+	font-size: 0 !important;
+}
+
+.slicknav_arrow:after {
+	content: '\f107';
+	position: absolute;
+	font-family: 'FontAwesome';
+	font-weight: var(--font-weight-black);
+	font-size: var(--text-xs);
+	margin-left: 8px;
+	color: var(--on-accent);
+	right: var(--space-3);
+	top: 50%;
+	transform: translateY(-50%);
+	transition: all var(--duration-fast) var(--ease-out);
+}
+
+.slicknav_open > a .slicknav_arrow:after {
+	transform: translateY(-50%) rotate(-180deg);
+	color: var(--on-image);
+}
+
+/* --- Responsive (antes en la sección 32 de custom.css) --- */
+
+/* --bp-lg */
+@media only screen and (max-width: 1024px) {
+	.main-menu ul li {
+		margin: 0;
+	}
+}
+
+/* --bp-md */
+@media only screen and (max-width: 991px) {
+	header.main-header {
+		top: 0px;
+		right: 0px;
+		left: 0px;
+	}
+
+	header.main-header .header-sticky {
+		width: 100%;
+		border-top: none;
+		border-right: none;
+		border-left: none;
+		border-radius: 0;
+	}
+
+	header.main-header .header-sticky.active {
+		width: 100%;
+		border-radius: 0;
+		top: 0;
+		left: 0;
+		right: 0;
+	}
+
+	.responsive-menu,
+	.navbar-toggle {
+		display: block;
+	}
+
+	.slicknav_nav li,
+	.slicknav_nav ul {
+		display: block;
+	}
+
+	.header-btn {
+		display: none;
+	}
+}

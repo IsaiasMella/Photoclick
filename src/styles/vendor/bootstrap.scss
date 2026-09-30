@@ -1,0 +1,41 @@
+// ==========================================================================
+// bootstrap.scss — Subconjunto de Bootstrap 5.3.3 (misma versión que el original).
+//
+// El original cargaba bootstrap.min.css completo (232 KB). Acá se compilan
+// SOLO los módulos que el marcado usa de verdad (relevado con un grep de
+// todas las clases del HTML contra las de Bootstrap; ver docs/PLAN.md §2):
+//   grilla y contenedores · navbar/nav · collapse (transición) · accordion
+//   breadcrumb · pagination · form-control · .h3/.h4 · 3 utilidades.
+// Resultado: ~30 KB sin comprimir. Equivale a hacer tree-shaking a mano.
+// ==========================================================================
+
+// 1. Configuración (obligatoria, no genera CSS)
+@import "bootstrap/scss/functions";
+@import "bootstrap/scss/variables";
+@import "bootstrap/scss/variables-dark";
+@import "bootstrap/scss/maps";
+@import "bootstrap/scss/mixins";
+@import "bootstrap/scss/utilities";
+
+// 2. Base: variables --bs-*, reboot (normalización) y tipografía
+@import "bootstrap/scss/root";
+@import "bootstrap/scss/reboot";
+@import "bootstrap/scss/type";
+
+// 3. Layout
+@import "bootstrap/scss/containers";
+@import "bootstrap/scss/grid";
+
+// 4. Componentes usados
+@import "bootstrap/scss/forms/form-control";
+@import "bootstrap/scss/transitions";
+@import "bootstrap/scss/nav";
+@import "bootstrap/scss/navbar";
+@import "bootstrap/scss/accordion";
+@import "bootstrap/scss/breadcrumb";
+@import "bootstrap/scss/pagination";
+
+// 5. Utilidades: solo las clases que aparecen en el HTML
+//    (.align-items-center, .mb-4, .mb-5, .text-success, .text-danger)
+$utilities: map-get-multiple($utilities, ("align-items", "margin-bottom", "color"));
+@import "bootstrap/scss/utilities/api";

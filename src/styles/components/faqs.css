@@ -1,0 +1,272 @@
+/* ==========================================================================
+   faqs.css
+   Sección FAQ: tarjeta CTA con imagen/redes y el acordeón .faq-accordion (sobre Bootstrap accordion).
+   Origen: custom.css del autor (ver docs/COMPILADO-VS-FUENTE.md).
+   ========================================================================== */
+
+.our-faqs {
+	padding: var(--space-24) 0;
+}
+
+.faq-cta-box {
+	position: sticky;
+	top: var(--space-6);
+	padding: var(--space-16);
+	min-height: 710px;
+	background: var(--surface) url('../../assets/images/faq-bg-image.png') no-repeat;
+	background-size: auto;
+	background-position: bottom 80px center;
+	display: flex;
+	flex-direction: column;
+	justify-content: space-between;
+	align-items: center;
+	text-align: center;
+	gap: var(--space-6);
+	border-radius: var(--radius-xl);
+	margin-right: var(--space-3);
+}
+
+.faq-cta-image-box {
+	height: 200px;
+	width: 200px;
+	background-color: var(--background);
+	border-radius: var(--radius-full);
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	justify-content: center;
+	padding: var(--space-3);
+}
+
+.faq-cta-image figure {
+	position: relative;
+	display: block;
+	max-width: 105px;
+	border-radius: var(--radius-xl) var(--radius-xl) 0 0;
+	overflow: hidden;
+}
+
+.faq-cta-image figure:before {
+	content: '';
+	position: absolute;
+	top: 0;
+	right: 0;
+	bottom: 0;
+	left: 0;
+	background: linear-gradient(180deg, var(--overlay-0) 61.11%, var(--overlay) 100%);
+	height: 100%;
+	width: 100%;
+	z-index: 1;
+}
+
+.faq-cta-image figure img {
+	width: 100%;
+	aspect-ratio: 1 / 0.87;
+	object-fit: cover;
+	border-radius: var(--radius-xl) var(--radius-xl) 0 0;
+}
+
+.faq-cta-image-content h2 {
+	font-size: var(--text-lg);
+	text-transform: uppercase;
+}
+
+.faq-cta-image-content p {
+	line-height: normal;
+	margin: var(--space-1) 0 0;
+}
+
+.faq-cta-body-content h3 {
+	font-size: var(--text-2xl);
+}
+
+.faq-cta-body-content p {
+	margin: var(--space-2) 0 0;
+}
+
+.faq-social-links {
+	margin-top: var(--space-8);
+}
+
+.faq-social-links ul {
+	display: flex;
+	flex-wrap: wrap;
+	justify-content: center;
+	gap: var(--space-3);
+	list-style: none;
+	margin: 0;
+	padding: 0;
+}
+
+.faq-social-links ul li a {
+	width: 40px;
+	height: 40px;
+	background-color: var(--surface);
+	color: var(--on-image);
+	border-radius: var(--radius-full);
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	transition: all var(--duration-fast) var(--ease-in-out);
+}
+
+.faq-social-links ul li:hover a {
+	background: var(--accent);
+	color: var(--on-accent);
+}
+
+.faq-social-links ul li i {
+	font-size: var(--text-md);
+	color: inherit;
+}
+
+.our-faq-btn {
+	margin-top: var(--space-8);
+}
+
+.faq-content {
+	height: 100%;
+	align-content: center;
+}
+
+.faq-accordion .accordion-item {
+	position: relative;
+	border: 1px solid var(--border);
+	border-radius: var(--radius-xl);
+	margin-bottom: var(--space-5);
+	overflow: hidden;
+	transition: all var(--duration-base) var(--ease-in-out);
+}
+
+.faq-accordion .accordion-item:last-child {
+	margin-bottom: 0;
+}
+
+.faq-accordion .accordion-header .accordion-button {
+	font-size: var(--text-md);
+	font-weight: var(--font-weight-medium);
+	line-height: 1.333em;
+	background: transparent;
+	color: var(--foreground-strong);
+	padding: 22px 55px 22px var(--space-6);
+	transition: all var(--duration-base) var(--ease-in-out);
+}
+
+.faq-accordion .accordion-item:has(.accordion-button:not(.collapsed)) {
+	background-color: var(--surface);
+	border-color: transparent;
+}
+
+.faq-accordion .accordion-item .accordion-button::after,
+.faq-accordion .accordion-item .accordion-button.collapsed::after {
+	content: '\2b';
+	font-family: 'Font Awesome 7 Free';
+	position: absolute;
+	top: 50%;
+	right: var(--space-6);
+	font-size: var(--text-lg);
+	font-weight: var(--font-weight-semibold);
+	transform: translateY(-50%);
+	color: var(--foreground-strong);
+	transition: all var(--duration-base) var(--ease-in-out);
+}
+
+.faq-accordion .accordion-button:not(.collapsed)::after {
+	content: '\f068';
+}
+
+.faq-accordion .accordion-item .accordion-body {
+	background: transparent;
+	border-top: 1px solid var(--border);
+	padding: 22px var(--space-6);
+}
+
+.faq-accordion .accordion-item .accordion-body p:last-child {
+	margin: 0;
+}
+
+/* --- Responsive (antes en la sección 32 de custom.css) --- */
+
+/* --bp-lg */
+@media only screen and (max-width: 1024px) {
+	.faq-cta-box {
+		position: initial;
+		min-height: auto;
+		padding: var(--space-6);
+		margin: 0 0 var(--space-6);
+	}
+}
+
+/* --bp-md */
+@media only screen and (max-width: 991px) {
+	.our-faqs {
+		padding: var(--space-12) 0;
+	}
+
+	.faq-cta-body-content h3 {
+		font-size: var(--text-xl);
+	}
+
+	.faq-social-links,
+	.our-faq-btn {
+		margin-top: var(--space-6);
+	}
+
+	.faq-accordion .accordion-item {
+		margin-bottom: var(--space-4);
+	}
+
+	.faq-accordion .accordion-header .accordion-button {
+		padding: var(--space-3) 45px var(--space-3) var(--space-4);
+	}
+
+	.faq-accordion .accordion-item .accordion-button::after,
+	.faq-accordion .accordion-item .accordion-button.collapsed::after {
+		right: var(--space-4);
+		font-size: var(--text-md);
+	}
+
+	.faq-accordion .accordion-item .accordion-body {
+		padding: var(--space-3) var(--space-4);
+	}
+}
+
+/* --bp-sm */
+@media only screen and (max-width: 767px) {
+	.faq-cta-box {
+		background-size: 95% auto;
+		gap: var(--space-4);
+		padding: var(--space-4);
+	}
+
+	.faq-cta-image figure {
+		max-width: 90px;
+	}
+
+	.faq-cta-image-content h2 {
+		font-size: var(--text-md);
+	}
+
+	.faq-cta-body-content h3 {
+		font-size: var(--text-lg);
+	}
+
+	.faq-social-links {
+		margin-top: var(--space-4);
+	}
+
+	.faq-accordion .accordion-header .accordion-button {
+		font-size: var(--text-sm);
+		padding: 12px 36px 12px var(--space-3);
+	}
+
+	.faq-accordion .accordion-item .accordion-button::after,
+	.faq-accordion .accordion-item .accordion-button.collapsed::after {
+		right: var(--space-3);
+		font-size: var(--text-sm);
+	}
+
+	.faq-accordion .accordion-item .accordion-body {
+		padding: 12px var(--space-3);
+	}
+}

@@ -1,0 +1,30 @@
+/* ==========================================================================
+   page-faqs.css
+   Página de preguntas frecuentes: separación entre grupos de acordeón.
+   Origen: custom.css del autor (ver docs/COMPILADO-VS-FUENTE.md).
+   ========================================================================== */
+
+.page-faqs {
+	padding: var(--space-24) 0;
+}
+
+.page-faqs .page-faq-accordion {
+	margin-bottom: var(--space-12);
+}
+
+.page-faqs .page-faq-accordion:last-child {
+	margin-bottom: 0px;
+}
+
+/* --- Responsive (antes en la sección 32 de custom.css) --- */
+
+/* --bp-md */
+@media only screen and (max-width: 991px) {
+	.page-faqs {
+		padding: var(--space-12) 0;
+	}
+
+	.page-faqs .page-faq-accordion {
+		margin-bottom: var(--space-8);
+	}
+}

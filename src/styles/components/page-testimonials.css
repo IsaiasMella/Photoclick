@@ -1,0 +1,24 @@
+/* ==========================================================================
+   page-testimonials.css
+   Listado de testimonios: espaciado de la grilla.
+   Origen: custom.css del autor (ver docs/COMPILADO-VS-FUENTE.md).
+   ========================================================================== */
+
+.page-testimonials {
+	padding: var(--space-24) 0 var(--space-18);
+}
+
+.page-testimonials .testimonial-item {
+	border-radius: var(--radius-xl);
+	height: calc(100% - 30px);
+	margin-bottom: var(--space-6);
+}
+
+/* --- Responsive (antes en la sección 32 de custom.css) --- */
+
+/* --bp-md */
+@media only screen and (max-width: 991px) {
+	.page-testimonials {
+		padding: var(--space-12) 0 var(--space-6);
+	}
+}
