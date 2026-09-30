@@ -1,0 +1,118 @@
+---
+/**
+ * WhyChooseUs.astro — Sección "Why Choose Us" (.why-choose-us).
+ *
+ * Se usa en: las 3 home, /services y /testimonials (idéntica en todas).
+ * Sin props: el contenido es fijo del diseño (no hay colección).
+ *
+ * Tres columnas: caja "Experienced Photographers", foto con "Our Story" y
+ * caja con la agenda (Ceremony / Reception) + botón "Book Your Date".
+ */
+import { Image } from 'astro:assets';
+import { routes } from '@/data/site';
+import TrustedByList from './TrustedByList.astro';
+import whyImage1 from '@/assets/images/why-choose-image-1.png';
+import whyImage from '@/assets/images/why-choose-image.jpg';
+import schedule1 from '@/assets/images/why-choose-schedule-info-image-1.jpg';
+import schedule2 from '@/assets/images/why-choose-schedule-info-image-2.jpg';
+---
+
+<div class="why-choose-us">
+  <div class="container">
+    <div class="row section-row">
+      <div class="col-lg-12">
+        <div class="section-title section-title-center">
+          <span class="section-sub-title wow fadeInUp">Why Choose Us</span>
+          <h2 class="text-anime-style-2" data-cursor="-opaque">Why we're your <span>best choice</span></h2>
+          <p class="wow fadeInUp" data-wow-delay="0.2s">
+            Our team focuses on capturing natural emotions and genuine moments, ensuring every detail is beautifully preserved. With a commitment to quality.
+          </p>
+        </div>
+      </div>
+    </div>
+
+    <div class="row">
+      <div class="col-xl-4 col-md-6">
+        <div class="why-choose-us-box box-1 wow fadeInUp">
+          <div class="why-choose-us-box-content section-sub-heading">
+            <span class="section-sub-title wow fadeInUp">Photography</span>
+            <h3>Experienced Photographers</h3>
+            <p>Our experienced wedding photographers bring years of expertise.</p>
+          </div>
+
+          <div class="why-choose-item-image">
+            <figure>
+              <Image src={whyImage1} alt="Photographer holding a professional camera" />
+            </figure>
+          </div>
+        </div>
+      </div>
+
+      <div class="col-xl-4 col-md-6">
+        <div class="why-choose-image-box wow fadeInUp" data-wow-delay="0.2s">
+          <div class="why-choose-us-image">
+            <figure>
+              <Image src={whyImage} alt="Wedding couple walking together" />
+            </figure>
+          </div>
+
+          <div class="why-choose-image-body">
+            <div class="why-choose-body-title">
+              <hr /><h3>Our Story</h3><hr />
+            </div>
+            <div class="why-choose-body-content">
+              <p>We started with a passion for capturing love and turning moments into memories. Over the years, we've grown.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="col-xl-4 col-md-6">
+        <div class="why-choose-us-box box-2 wow fadeInUp" data-wow-delay="0.4s">
+          <div class="why-choose-highlighted-content">
+            <p>Every love story deserves to be captured with passion and creativity.</p>
+          </div>
+
+          <div class="why-choose-schedule-body">
+            <div class="why-choose-schedule-info-box">
+              <div class="why-choose-schedule-info-item">
+                <div class="why-choose-schedule-info-image">
+                  <figure class="image-anime">
+                    <Image src={schedule1} alt="" />
+                  </figure>
+                </div>
+                <div class="why-choose-schedule-info-content">
+                  <h3>Ceremony</h3>
+                  <p>03:00am Mary's Church</p>
+                </div>
+              </div>
+
+              <div class="why-choose-schedule-info-item">
+                <div class="why-choose-schedule-info-image">
+                  <figure class="image-anime">
+                    <Image src={schedule2} alt="" />
+                  </figure>
+                </div>
+                <div class="why-choose-schedule-info-content">
+                  <h3>Reception</h3>
+                  <p>05:00pm Grand Fallroom</p>
+                </div>
+              </div>
+            </div>
+
+            <div class="why-choose-schedule-btn">
+              <a href={routes.contact} class="btn-default">Book Your Date</a>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="col-lg-12">
+        <div class="section-footer-text wow fadeInUp" data-wow-delay="0.2s">
+          <p><span>Free</span> Let's connect and make your wedding moments truly unforgettable - <a href={routes.contact}>Contact Us</a></p>
+          <TrustedByList />
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

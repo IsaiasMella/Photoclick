@@ -1,0 +1,53 @@
+---
+/**
+ * video-gallery.astro — Galería de videos (= video-gallery.html del original).
+ *
+ * - Videos: colección `videos`, ordenados por `order`.
+ * - Cada miniatura es un `a.popup-video` que abre el video de YouTube en el
+ *   lightbox (src/scripts/lightbox.ts, Agente D). Sin JS, el enlace lleva a
+ *   YouTube directamente.
+ * - El enlace no tiene texto visible: su nombre accesible es el alt de la
+ *   miniatura ("Play video: …").
+ */
+import { Image } from 'astro:assets';
+import { getCollection } from 'astro:content';
+import BaseLayout from '@/layouts/BaseLayout.astro';
+import PageHeader from '@/components/global/PageHeader.astro';
+import { galleryAlt } from '@/components/ui/gallery-alt';
+import { delay } from '@/lib/wow';
+
+const videos = (await getCollection('videos')).sort((a, b) => a.data.order - b.data.order);
+---
+
+<BaseLayout title="Video Gallery" description="Watch highlights from the weddings we have filmed.">
+  <PageHeader title="Our" accent="video" crumbs={[{ label: 'Video' }]} />
+
+  <div class="page-video-gallery">
+    <div class="container">
+      <div class="row">
+        {
+          videos.map((v, i) => (
+            <div class="col-lg-4 col-md-6">
+              <div class="video-gallery-image wow fadeInUp" data-wow-delay={delay(i)}>
+                <a href={v.data.url} class="popup-video" data-cursor-text="Play">
+                  <figure>
+                    <Image
+                      src={v.data.thumbnail}
+                      alt={`Play video: ${galleryAlt(v.data.thumbnail)}`}
+                      widths={[400, 600, 900]}
+                      sizes="(max-width: 767px) 100vw, (max-width: 991px) 50vw, 416px"
+                    />
+                  </figure>
+                </a>
+              </div>
+            </div>
+          ))
+        }
+      </div>
+    </div>
+  </div>
+</BaseLayout>
+
+<script>
+  import '@/scripts/lightbox';
+</script>

@@ -1,0 +1,35 @@
+---
+/**
+ * index-video.astro — Home con video de fondo en el hero (/index-video/)
+ * = index-video.html del original. Igual a la home principal salvo el Hero.
+ */
+import BaseLayout from '@/layouts/BaseLayout.astro';
+import Hero from '@/components/sections/Hero.astro';
+import AboutUs from '@/components/sections/AboutUs.astro';
+import OurServices from '@/components/sections/OurServices.astro';
+import WhyChooseUs from '@/components/sections/WhyChooseUs.astro';
+import IntroVideo from '@/components/sections/IntroVideo.astro';
+import OurPortfolio from '@/components/sections/OurPortfolio.astro';
+import OurPackages from '@/components/sections/OurPackages.astro';
+import WeddingGallery from '@/components/sections/WeddingGallery.astro';
+import OurFaqs from '@/components/sections/OurFaqs.astro';
+import Testimonials from '@/components/sections/Testimonials.astro';
+import CtaBox from '@/components/sections/CtaBox.astro';
+import OurBlog from '@/components/sections/OurBlog.astro';
+import heroBg from '@/assets/images/hero-bg-image.jpg';
+---
+
+<BaseLayout title="Home - Video" image={heroBg}>
+  <Hero variant="video" />
+  <AboutUs />
+  <OurServices />
+  <WhyChooseUs />
+  <IntroVideo />
+  <OurPortfolio />
+  <OurPackages />
+  <WeddingGallery />
+  <OurFaqs />
+  <Testimonials />
+  <CtaBox />
+  <OurBlog />
+</BaseLayout>

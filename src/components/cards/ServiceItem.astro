@@ -1,0 +1,56 @@
+---
+/**
+ * ServiceItem.astro — Tarjeta de un servicio (.service-item).
+ *
+ * Se usa en: sections/OurServices (home, 3 ítems) y /services (listado, 6).
+ * El que llama pone la columna de Bootstrap (col-xl-4 col-md-6) alrededor.
+ *
+ * Props:
+ *   entry  — entrada de la colección `services`.
+ *   index  — posición en el listado; define el data-wow-delay (0.2s × index).
+ *
+ * Decisiones:
+ *   - El texto sale de `summary` (el del listado de services.html: dice
+ *     "locations"; la home del original decía "location").
+ *   - El ícono es decorativo (el título ya dice el servicio): alt="".
+ *   - La foto tiene alt descriptivo (el original tenía alt="").
+ */
+import { Image } from 'astro:assets';
+import type { CollectionEntry } from 'astro:content';
+import { routes } from '@/data/site';
+import { delay } from '@/lib/wow';
+
+interface Props {
+  entry: CollectionEntry<'services'>;
+  index: number;
+}
+
+const { entry, index } = Astro.props;
+const { title, summary, icon, image } = entry.data;
+const href = routes.service(entry.id);
+---
+
+<div class="service-item wow fadeInUp" data-wow-delay={delay(index)}>
+  <div class="service-item-header">
+    <div class="icon-box">
+      <Image src={icon} alt="" />
+    </div>
+    <div class="service-item-content">
+      <h2><a href={href}>{title}</a></h2>
+      <p>{summary}</p>
+    </div>
+  </div>
+
+  <div class="service-item-image">
+    <a href={href} data-cursor-text="View">
+      <figure class="image-anime">
+        <Image
+          src={image}
+          alt={`${title} session`}
+          widths={[400, 600, 800, 1200]}
+          sizes="(max-width: 767px) 100vw, (max-width: 1199px) 50vw, 400px"
+        />
+      </figure>
+    </a>
+  </div>
+</div>

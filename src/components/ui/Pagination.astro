@@ -1,0 +1,78 @@
+---
+/**
+ * Pagination.astro — Paginación de un listado (.page-pagination).
+ *
+ * Se usa en: /blog/ y /blog/page/N/ (blog/[...page].astro).
+ * Props:
+ *   current — página actual (1 = primera).
+ *   last    — cantidad total de páginas (≥ 1).
+ *   href    — función número → URL de esa página (p. ej. routes.blogPage).
+ *   delay   — data-wow-delay de la animación de aparición. Default '1.2s'
+ *             (el del original, que entra después de las 6 tarjetas).
+ *
+ * Decisión D5 del plan: la paginación es real y el bloque se muestra SIEMPRE,
+ * aunque haya una sola página, para que la altura del listado no cambie.
+ * Las flechas que no aplican (anterior en la primera, siguiente en la
+ * última) quedan deshabilitadas: <span role="link" aria-disabled="true">.
+ * Se usa <span> y no <a> sin href porque el CSS ya estiliza `li span` igual
+ * que `li a` (sin el :hover dorado, que en una flecha inactiva confundiría) y
+ * porque el reboot de Bootstrap le cambia el color a los <a> sin href.
+ * El contenedor es <nav> (en el original, <div>): mismo bloque, pero los
+ * lectores de pantalla lo anuncian como navegación.
+ * Única diferencia visual aceptada con el original: allí eran botones
+ * falsos "1 2 3"; acá se ven tantos números como páginas existan.
+ */
+import Icon from '@/components/global/Icon.astro';
+
+interface Props {
+  current: number;
+  last: number;
+  href: (n: number) => string;
+  delay?: string;
+}
+
+const { current, last, href, delay = '1.2s' } = Astro.props;
+const pages = Array.from({ length: Math.max(1, last) }, (_, i) => i + 1);
+const hasPrev = current > 1;
+const hasNext = current < last;
+---
+
+<nav class="page-pagination wow fadeInUp" data-wow-delay={delay} aria-label="Pagination">
+  <ul class="pagination">
+    <li>
+      {
+        hasPrev ? (
+          <a href={href(current - 1)} rel="prev" aria-label="Previous page">
+            <Icon name="solid:angle-left" />
+          </a>
+        ) : (
+          <span role="link" aria-disabled="true" aria-label="Previous page">
+            <Icon name="solid:angle-left" />
+          </span>
+        )
+      }
+    </li>
+    {
+      pages.map((n) => (
+        <li class:list={[n === current && 'active']}>
+          <a href={href(n)} aria-current={n === current ? 'page' : undefined} aria-label={`Page ${n}`}>
+            {n}
+          </a>
+        </li>
+      ))
+    }
+    <li>
+      {
+        hasNext ? (
+          <a href={href(current + 1)} rel="next" aria-label="Next page">
+            <Icon name="solid:angle-right" />
+          </a>
+        ) : (
+          <span role="link" aria-disabled="true" aria-label="Next page">
+            <Icon name="solid:angle-right" />
+          </span>
+        )
+      }
+    </li>
+    </ul>
+</nav>

@@ -1,0 +1,50 @@
+---
+/**
+ * PortfolioItem.astro — Tarjeta de un proyecto (.portfolio-item).
+ *
+ * Se usa en: sections/OurPortfolio (home, 3 ítems) y /portfolio (listado, 6).
+ * El que llama pone la columna de Bootstrap (col-xl-4 col-md-6).
+ *
+ * Props:
+ *   entry  — entrada de la colección `portfolio`.
+ *   index  — posición en el listado → data-wow-delay (0.2s × index).
+ *
+ * Todos los enlaces (foto, categoría y título) van al detalle del proyecto
+ * (routes.project); en el original apuntaban todos a portfolio-single.html.
+ */
+import { Image } from 'astro:assets';
+import type { CollectionEntry } from 'astro:content';
+import { routes } from '@/data/site';
+import { delay } from '@/lib/wow';
+
+interface Props {
+  entry: CollectionEntry<'portfolio'>;
+  index: number;
+}
+
+const { entry, index } = Astro.props;
+const { title, category, image } = entry.data;
+const href = routes.project(entry.id);
+---
+
+<div class="portfolio-item wow fadeInUp" data-wow-delay={delay(index)}>
+  <div class="portfolio-item-image">
+    <a href={href} data-cursor-text="View">
+      <figure>
+        <Image
+          src={image}
+          alt={`${title} — ${category.toLowerCase()} photography project`}
+          widths={[400, 600, 800, 1200]}
+          sizes="(max-width: 767px) 100vw, (max-width: 1199px) 50vw, 400px"
+        />
+      </figure>
+    </a>
+  </div>
+
+  <div class="portfolio-item-content">
+    <ul>
+      <li><a href={href}>{category}</a></li>
+    </ul>
+    <h2><a href={href}>{title}</a></h2>
+  </div>
+</div>

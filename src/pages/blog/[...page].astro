@@ -1,0 +1,64 @@
+---
+/**
+ * /blog/ y /blog/page/N/ — Listado del blog paginado (plantilla: blog.html).
+ *
+ * paginate() arma una página cada 6 posts (ordenados por fecha, del más
+ * nuevo al más viejo). Equivalente en Next.js: app/blog/page/[n]/page.tsx
+ * con generateStaticParams() y el corte del array hecho a mano.
+ *
+ * URLs: paginate() con un parámetro [...page] genera /blog/ y /blog/2/.
+ * Para respetar routes.blogPage (/blog/page/2/, así no choca con los
+ * detalles /blog/<slug>/) se reescribe el parámetro a "page/2". Por eso los
+ * enlaces se arman con routes.blogPage y no con page.url.*, que quedaría
+ * apuntando a /blog/2/.
+ *
+ * El bloque de paginación se muestra siempre (decisión D5, ver ui/Pagination).
+ */
+import type { GetStaticPaths, Page } from 'astro';
+import { getCollection, type CollectionEntry } from 'astro:content';
+import BaseLayout from '@/layouts/BaseLayout.astro';
+import PageHeader from '@/components/global/PageHeader.astro';
+import PostItem from '@/components/cards/PostItem.astro';
+import Pagination from '@/components/ui/Pagination.astro';
+import { routes } from '@/data/site';
+
+export const getStaticPaths = (async ({ paginate }) => {
+  // Posts por página: los 6 de la grilla del original. (Va adentro: Astro
+  // ejecuta getStaticPaths aislado y no ve las constantes del frontmatter.)
+  const PAGE_SIZE = 6;
+  const posts = (await getCollection('posts')).sort((a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf());
+  return paginate(posts, { pageSize: PAGE_SIZE }).map((path) => ({
+    ...path,
+    params: { page: path.params.page ? `page/${path.params.page}` : undefined },
+  }));
+}) satisfies GetStaticPaths;
+
+interface Props {
+  page: Page<CollectionEntry<'posts'>>;
+}
+
+const { page } = Astro.props;
+const title = page.currentPage > 1 ? `Our Blog - Page ${page.currentPage}` : 'Our Blog';
+---
+
+<BaseLayout title={title} description="Wedding photography tips, trends and stories from the Photoclick team.">
+  <PageHeader title="Our" accent="blog" crumbs={[{ label: 'Blog' }]} />
+
+  <div class="page-blog">
+    <div class="container">
+      <div class="row">
+        {
+          page.data.map((entry, index) => (
+            <div class="col-xl-4 col-md-6">
+              <PostItem entry={entry} index={index} />
+            </div>
+          ))
+        }
+
+        <div class="col-lg-12">
+          <Pagination current={page.currentPage} last={page.lastPage} href={routes.blogPage} />
+        </div>
+      </div>
+    </div>
+  </div>
+</BaseLayout>

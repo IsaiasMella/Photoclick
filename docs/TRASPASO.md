@@ -1,36 +1,43 @@
-# Traspaso: estado del trabajo (30/09/2026)
+# Traspaso: estado del trabajo (30/09/2026, segunda sesión)
 
-Rama: `rebuild/astro`, con 2 commits sobre `main`: Fase 2 y la base de la Fase 3. Nada está pusheado todavía.
+Rama: **`rebuild/astro`** (pusheada). La rama `main` no se toca.
 
-## Hecho y verificado
-- **Paso 0:** la demo completa está en `referencia/` (en `.gitignore`). La copia local es idéntica a la original: 0 % de diferencia salvo los carruseles.
-- **Línea base de Lighthouse** (celular, demo en línea): Performance 56, LCP 8,3 s, 7,98 MB, SEO 58. Está en `docs/lighthouse/`.
-- **Fase 1:** `docs/PLAN.md` (decisiones D1–D10 aprobadas por el usuario) y `docs/DECISIONES.md`.
-- **Fase 2:**
-  - `src/styles/`: `tokens.css` en 3 niveles, tema claro con "islas oscuras" y 36 archivos por componente, generados desde custom.css.
-  - Subconjunto de Bootstrap 5.3.3 por Sass, CSS de plugins legible, `icons.css` (SVG + subconjunto de fuente de 776 B para los glifos de `content:`), `animations.css` (reemplaza a animate.css) y `a11y.css`.
-  - **0 diferencias de estilos computados** en 18 páginas × 5 anchos. Resultados en `docs/VERIFICACION.md`.
-- **Fase 3, base:**
-  - `BaseLayout.astro`, `Seo`, `ThemeScript` (sin flash de tema), `Header` (menú de celular generado en el servidor, 0 % de diferencia abierto), `Footer`, `PageHeader`, `Preloader` (D2), `ThemeToggle` (D1), `Icon` (D3).
-  - `src/data/site.ts`, `src/lib/{background-image,wow}.ts` y `src/content.config.ts`, con el contenido extraído del original (`tools/extract-content.mjs`).
-  - Scripts globales en `src/scripts/`: reveal, text-animations (GSAP), cursor, parallax, smooth-scroll y mobile-menu.
-- `astro check` da 0 errores y 0 advertencias.
+## Hecho
+- Fases 1 y 2 completas (ver commits anteriores y `docs/VERIFICACION.md`).
+- Base de la Fase 3: layout, header, footer, contenido y scripts globales.
+- `referencia/` (la demo original) **ahora está versionada**: el usuario la sacó del `.gitignore`. El repositorio tiene que ser privado.
+- Las herramientas de `tools/` aceptan `PW_CHROMIUM_PATH` (Chromium ya instalado; en la nube: `/opt/pw-browsers/chromium`).
+- `tools/lh-summary.mjs`: resume informes de Lighthouse en tabla Markdown.
+- **Lighthouse "antes" medido en local** (Lighthouse 13.5, original servido desde `referencia/`): `docs/lighthouse/antes-local-{index,index-slider,about,blog}-{mobile,desktop}.json`. En celular: Performance 45–62, LCP 7,9–10,2 s.
+- `docs/DECISIONES.md`: ya están anotadas la unificación de textos ("s" de services y cargo de Elena → texto del listado), `referencia/` versionada, `PW_CHROMIUM_PATH` y el criterio de Lighthouse local.
+
+## Fase 3: subagentes lanzados y FRENADOS a mitad de camino
+Los 4 subagentes (A, B, C y D de `docs/CONTRATOS.md`) se frenaron por falta de tokens. **Su trabajo está commiteado tal como quedó, sin revisar.** `npx astro check` da 0 errores y 0 advertencias en ese estado, pero **nada está verificado visualmente todavía**.
+
+Qué dejó cada uno (y lo que estaba haciendo al frenarse):
+- **A** (secciones, cards, home): `src/components/sections/*` (incluye `TrustedByList.astro`, que no estaba en el contrato), `src/components/cards/*`, `src/pages/index*.astro`. Estaba escribiendo "las tres páginas" de la home: **revisá que `index.astro`, `index-slider.astro` e `index-video.astro` estén completas**.
+- **B** (listados y detalles): `src/pages/{services,portfolio,blog,team}/**`, `src/components/ui/Pagination.astro`, `src/components/detail/*`, cuerpos Markdown de las 4 colecciones y campos agregados en `src/content.config.ts`. Iba a correr check y verificar las páginas: **falta la verificación**.
+- **C** (páginas fijas): about, testimonials, image-gallery, video-gallery, faqs, contact, 404 y `src/components/ui/*` (ContactForm, OurApproach, WhatWeDo, SidebarCtaBox, `gallery-alt.ts`). Estaba por hacer la comparación final de las 7 páginas.
+- **D** (scripts): `src/scripts/{sliders,lightbox,gallery-filter,counters,contact-form,accordion,lazy-video}.ts` y `src/pages/dev/d-[page].astro`. Estaba escribiendo `accordion.ts` y `lazy-video.ts`: **revisá que estén completos**.
 
 ## Pendiente
-1. **Fase 3, subagentes:** los contratos están en `docs/CONTRATOS.md`. Hay 4 agentes (A: secciones y home · B: colecciones y detalles · C: páginas fijas · D: scripts). No llegué a lanzarlos.
+1. Revisar y terminar lo de cada agente (arriba). Verificar cada página con `compare.mjs` contra el original (1440 y 390 px) y medir el ruido.
 2. Borrar `src/pages/dev/`.
-3. **Fase 4:**
-   - `npm run build` limpio.
-   - Comparación final de las 18 páginas.
-   - Lighthouse después de los cambios → `docs/RENDIMIENTO.md`.
-   - Documentación: `ARQUITECTURA.md`, `TOKENS.md`, `ERRORES-COMUNES.md`, `COMPILADO-VS-FUENTE.md`, `COMO-USAR-DE-BASE.md` e `INFORME.md`.
-   - Commit y push.
+3. Fase 4:
+   - `npm run build` + `astro check` sin errores ni advertencias. Sitemap y SEO.
+   - Comparación visual final de todo el sitio (1440 y 390 px, oscuro y claro) con el ruido (original contra sí mismo). Actualizar `docs/VERIFICACION.md`.
+   - Lighthouse del build (`npx astro preview`) en las mismas 4 páginas y 2 formatos que el "antes" → `docs/RENDIMIENTO.md` con la tabla antes/después (`node tools/lh-summary.mjs ...`).
+   - Documentación: `ARQUITECTURA.md`, `TOKENS.md`, `ERRORES-COMUNES.md` (con ubicación exacta en el código), `COMPILADO-VS-FUENTE.md` (3 ejemplos lado a lado), `COMO-USAR-DE-BASE.md` e `INFORME.md`.
+   - Commit con `Co-Authored-By: Claude Opus 5.5 <noreply@anthropic.com>` y push a `origin rebuild/astro`.
+
+## Cómo levantar el entorno
+- Original: `npm run ref` → http://localhost:5510/<pagina>.html (serve redirige `x.html` → `x`, es normal).
+- Dev: `npx astro dev --port 5520` en segundo plano. **El puerto 4321 es de otro proyecto del usuario: no se toca.**
+- Lighthouse en la nube: instalalo aparte (`npm i lighthouse@13` en una carpeta temporal) y corrélo con `CHROME_PATH=/opt/pw-browsers/chromium` y `--chrome-flags="--headless=new --no-sandbox"`.
 
 ## Cosas que no son obvias
-- El puerto 4321 lo usa otro proyecto del usuario. Puertos de este proyecto: referencia en **5510** (`npm run ref`), dev en **5520** y la copia de CSS de la Fase 2 en **5511**.
 - En Node 24 + Windows con "ñ" en la ruta, `fs.cpSync` se cae: hay que copiar a mano.
-- Los heredocs de bash con comillas fallan en silencio: conviene usar la herramienta Write.
+- Los heredocs de bash con comillas fallan en Windows: conviene usar la herramienta Write.
 - En los comentarios de `.astro`, no escribir el texto literal "&lt;script": rompe el escáner de Vite.
 - El header "sticky" del original nunca se activa (su JS busca una clase que no existe en el HTML): no hay que portarlo.
-- Las variantes de texto entre páginas (una "s" en services y el cargo de Elena) se resolvieron usando el texto del listado. **Falta anotarlo en `DECISIONES.md`.**
-- Los scripts de migración de CSS (`migrate_css.py`, `cssparse.py`) quedaron en el scratchpad de la sesión; si hace falta regenerar, lo que se versiona es el resultado en `src/styles/`.
+- La demo en línea (`html.awaikenthemes.com`) bloquea descargas automáticas con un captcha: usá `referencia/`.

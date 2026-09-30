@@ -1,0 +1,142 @@
+---
+/**
+ * /portfolio/[slug]/ — Detalle de un proyecto (plantilla: portfolio-single.html).
+ *
+ * Una página por entrada de la colección `portfolio` (getStaticPaths).
+ * Equivalente en Next.js: app/portfolio/[slug]/page.tsx + generateStaticParams().
+ *
+ * De dónde sale cada parte:
+ *   - <h1> y breadcrumb: el título de la colección (el del listado). El
+ *     original decía "Bridal portrait photography" en el detalle y "Achieve
+ *     Fitness Goal Natural" en el listado; se usa el del listado (regla de
+ *     variantes de texto). `heading` solo lo pasa a minúsculas como el diseño.
+ *   - Sidebar: detail/PortfolioSidebar (ficha desde el frontmatter).
+ *   - "Portfolio overview": cuerpo Markdown (<Content />).
+ *   - "Creative vision" y la galería: `creative` y `gallery` del frontmatter
+ *     (son fotos: en Markdown no se optimizarían). Si faltan, no se muestran.
+ *
+ * Las 5 entradas que el original no tiene repiten el contenido de
+ * demostración del proyecto de ejemplo con su propio título y foto.
+ */
+import { Image } from 'astro:assets';
+import { getCollection, render, type CollectionEntry } from 'astro:content';
+import BaseLayout from '@/layouts/BaseLayout.astro';
+import PageHeader from '@/components/global/PageHeader.astro';
+import PortfolioSidebar from '@/components/detail/PortfolioSidebar.astro';
+import SingleFaqs from '@/components/detail/SingleFaqs.astro';
+import { splitHeading } from '@/components/detail/format';
+import { routes } from '@/data/site';
+
+export async function getStaticPaths() {
+  const projects = await getCollection('portfolio');
+  return projects.map((entry) => ({ params: { slug: entry.id }, props: { entry } }));
+}
+
+interface Props {
+  entry: CollectionEntry<'portfolio'>;
+}
+
+const { entry } = Astro.props;
+const { title, category, image, creative, gallery } = entry.data;
+const heading = splitHeading(title, entry.data.heading);
+const { Content } = await render(entry);
+---
+
+<BaseLayout title={title} description={`${category} photography project: ${title}.`} image={image}>
+  <PageHeader
+    {...heading}
+    crumbs={[{ label: 'portfolio', href: routes.portfolio }, { label: title }]}
+  />
+
+  <div class="page-portfolio-single">
+    <div class="container">
+      <div class="row">
+        <div class="col-lg-4">
+          <PortfolioSidebar entry={entry} />
+        </div>
+
+        <div class="col-lg-8">
+          <div class="portfolio-single-content">
+            <div class="page-single-image">
+              <figure class="image-anime reveal">
+                <Image
+                  src={image}
+                  alt={`${title}: ${category.toLowerCase()} photography`}
+                  widths={[400, 800, 1200]}
+                  sizes="(max-width: 991px) calc(100vw - 30px), 850px"
+                  loading="eager"
+                  fetchpriority="high"
+                />
+              </figure>
+            </div>
+
+            <div class="portfolio-entry">
+              <Content />
+
+              {
+                creative && (
+                  <div class="portfolio-creative-box">
+                    <h2 class="text-anime-style-2">
+                      {creative.title} <span>{creative.accent}</span>
+                    </h2>
+                    <p class="wow fadeInUp">{creative.text}</p>
+
+                    <div class="portfolio-creative-image-list">
+                      <div class="portfolio-creative-image">
+                        <figure class="image-anime reveal">
+                          <Image
+                            src={creative.image}
+                            alt={`Behind the scenes of ${title}`}
+                            widths={[400, 630]}
+                            sizes="(max-width: 767px) calc(100vw - 30px), 400px"
+                          />
+                        </figure>
+                      </div>
+
+                      {creative.points.length > 0 && (
+                        <div class="portfolio-creative-list wow fadeInUp" data-wow-delay="0.2s">
+                          <ul>
+                            {creative.points.map((point) => (
+                              <li>{point}</li>
+                            ))}
+                          </ul>
+                        </div>
+                      )}
+                    </div>
+
+                    {creative.note && (
+                      <p class="wow fadeInUp" data-wow-delay="0.4s">
+                        {creative.note}
+                      </p>
+                    )}
+                  </div>
+                )
+              }
+
+              {
+                gallery.length > 0 && (
+                  <div class="portfolio-image-gallary-box">
+                    {gallery.map((img, i) => (
+                      <div class="portfolio-image-gallary-item">
+                        <figure class="image-anime reveal">
+                          <Image
+                            src={img}
+                            alt={`${title}: gallery photo ${i + 1}`}
+                            widths={[414]}
+                            sizes="(max-width: 767px) calc(100vw - 30px), 270px"
+                          />
+                        </figure>
+                      </div>
+                    ))}
+                  </div>
+                )
+              }
+            </div>
+
+            <SingleFaqs id="portfolio-faqs" />
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</BaseLayout>

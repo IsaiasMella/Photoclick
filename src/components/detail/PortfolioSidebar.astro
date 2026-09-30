@@ -1,0 +1,80 @@
+---
+/**
+ * PortfolioSidebar.astro — Sidebar del detalle de proyecto (.page-single-sidebar):
+ * ficha "Portfolio Information", enlaces para compartir y tarjeta de contacto.
+ *
+ * Se usa en: /portfolio/[slug].
+ * Props:
+ *   entry — entrada de la colección `portfolio`. La ficha sale del
+ *           frontmatter: category (tipo), client, duration y location.
+ *           Un dato que falta no se muestra.
+ *
+ * Los enlaces de "Share to" son las redes del estudio (site.social, mismo
+ * orden que el original: Pinterest, X, Facebook, Instagram).
+ * La tarjeta de contacto es ui/SidebarCtaBox.astro (Agente C).
+ */
+import { Image } from 'astro:assets';
+import type { CollectionEntry } from 'astro:content';
+import Icon, { type IconName } from '@/components/global/Icon.astro';
+import SidebarCtaBox from '@/components/ui/SidebarCtaBox.astro';
+import { site } from '@/data/site';
+
+import iconType from '@/assets/images/icon-portfolio-category-item-1.svg';
+import iconClient from '@/assets/images/icon-portfolio-category-item-2.svg';
+import iconDuration from '@/assets/images/icon-portfolio-category-item-3.svg';
+import iconLocation from '@/assets/images/icon-portfolio-category-item-4.svg';
+
+interface Props {
+  entry: CollectionEntry<'portfolio'>;
+}
+
+const { category, client, duration, location } = Astro.props.entry.data;
+
+/** Filas de la ficha; los íconos son decorativos (el rótulo ya dice qué es). */
+const info = [
+  { label: 'Portfolio Type:', value: category, icon: iconType },
+  { label: 'Client Name:', value: client, icon: iconClient },
+  { label: 'Duration:', value: duration, icon: iconDuration },
+  { label: 'Location:', value: location, icon: iconLocation },
+].filter((row) => row.value);
+---
+
+<div class="page-single-sidebar">
+  <div class="page-category-list wow fadeInUp">
+    <h2 class="page-category-list-title">Portfolio Information</h2>
+    <div class="portfolio-category-item-list">
+      {
+        info.map((row) => (
+          <div class="portfolio-category-item">
+            <div class="icon-box">
+              <Image src={row.icon} alt="" />
+            </div>
+            <div class="portfolio-category-item-content">
+              <h3>{row.label}</h3>
+              <p>{row.value}</p>
+            </div>
+          </div>
+        ))
+      }
+
+      <div class="portfolio-category-item">
+        <div class="portfolio-category-social-links">
+          <h3>Share to:</h3>
+          <ul>
+            {
+              site.social.map((s) => (
+                <li>
+                  <a href={s.href} aria-label={s.label}>
+                    <Icon name={`brands:${s.icon}` as IconName} />
+                  </a>
+                </li>
+              ))
+            }
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <SidebarCtaBox />
+</div>

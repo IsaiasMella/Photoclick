@@ -1,0 +1,62 @@
+---
+/**
+ * TestimonialItem.astro — Tarjeta de un testimonio (.testimonial-item).
+ *
+ * Se usa en: sections/Testimonials (dentro de un .swiper-slide del slider)
+ * y /testimonials (grilla, dentro de col-xl-4 col-md-6).
+ *
+ * Props:
+ *   entry    — entrada de la colección `testimonials`.
+ *   index    — posición → data-wow-delay (solo si animate).
+ *   animate  — false (default) en el slider; true en /testimonials, donde el
+ *              original lleva "wow fadeInUp" con delay escalonado.
+ *
+ * Entre estrellas va un espacio explícito ({' '}): Astro comprime el HTML y
+ * borraría los saltos de línea que en el original las separaban.
+ *
+ * Las estrellas salen de `rating` (todas 5 en el original). Tienen texto
+ * para lectores de pantalla ("5 out of 5 stars"); los íconos son decorativos.
+ */
+import { Image } from 'astro:assets';
+import type { CollectionEntry } from 'astro:content';
+import Icon from '@/components/global/Icon.astro';
+import { delay } from '@/lib/wow';
+import quoteIcon from '@/assets/images/icon-quote-accent.svg';
+
+interface Props {
+  entry: CollectionEntry<'testimonials'>;
+  index: number;
+  animate?: boolean;
+}
+
+const { entry, index, animate = false } = Astro.props;
+const { name, role, quote, avatar, rating } = entry.data;
+---
+
+<div class:list={['testimonial-item', animate && 'wow fadeInUp']} data-wow-delay={animate ? delay(index) : undefined}>
+  <div class="testimonial-item-author">
+    <div class="testimonial-item-author-image">
+      <figure class="image-anime">
+        <Image src={avatar} alt={`Portrait of ${name}`} />
+      </figure>
+    </div>
+    <div class="testimonial-item-author-content">
+      <h2>{name}</h2>
+      <p>{role}</p>
+    </div>
+  </div>
+
+  <div class="testimonial-item-body">
+    <div class="testimonial-item-content">
+      <p>{quote}</p>
+    </div>
+    <div class="testimonial-item-rating">
+      {Array.from({ length: rating }, () => <>{' '}<Icon name="solid:star" class="fa" /></>)}
+      <span class="sr-only">{rating} out of 5 stars</span>
+    </div>
+  </div>
+
+  <div class="testimonial-item-quote">
+    <Image src={quoteIcon} alt="" />
+  </div>
+</div>

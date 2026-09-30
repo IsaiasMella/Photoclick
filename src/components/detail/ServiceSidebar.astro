@@ -1,0 +1,47 @@
+---
+/**
+ * ServiceSidebar.astro — Sidebar del detalle de servicio (.page-single-sidebar):
+ * lista "Explore Our Services" + tarjeta de contacto.
+ *
+ * Se usa en: /services/[slug].
+ * Props:
+ *   current — id (slug) del servicio que se está viendo; su enlace lleva
+ *             aria-current="page".
+ *
+ * Diferencias con service-single.html:
+ *   - Lista TODOS los servicios de la colección (contrato §4). El original
+ *     mostraba 5 a mano (le faltaba "Wedding Album Design"), así que el
+ *     sidebar es un renglón más alto.
+ *   - Los enlaces llevan a cada servicio (en el original eran href="#").
+ * La tarjeta de contacto es ui/SidebarCtaBox.astro (Agente C): mismo bloque.
+ */
+import { getCollection } from 'astro:content';
+import SidebarCtaBox from '@/components/ui/SidebarCtaBox.astro';
+import { routes } from '@/data/site';
+
+interface Props {
+  current: string;
+}
+
+const { current } = Astro.props;
+const services = (await getCollection('services')).sort((a, b) => a.data.order - b.data.order);
+---
+
+<div class="page-single-sidebar">
+  <div class="page-category-list wow fadeInUp">
+    <h2 class="page-category-list-title">Explore Our Services</h2>
+    <ul>
+      {
+        services.map((s) => (
+          <li>
+            <a href={routes.service(s.id)} aria-current={s.id === current ? 'page' : undefined}>
+              {s.data.title}
+            </a>
+          </li>
+        ))
+      }
+    </ul>
+  </div>
+
+  <SidebarCtaBox />
+</div>

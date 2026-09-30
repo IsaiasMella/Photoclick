@@ -1,0 +1,53 @@
+---
+/**
+ * OurServices.astro — Sección "Our Services" (.our-services.light-section).
+ *
+ * Se usa en: las 3 home.
+ *
+ * Props:
+ *   limit — cuántos servicios mostrar (default 3), de la colección
+ *           `services` ordenada por `order`.
+ *
+ * Cada tarjeta es cards/ServiceItem. El pie repite la lista
+ * "Trusted By…" (TrustedByList).
+ */
+import { getCollection } from 'astro:content';
+import ServiceItem from '@/components/cards/ServiceItem.astro';
+import TrustedByList from './TrustedByList.astro';
+
+interface Props {
+  limit?: number;
+}
+
+const { limit = 3 } = Astro.props;
+const services = (await getCollection('services')).sort((a, b) => a.data.order - b.data.order).slice(0, limit);
+---
+
+<div class="our-services light-section">
+  <div class="container">
+    <div class="row section-row">
+      <div class="col-lg-12">
+        <div class="section-title section-title-center">
+          <span class="section-sub-title wow fadeInUp">Our Services</span>
+          <h2 class="text-anime-style-2" data-cursor="-opaque">Capturing every moment with <span>expert services</span></h2>
+        </div>
+      </div>
+    </div>
+
+    <div class="row">
+      {
+        services.map((entry, i) => (
+          <div class="col-xl-4 col-md-6">
+            <ServiceItem entry={entry} index={i} />
+          </div>
+        ))
+      }
+
+      <div class="col-lg-12">
+        <div class="section-footer-text wow fadeInUp">
+          <TrustedByList />
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,80 @@
+---
+/**
+ * OurPackages.astro — Sección "Photography Package" (.our-packages.light-section):
+ * lista de paquetes con precio + video con una reseña encima.
+ *
+ * Se usa en: las 3 home. Sin props; los paquetes salen de la colección
+ * `packages` ordenada por `order`.
+ *
+ * Decisiones:
+ *   - Delays: los paquetes arrancan en 0.2s (índice + 1), como el original.
+ *   - Precio: el original usa <span> en el PRIMER paquete y <h3> en los demás
+ *     (descuido del autor), y el CSS los pinta distinto (tamaño/color/peso).
+ *     Para que se vea idéntico se reproduce igual. Si se quiere unificar,
+ *     basta con usar siempre <span> (queda como el primero).
+ *   - Video (D8): preload="none", sin autoplay y con data-lazy-video →
+ *     src/scripts/lazy-video.ts lo reproduce al entrar en pantalla.
+ *   - Entre estrellas va un espacio explícito ({' '}): Astro comprime el HTML
+ *     y borraría los saltos de línea que en el original las separaban.
+ *   - Las estrellas son decorativas; el texto sr-only da la calificación.
+ */
+import { getCollection } from 'astro:content';
+import Icon from '@/components/global/Icon.astro';
+import { delay } from '@/lib/wow';
+
+const packages = (await getCollection('packages')).sort((a, b) => a.data.order - b.data.order);
+---
+
+<div class="our-packages light-section">
+  <div class="container">
+    <div class="row">
+      <div class="col-xl-6">
+        <div class="our-package-content">
+          <div class="section-title">
+            <span class="section-sub-title wow fadeInUp">Photography Package</span>
+            <h2 class="text-anime-style-2" data-cursor="-opaque">Choose the perfect wedding <span>photography package</span></h2>
+          </div>
+
+          <div class="our-package-item-list">
+            {
+              packages.map((p, i) => (
+                <div class="our-package-item wow fadeInUp" data-wow-delay={delay(i + 1)}>
+                  <div class="our-package-item-title">
+                    <h3>{p.data.title}</h3>
+                    <hr />
+                    {i === 0 ? <span>{p.data.price}</span> : <h3>{p.data.price}</h3>}
+                  </div>
+                  <div class="our-package-item-content">
+                    <p>{p.data.description}</p>
+                  </div>
+                </div>
+              ))
+            }
+          </div>
+        </div>
+      </div>
+
+      <div class="col-xl-6">
+        <div class="package-video-content-box wow fadeInUp" data-wow-delay="0.2s">
+          <div class="package-video-box">
+            <video muted playsinline loop preload="none" id="package_video" data-lazy-video aria-hidden="true">
+              <source src="/videos/photoclick-our-package.mp4" type="video/mp4" />
+            </video>
+          </div>
+
+          <div class="package-video-rating-box">
+            <span class="package-video-rating">
+              {Array.from({ length: 5 }, () => <>{' '}<Icon name="solid:star" class="fa" /></>)}
+              <span class="sr-only">5 out of 5 stars</span>
+            </span>
+            <p>“Absolutely incredible work! Every photo captured our emotions so beautifully and naturally.”</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+  import '@/scripts/lazy-video';
+</script>

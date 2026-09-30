@@ -1,0 +1,53 @@
+---
+/**
+ * Página de prueba TEMPORAL del Agente D (se borra al final de la Fase 3).
+ *
+ * Copia el cuerpo de una página del original (entre el header y el footer)
+ * tal cual, con las imágenes apuntando al servidor de referencia
+ * (localhost:5510), para probar los scripts de interactividad sobre el
+ * mismo marcado mientras los agentes A/B/C escriben los componentes reales.
+ *
+ * Únicos cambios al marcado: los videos de fondo pasan a data-lazy-video
+ * (preload="none", sin autoplay), como se van a escribir en los componentes.
+ * ?nocache en la URL agrega un parámetro al href de la galería para probar
+ * el caso "foto grande todavía no descargada".
+ */
+import fs from 'node:fs';
+import path from 'node:path';
+import BaseLayout from '@/layouts/BaseLayout.astro';
+
+export function getStaticPaths() {
+  return ['index', 'index-slider', 'index-video', 'about', 'image-gallery', 'video-gallery', 'contact', 'team-single', 'faqs'].map(
+    (page) => ({ params: { page } }),
+  );
+}
+
+const { page } = Astro.params;
+const REF = 'http://localhost:5510/';
+const source = fs.readFileSync(path.join(process.cwd(), 'referencia', `${page}.html`), 'utf8');
+const start = source.indexOf('<!-- Header End -->');
+const end = source.indexOf('<!-- Main Footer Start -->');
+let body = source.slice(start, end);
+body = body
+  .replace(/<!--[\s\S]*?-->/g, '')
+  .replace(/(src|href)="images\//g, `$1="${REF}images/`)
+  .replace(/<video autoplay muted playsinline loop id="(myvideo|package_video)">/g, '<video data-lazy-video muted playsinline loop preload="none" id="$1">');
+---
+
+<BaseLayout title={`dev D: ${page}`} noindex>
+  <Fragment set:html={body} />
+</BaseLayout>
+<script>
+  import '@/scripts/sliders';
+  import '@/scripts/lightbox';
+  import '@/scripts/gallery-filter';
+  import '@/scripts/counters';
+  import '@/scripts/accordion';
+  import '@/scripts/contact-form';
+  import '@/scripts/lazy-video';
+
+  // ?nocache: fuerza a que la foto grande sea otra URL que la miniatura.
+  if (location.search.includes('nocache')) {
+    document.querySelectorAll<HTMLAnchorElement>('.gallery-items a').forEach((a) => (a.href += `?v=${Date.now()}`));
+  }
+</script>

@@ -1,0 +1,42 @@
+---
+/**
+ * SidebarCtaBox.astro — Tarjeta de contacto del sidebar (`.sidebar-cta-box`):
+ * foto, logo y teléfono/correo.
+ *
+ * Dónde se usa: sidebar de /faqs. El detalle de servicio del original tiene
+ * exactamente el mismo bloque, así que también se puede usar ahí.
+ * Sin props.
+ *
+ * Texto de contacto: el original muestra acá "+1 (123) 456-789" e
+ * "info@dominname.com" (con enlaces a tel:+123456789 y mailto:info@photoclick.com),
+ * distinto de los datos del pie (site.contact). Se conserva tal cual para
+ * que se vea idéntico; unificarlo con site.contact es una decisión de
+ * contenido pendiente.
+ */
+import { Image } from 'astro:assets';
+import ctaImage from '@/assets/images/sidebar-cta-image.jpg';
+import logo from '@/assets/images/logo.svg';
+import iconPhone from '@/assets/images/icon-phone-accent.svg';
+import iconMail from '@/assets/images/icon-mail-accent.svg';
+---
+
+<div class="sidebar-cta-box wow fadeInUp" data-wow-delay="0.25s">
+  <div class="sidebar-cta-box-image">
+    <figure>
+      <Image src={ctaImage} alt="Bride and groom walking hand in hand" />
+    </figure>
+  </div>
+
+  <div class="sidebar-cta-item-box">
+    <div class="sidebar-cta-item-logo">
+      <Image src={logo} alt="Photoclick" />
+    </div>
+
+    <div class="sidebar-cta-contact-list">
+      <ul>
+        <li><Image src={iconPhone} alt="" /><a href="tel:+123456789">+1 (123) 456-789</a></li>
+        <li><Image src={iconMail} alt="" /><a href="mailto:info@photoclick.com">info@dominname.com</a></li>
+      </ul>
+    </div>
+  </div>
+</div>

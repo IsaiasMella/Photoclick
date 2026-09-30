@@ -1,0 +1,71 @@
+---
+/**
+ * WhatWeDo.astro — Sección "What We Do" (`.what-we-do`) de /about:
+ * los 4 pasos del proceso + dos fotos superpuestas.
+ *
+ * Dónde se usa: solo en /about. Sin props (texto fijo del original).
+ * Se conserva la errata del original "Documente" para que el texto sea
+ * idéntico; corregirla es cambiar una línea de `steps`.
+ */
+import { Image } from 'astro:assets';
+import { delay } from '@/lib/wow';
+import icon1 from '@/assets/images/icon-what-we-do-1.svg';
+import icon2 from '@/assets/images/icon-what-we-do-2.svg';
+import icon3 from '@/assets/images/icon-what-we-do-3.svg';
+import icon4 from '@/assets/images/icon-what-we-do-4.svg';
+import image1 from '@/assets/images/what-we-do-image-1.jpg';
+import image2 from '@/assets/images/what-we-do-image-2.jpg';
+
+const steps = [
+  { icon: icon1, title: 'Discover Your Story', text: 'Understanding your unique journey and vision' },
+  { icon: icon2, title: 'Plan Every Detail', text: 'Organizing every moment for seamless coverage' },
+  { icon: icon3, title: 'Capture Real Moments', text: 'Documente genuine emotions as they naturally unfold' },
+  { icon: icon4, title: 'Create Lasting Memory', text: "Crafting beautiful photos you'll cherish forever" },
+];
+---
+
+<div class="what-we-do">
+  <div class="container">
+    <div class="row">
+      <div class="col-xl-6">
+        <div class="what-we-do-content-box">
+          <div class="section-title">
+            <span class="section-sub-title wow fadeInUp">What We Do</span>
+            <h2 class="text-anime-style-2" data-cursor="-opaque">Our process for capturing <span>your special day</span></h2>
+          </div>
+
+          <div class="what-we-do-item-list">
+            {
+              steps.map((step, i) => (
+                <div class="what-we-do-item wow fadeInUp" data-wow-delay={delay(i)}>
+                  <div class="icon-box">
+                    <Image src={step.icon} alt="" />
+                  </div>
+                  <div class="what-we-do-item-content">
+                    <h3>{step.title}</h3>
+                    <p>{step.text}</p>
+                  </div>
+                </div>
+              ))
+            }
+          </div>
+        </div>
+      </div>
+
+      <div class="col-xl-6">
+        <div class="what-we-do-image-box wow fadeInUp" data-wow-delay="0.2s">
+          <div class="what-we-do-image image-1">
+            <figure class="image-anime">
+              <Image src={image1} alt="Photographer with a camera on a tripod next to a bride holding her bouquet" />
+            </figure>
+          </div>
+          <div class="what-we-do-image image-2">
+            <figure class="image-anime">
+              <Image src={image2} alt="Bride and groom touching foreheads under falling confetti" />
+            </figure>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,127 @@
+---
+/**
+ * /blog/[slug]/ — Detalle de un post (plantilla: blog-single.html).
+ *
+ * Una página por entrada de la colección `posts` (getStaticPaths).
+ * Equivalente en Next.js: app/blog/[slug]/page.tsx + generateStaticParams().
+ *
+ * De dónde sale cada parte:
+ *   - Cabecera: `heading.title` (o el título) + autor y `pubDate` reales,
+ *     con el formato del original ("11 May, 2026"), en el slot de PageHeader.
+ *   - Foto: `image`. Texto: cuerpo Markdown (<Content />, dentro de .post-entry).
+ *   - Etiquetas: `tags`. Compartir: enlaces reales de cada red.
+ *
+ * Las 5 entradas que el original no tiene repiten el texto de demostración
+ * de how-to-pose-naturally-for-your-wedding-photos con su título y foto.
+ * El ejemplo define `heading` porque el original acorta el título en la
+ * cabecera ("How to pose naturally for...") para que entre en una línea.
+ */
+import { Image } from 'astro:assets';
+import { getCollection, render, type CollectionEntry } from 'astro:content';
+import BaseLayout from '@/layouts/BaseLayout.astro';
+import PageHeader from '@/components/global/PageHeader.astro';
+import Icon, { type IconName } from '@/components/global/Icon.astro';
+import { formatPostDate, isoDate } from '@/components/detail/format';
+import { routes, site } from '@/data/site';
+
+export async function getStaticPaths() {
+  const posts = await getCollection('posts');
+  return posts.map((entry) => ({ params: { slug: entry.id }, props: { entry } }));
+}
+
+interface Props {
+  entry: CollectionEntry<'posts'>;
+}
+
+const { entry } = Astro.props;
+const { title, image, pubDate, author, tags, description } = entry.data;
+const headerTitle = entry.data.heading?.title ?? title;
+const { Content } = await render(entry);
+
+/** Enlaces para compartir (en el original eran href="#"). Instagram no tiene URL para compartir: va al perfil. */
+const url = new URL(Astro.url.pathname, Astro.site).href;
+const instagram = site.social.find((s) => s.icon === 'instagram')?.href ?? '#';
+const share: { label: string; icon: IconName; href: string }[] = [
+  { label: 'Share on Facebook', icon: 'brands:facebook-f', href: `https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(url)}` },
+  { label: 'Share on LinkedIn', icon: 'brands:linkedin-in', href: `https://www.linkedin.com/sharing/share-offsite/?url=${encodeURIComponent(url)}` },
+  { label: 'Follow us on Instagram', icon: 'brands:instagram', href: instagram },
+  {
+    label: 'Share on X',
+    icon: 'brands:x-twitter',
+    href: `https://x.com/intent/post?url=${encodeURIComponent(url)}&text=${encodeURIComponent(title)}`,
+  },
+];
+---
+
+<BaseLayout title={title} description={description ?? title} image={image} type="article">
+  <PageHeader title={headerTitle}>
+    <div class="post-single-meta wow fadeInUp">
+      <ol class="breadcrumb">
+        <li><Icon name="regular:user" /> <span class="sr-only">Author:</span>{author}</li>
+        <li><Icon name="regular:clock" /> <time datetime={isoDate(pubDate)}>{formatPostDate(pubDate)}</time></li>
+      </ol>
+    </div>
+  </PageHeader>
+
+  <div class="page-single-post">
+    <div class="container">
+      <div class="row">
+        <div class="col-lg-12">
+          <div class="post-image">
+            <figure class="image-anime reveal">
+              <Image
+                src={image}
+                alt={title}
+                widths={[480, 800, 1300]}
+                sizes="(max-width: 1440px) calc(100vw - 30px), 1300px"
+                loading="eager"
+                fetchpriority="high"
+              />
+            </figure>
+          </div>
+
+          <div class="post-content">
+            <div class="post-entry">
+              <Content />
+            </div>
+
+            <div class="post-tag-links">
+              <div class="row align-items-center">
+                <div class="col-lg-8">
+                  {
+                    tags.length > 0 && (
+                      <div class="post-tags wow fadeInUp" data-wow-delay="0.8s">
+                        <span class="tag-links">
+                          Tags:
+                          {tags.map((tag) => (
+                            <a href={routes.blog}>{tag}</a>
+                          ))}
+                        </span>
+                      </div>
+                    )
+                  }
+                </div>
+
+                <div class="col-lg-4">
+                  <div class="post-social-sharing wow fadeInUp" data-wow-delay="0.8s">
+                    <ul>
+                      {
+                        share.map((s) => (
+                          <li>
+                            <a href={s.href} aria-label={s.label} target="_blank" rel="noopener noreferrer">
+                              <Icon name={s.icon} />
+                            </a>
+                          </li>
+                        ))
+                      }
+                    </ul>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</BaseLayout>

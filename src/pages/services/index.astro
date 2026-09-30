@@ -1,0 +1,46 @@
+---
+/**
+ * /services/ — Listado de servicios (plantilla: services.html).
+ *
+ * Grilla con TODOS los servicios de la colección (ordenados por `order`)
+ * seguida de las secciones compartidas de la home (Agente A): video de
+ * presentación, "why choose us", preguntas frecuentes y testimonios.
+ * Equivalente en Next.js: app/services/page.tsx (Server Component).
+ */
+import { getCollection } from 'astro:content';
+import BaseLayout from '@/layouts/BaseLayout.astro';
+import PageHeader from '@/components/global/PageHeader.astro';
+import ServiceItem from '@/components/cards/ServiceItem.astro';
+import IntroVideo from '@/components/sections/IntroVideo.astro';
+import WhyChooseUs from '@/components/sections/WhyChooseUs.astro';
+import OurFaqs from '@/components/sections/OurFaqs.astro';
+import Testimonials from '@/components/sections/Testimonials.astro';
+
+const services = (await getCollection('services')).sort((a, b) => a.data.order - b.data.order);
+---
+
+<BaseLayout
+  title="Our Services"
+  description="Wedding photography services: pre-wedding, traditional, engagement, candid, couple portraits and album design."
+>
+  <PageHeader title="Our" accent="services" crumbs={[{ label: 'Services' }]} />
+
+  <div class="page-services">
+    <div class="container">
+      <div class="row">
+        {
+          services.map((entry, index) => (
+            <div class="col-xl-4 col-md-6">
+              <ServiceItem entry={entry} index={index} />
+            </div>
+          ))
+        }
+      </div>
+    </div>
+  </div>
+
+  <IntroVideo />
+  <WhyChooseUs />
+  <OurFaqs />
+  <Testimonials />
+</BaseLayout>

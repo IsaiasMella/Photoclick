@@ -1,0 +1,45 @@
+---
+/**
+ * testimonials.astro — Página de testimonios (= testimonials.html del original).
+ *
+ * Orden de secciones del original:
+ *   grilla de testimonios (.page-testimonials) → IntroVideo → WhyChooseUs →
+ *   OurFaqs → WeddingGallery
+ * La grilla usa cards/TestimonialItem con `animate` (acá lleva
+ * "wow fadeInUp" con delay escalonado, a diferencia del slider de la home).
+ * Muestra todos los testimonios de la colección, ordenados por `order`.
+ */
+import { getCollection } from 'astro:content';
+import BaseLayout from '@/layouts/BaseLayout.astro';
+import PageHeader from '@/components/global/PageHeader.astro';
+import TestimonialItem from '@/components/cards/TestimonialItem.astro';
+import IntroVideo from '@/components/sections/IntroVideo.astro';
+import WhyChooseUs from '@/components/sections/WhyChooseUs.astro';
+import OurFaqs from '@/components/sections/OurFaqs.astro';
+import WeddingGallery from '@/components/sections/WeddingGallery.astro';
+
+const testimonials = (await getCollection('testimonials')).sort((a, b) => a.data.order - b.data.order);
+---
+
+<BaseLayout title="Testimonials" description="What couples say about their wedding photography experience with Photoclick.">
+  <PageHeader title="Our" accent="testimonials" crumbs={[{ label: 'Testimonials' }]} />
+
+  <div class="page-testimonials">
+    <div class="container">
+      <div class="row">
+        {
+          testimonials.map((entry, i) => (
+            <div class="col-xl-4 col-md-6">
+              <TestimonialItem entry={entry} index={i} animate />
+            </div>
+          ))
+        }
+      </div>
+    </div>
+  </div>
+
+  <IntroVideo />
+  <WhyChooseUs />
+  <OurFaqs />
+  <WeddingGallery />
+</BaseLayout>

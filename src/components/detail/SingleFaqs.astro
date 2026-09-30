@@ -1,0 +1,33 @@
+---
+/**
+ * SingleFaqs.astro — Bloque de preguntas frecuentes al pie de un detalle
+ * (.page-single-faqs): título de sección + acordeón con las FAQ `featured`.
+ *
+ * Se usa en: /services/[slug] y /portfolio/[slug] (mismo bloque en
+ * service-single.html y portfolio-single.html).
+ * Props:
+ *   id — id del acordeón (único en la página). Default "single-faqs".
+ *
+ * El acordeón es cards/FaqAccordion.astro (Agente A); el original repetía
+ * id="accordion", acá cada acordeón recibe su propio id.
+ */
+import { getCollection } from 'astro:content';
+import FaqAccordion from '@/components/cards/FaqAccordion.astro';
+
+interface Props {
+  id?: string;
+}
+
+const { id = 'single-faqs' } = Astro.props;
+const faqs = (await getCollection('faqs', ({ data }) => data.featured)).sort(
+  (a, b) => a.data.groupOrder - b.data.groupOrder || a.data.order - b.data.order,
+);
+---
+
+<div class="page-single-faqs">
+  <div class="section-title">
+    <h2 class="text-anime-style-2" data-cursor="-opaque">Your photography <span>questions answered</span></h2>
+  </div>
+
+  <FaqAccordion items={faqs} id={id} />
+</div>

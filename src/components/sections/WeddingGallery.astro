@@ -1,0 +1,102 @@
+---
+/**
+ * WeddingGallery.astro — Galería filtrable "Wedding Gallery"
+ * (.our-wedding-gallery).
+ *
+ * Se usa en: las 3 home y /testimonials. Sin props; las fotos salen de la
+ * colección `gallery` con album === 'wedding', ordenadas por `order`.
+ *
+ * Comportamiento (src/scripts/gallery-filter.ts): masonry + filtro. Engancha
+ * .wedding-gallery-item-boxes y .our-wedding-gallery-nav li a[data-filter];
+ * cada ítem lleva como clases sus `filters` (pre-wedding, engagement, haldi).
+ *
+ * Decisiones:
+ *   - Los filtros siguen siendo <a href="#" data-filter> (el contrato con el
+ *     Agente D y el CSS del autor apuntan a "li a"). Llevan role="button"
+ *     para que los lectores de pantalla los anuncien como acción.
+ *   - alt de cada foto = su título ("Pre-Wedding Photography"…).
+ */
+import { Image } from 'astro:assets';
+import { getCollection } from 'astro:content';
+import { routes } from '@/data/site';
+import TrustedByList from './TrustedByList.astro';
+
+const items = (await getCollection('gallery', (e) => e.data.album === 'wedding')).sort((a, b) => a.data.order - b.data.order);
+
+const filters = [
+  { label: 'All', filter: '*' },
+  { label: 'Pre-Wedding', filter: '.pre-wedding' },
+  { label: 'Engagement', filter: '.engagement' },
+  { label: 'Haldi Ceremony', filter: '.haldi' },
+];
+---
+
+<div class="our-wedding-gallery">
+  <div class="container">
+    <div class="row section-row">
+      <div class="col-lg-12">
+        <div class="section-title section-title-center">
+          <span class="section-sub-title wow fadeInUp">Wedding Gallery</span>
+          <h2 class="text-anime-style-2" data-cursor="-opaque">Discover our stunning wedding <span>photography gallery</span></h2>
+        </div>
+      </div>
+    </div>
+
+    <div class="row">
+      <div class="col-lg-12">
+        <div class="our-wedding-gallery-nav wow fadeInUp">
+          <ul>
+            {
+              filters.map((f, i) => (
+                <li>
+                  <a href="#" role="button" class:list={[i === 0 && 'active-btn']} data-filter={f.filter}>{f.label}</a>
+                </li>
+              ))
+            }
+          </ul>
+        </div>
+      </div>
+
+      <div class="col-lg-12">
+        <div class="row wedding-gallery-item-boxes wow fadeInUp" data-wow-delay="0.2s">
+          {
+            items.map((item) => (
+              <div class:list={['col-xl-3 col-lg-4 col-md-6 wedding-gallery-item-box', item.data.filters]}>
+                <div class="gallery-item">
+                  <div class="gallery-item-image">
+                    <figure>
+                      <Image
+                        src={item.data.image}
+                        alt={item.data.title ?? 'Wedding photograph'}
+                        widths={[400, 600, 800]}
+                        sizes="(max-width: 767px) 100vw, (max-width: 991px) 50vw, (max-width: 1199px) 33vw, 300px"
+                      />
+                    </figure>
+                  </div>
+
+                  <div class="gallery-item-content">
+                    <ul>
+                      <li>{item.data.category}</li>
+                    </ul>
+                    <h3>{item.data.title}</h3>
+                  </div>
+                </div>
+              </div>
+            ))
+          }
+        </div>
+      </div>
+
+      <div class="col-lg-12">
+        <div class="section-footer-text wow fadeInUp">
+          <p><span>Free</span> Learn More About Our Services, Approach, and Client Support. - <a href={routes.imageGallery}>View all image gallery</a></p>
+          <TrustedByList />
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+  import '@/scripts/gallery-filter';
+</script>

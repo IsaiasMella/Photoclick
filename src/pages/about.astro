@@ -1,0 +1,35 @@
+---
+/**
+ * about.astro — Página "About Us" (= about.html del original).
+ *
+ * Orden de secciones del original:
+ *   AboutUs (botón "View all portfolio") → OurApproach → WhatWeDo →
+ *   IntroVideo → OurTeam → OurFaqs → Testimonials
+ * Las secciones compartidas son del Agente A (src/components/sections);
+ * "Our Approach" y "What We Do" solo existen acá (src/components/ui).
+ */
+import BaseLayout from '@/layouts/BaseLayout.astro';
+import PageHeader from '@/components/global/PageHeader.astro';
+import AboutUs from '@/components/sections/AboutUs.astro';
+import IntroVideo from '@/components/sections/IntroVideo.astro';
+import OurTeam from '@/components/sections/OurTeam.astro';
+import OurFaqs from '@/components/sections/OurFaqs.astro';
+import Testimonials from '@/components/sections/Testimonials.astro';
+import OurApproach from '@/components/ui/OurApproach.astro';
+import WhatWeDo from '@/components/ui/WhatWeDo.astro';
+import { routes } from '@/data/site';
+---
+
+<BaseLayout
+  title="About Us"
+  description="Meet the Photoclick team: our story, mission, vision and the process we follow to capture your wedding day."
+>
+  <PageHeader title="About" accent="us" crumbs={[{ label: 'About Us' }]} />
+  <AboutUs button={{ label: 'View all portfolio', href: routes.portfolio }} />
+  <OurApproach />
+  <WhatWeDo />
+  <IntroVideo />
+  <OurTeam />
+  <OurFaqs />
+  <Testimonials />
+</BaseLayout>

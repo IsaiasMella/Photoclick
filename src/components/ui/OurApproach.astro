@@ -1,0 +1,81 @@
+---
+/**
+ * OurApproach.astro — Sección "Our Approach" (`.our-approach`) de /about:
+ * foto grande con "Our Story" + dos ítems (misión y visión).
+ *
+ * Dónde se usa: solo en /about. Sin props: el texto es fijo del original y
+ * no hay colección para él (es contenido de una única página).
+ * Los ítems salen de un arreglo para que el delay escalonado use delay(i).
+ */
+import { Image } from 'astro:assets';
+import { delay } from '@/lib/wow';
+import approachImage from '@/assets/images/approach-item-image.jpg';
+import iconMission from '@/assets/images/icon-approach-item-1.svg';
+import iconVision from '@/assets/images/icon-approach-item-2.svg';
+
+const items = [
+  {
+    icon: iconMission,
+    title: 'Our Mission',
+    text: 'We aim to provide a seamless and comfortable experience allowing couple to be themselves while we capture every moment with creativity, care, and precision.',
+  },
+  {
+    icon: iconVision,
+    title: 'Our Vision',
+    text: 'Our vision is to become a trusted name in wedding photography, known for creating emotionally rich and artistically crafted visual stories.',
+  },
+];
+---
+
+<div class="our-approach light-section">
+  <div class="container">
+    <div class="row section-row">
+      <div class="col-lg-12">
+        <div class="section-title section-title-center">
+          <span class="section-sub-title wow fadeInUp">Our Approach</span>
+          <h2 class="text-anime-style-2" data-cursor="-opaque">Why we're your <span>best choice</span></h2>
+          <p class="wow fadeInUp" data-wow-delay="0.2s">Our team focuses on capturing natural emotions and genuine moments, ensuring every detail is beautifully preserved. With a commitment to quality.</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="row">
+      <div class="col-lg-7">
+        <div class="approach-item-image-box wow fadeInUp">
+          <div class="approach-item-image">
+            <figure>
+              <Image
+                src={approachImage}
+                alt="Bride and groom smiling at each other against a dramatic cloudy sky"
+                widths={[400, approachImage.width]}
+                sizes="(max-width: 991px) 100vw, 746px"
+              />
+            </figure>
+          </div>
+          <div class="approach-item-image-content">
+            <h3>Our Story</h3>
+            <p>What began as a simple love for capturing moments soon turned into a journey of documenting real emotions and beautiful connections. Over the years, we've had the privilege of being part of weddings—each one unique and unforgettable.</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="col-lg-5">
+        <div class="approach-item-list-box">
+          {
+            items.map((item, i) => (
+              <div class="approach-item wow fadeInUp" data-wow-delay={delay(i)}>
+                <div class="icon-box">
+                  <Image src={item.icon} alt="" />
+                </div>
+                <div class="approach-item-content">
+                  <h3>{item.title}</h3>
+                  <p>{item.text}</p>
+                </div>
+              </div>
+            ))
+          }
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,53 @@
+---
+/**
+ * PostItem.astro — Tarjeta de un artículo del blog (.post-item).
+ *
+ * Se usa en: sections/OurBlog (home, 3 ítems) y /blog (listado paginado).
+ * El que llama pone la columna de Bootstrap (col-xl-4 col-md-6).
+ *
+ * Props:
+ *   entry  — entrada de la colección `posts`.
+ *   index  — posición en el listado → data-wow-delay (0.2s × index).
+ *
+ * El "read more" lleva el título para lectores de pantalla (sr-only), así
+ * no quedan varios enlaces idénticos "read more" sin contexto.
+ */
+import { Image } from 'astro:assets';
+import type { CollectionEntry } from 'astro:content';
+import { routes } from '@/data/site';
+import { delay } from '@/lib/wow';
+
+interface Props {
+  entry: CollectionEntry<'posts'>;
+  index: number;
+}
+
+const { entry, index } = Astro.props;
+const { title, image } = entry.data;
+const href = routes.post(entry.id);
+---
+
+<div class="post-item wow fadeInUp" data-wow-delay={delay(index)}>
+  <div class="post-featured-image">
+    <a href={href} data-cursor-text="View">
+      <figure class="image-anime">
+        <Image
+          src={image}
+          alt={title}
+          widths={[400, 600, 800, 1366]}
+          sizes="(max-width: 767px) 100vw, (max-width: 1199px) 50vw, 400px"
+        />
+      </figure>
+    </a>
+  </div>
+
+  <div class="post-item-body">
+    <div class="post-item-content">
+      <h2><a href={href}>{title}</a></h2>
+    </div>
+
+    <div class="post-item-btn">
+      <a href={href} class="readmore-btn">read more<span class="sr-only">: {title}</span></a>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,81 @@
+---
+/**
+ * faqs.astro — Preguntas frecuentes (= faqs.html del original):
+ * sidebar (índice de grupos + tarjeta de contacto) y 5 grupos de acordeón.
+ *
+ * - Los grupos salen de la colección `faqs` (campo `group`/`groupAccent`,
+ *   ordenados por `groupOrder` y `order`): agregar una pregunta o un grupo
+ *   es editar src/content/faqs.json.
+ * - El texto del índice lateral ("Safety & Security Questions") es el título
+ *   del grupo en Title Case, igual que en el original.
+ * - Ids únicos: el ancla del grupo es `faq_N` (como el original, así los
+ *   enlaces del índice siguen funcionando) y cada acordeón recibe su propio
+ *   id (`faq-accordion-N`). El original repetía `id="accordion"`.
+ * - Como en el original, cada grupo arranca con la 2.ª pregunta abierta (open={1}).
+ */
+import { getCollection } from 'astro:content';
+import BaseLayout from '@/layouts/BaseLayout.astro';
+import PageHeader from '@/components/global/PageHeader.astro';
+import FaqAccordion from '@/components/cards/FaqAccordion.astro';
+import SidebarCtaBox from '@/components/ui/SidebarCtaBox.astro';
+
+const faqs = (await getCollection('faqs')).sort(
+  (a, b) => a.data.groupOrder - b.data.groupOrder || a.data.order - b.data.order,
+);
+
+/** Agrupa las preguntas por `groupOrder` conservando el orden. */
+const groups = [...new Set(faqs.map((f) => f.data.groupOrder))].map((groupOrder) => {
+  const items = faqs.filter((f) => f.data.groupOrder === groupOrder);
+  const { group, groupAccent } = items[0]!.data;
+  return { groupOrder, group, groupAccent, items };
+});
+
+/** "Safety & security questions" → "Safety & Security Questions". */
+const titleCase = (s: string) => s.replace(/\b\p{L}/gu, (c) => c.toUpperCase());
+---
+
+<BaseLayout title="FAQs" description="Answers to the most frequent questions about our wedding photography services.">
+  <PageHeader title="Frequently asked" accent="questions" crumbs={[{ label: "FAQ's" }]} />
+
+  <div class="page-faqs">
+    <div class="container">
+      <div class="row">
+        <div class="col-lg-4">
+          <div class="page-single-sidebar">
+            <nav class="page-category-list wow fadeInUp" aria-label="FAQ categories">
+              <ul>
+                {
+                  groups.map((g) => (
+                    <li>
+                      <a href={`#faq_${g.groupOrder}`}>{titleCase(`${g.group} ${g.groupAccent}`)}</a>
+                    </li>
+                  ))
+                }
+              </ul>
+            </nav>
+
+            <SidebarCtaBox />
+          </div>
+        </div>
+
+        <div class="col-lg-8">
+          <div class="page-faqs-category">
+            {
+              groups.map((g) => (
+                <div class="page-faq-accordion" id={`faq_${g.groupOrder}`}>
+                  <div class="section-title">
+                    <h2 class="text-anime-style-2" data-cursor="-opaque">
+                      {g.group} <span>{g.groupAccent}</span>
+                    </h2>
+                  </div>
+
+                  <FaqAccordion items={g.items} id={`faq-accordion-${g.groupOrder}`} open={1} />
+                </div>
+              ))
+            }
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</BaseLayout>

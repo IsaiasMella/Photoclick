@@ -1,0 +1,94 @@
+---
+/**
+ * contact.astro — Página de contacto (= contact.html del original):
+ * foto + datos de contacto, formulario y mapa de Google.
+ *
+ * - El formulario es ui/ContactForm.astro (lo comparte con /team/[slug]).
+ * - Datos de contacto: el original muestra acá "info@dominname.com" y
+ *   "+1 (123) 456-789" (con enlaces a mailto:info@photoclick.com y
+ *   tel:+123456789), distintos de site.contact (pie). Se conservan tal cual
+ *   para que se vea idéntico; la dirección sí coincide y sale de site.ts.
+ * - Mapa: <iframe> con `loading="lazy"` (no se descarga hasta acercarse) y
+ *   `title` (obligatorio para lectores de pantalla).
+ */
+import { Image } from 'astro:assets';
+import BaseLayout from '@/layouts/BaseLayout.astro';
+import PageHeader from '@/components/global/PageHeader.astro';
+import ContactForm from '@/components/ui/ContactForm.astro';
+import contactImage from '@/assets/images/contact-form-image.jpg';
+import iconMail from '@/assets/images/icon-mail-accent.svg';
+import iconPhone from '@/assets/images/icon-phone-accent.svg';
+import iconLocation from '@/assets/images/icon-location-accent.svg';
+import { site } from '@/data/site';
+
+const mapSrc =
+  'https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d96737.10562045308!2d-74.08535042841811!3d40.739265258395164!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x89c24fa5d33f083b%3A0xc80b8f06e177fe62!2sNew%20York%2C%20NY%2C%20USA!5e0!3m2!1sen!2sin!4v1703158537552!5m2!1sen!2sin';
+---
+
+<BaseLayout title="Contact Us" description="Get in touch with Photoclick to plan the photography of your wedding day.">
+  <PageHeader title="Contact" accent="us" crumbs={[{ label: 'Contact us' }]} />
+
+  <div class="page-contact-us">
+    <div class="container">
+      <div class="row">
+        <div class="col-xl-12">
+          <div class="contact-form-box">
+            <div class="contact-form-image-box">
+              <div class="contact-form-image">
+                <figure>
+                  <Image
+                    src={contactImage}
+                    alt="Photographer taking a portrait of a smiling bride in a garden"
+                    widths={[400, contactImage.width]}
+                    sizes="(max-width: 767px) 100vw, 640px"
+                  />
+                </figure>
+              </div>
+
+              <div class="contact-form-content-box">
+                <div class="section-title">
+                  <span class="section-sub-title wow fadeInUp">Get In Touch</span>
+                  <h2 class="text-anime-style-2" data-cursor="-opaque">Let's create your special <span>day together</span></h2>
+                </div>
+
+                <div class="contact-info-list wow fadeInUp" data-wow-delay="0.2s">
+                  <ul>
+                    <li><Image src={iconMail} alt="" /><a href="mailto:info@photoclick.com">info@dominname.com</a></li>
+                    <li><Image src={iconPhone} alt="" /><a href="tel:+123456789">+1 (123) 456-789 </a></li>
+                    <li><Image src={iconLocation} alt="" />{site.contact.address} </li>
+                  </ul>
+                </div>
+              </div>
+            </div>
+
+            <div class="contact-us-form">
+              <ContactForm />
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="google-map">
+    <div class="container">
+      <div class="row section-row">
+        <div class="col-lg-12">
+          <div class="section-title section-title-center">
+            <span class="section-sub-title wow fadeInUp">Visit Our Location</span>
+            <h2 class="text-anime-style-2" data-cursor="-opaque">Where you can <span>find us</span></h2>
+            <p class="wow fadeInUp" data-wow-delay="0.2s">Visit our studio location and let's discuss your wedding photography plans in person, exploring ideas to beautifully capture your special day.</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="row">
+        <div class="col-lg-12">
+          <div class="google-map-iframe wow fadeInUp" data-wow-delay="0.4s">
+            <iframe src={mapSrc} title="Map with the location of the Photoclick studio" allowfullscreen loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</BaseLayout>

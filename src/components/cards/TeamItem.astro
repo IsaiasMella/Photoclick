@@ -1,0 +1,67 @@
+---
+/**
+ * TeamItem.astro — Tarjeta de un integrante del equipo (.team-item).
+ *
+ * Se usa en: sections/OurTeam (/about, 3 ítems) y /team (listado, 6).
+ * El que llama pone la columna de Bootstrap (col-xl-4 col-md-6).
+ *
+ * Props:
+ *   entry  — entrada de la colección `team`.
+ *   index  — posición en el listado → data-wow-delay (0.2s × index).
+ *
+ * Decisiones:
+ *   - El cargo sale de la colección (texto del listado team.html). En
+ *     about.html Elena figuraba como "Studio Manager"; en team.html,
+ *     "Portrait Specialist": se usa el del listado.
+ *   - Redes: las de site.ts (mismas 4 del original, que eran "#"), con
+ *     aria-label porque el enlace solo tiene un ícono.
+ */
+import { Image } from 'astro:assets';
+import type { CollectionEntry } from 'astro:content';
+import Icon, { type IconName } from '@/components/global/Icon.astro';
+import { routes, site } from '@/data/site';
+import { delay } from '@/lib/wow';
+
+interface Props {
+  entry: CollectionEntry<'team'>;
+  index: number;
+}
+
+const { entry, index } = Astro.props;
+const { name, role, image } = entry.data;
+const href = routes.member(entry.id);
+---
+
+<div class="team-item wow fadeInUp" data-wow-delay={delay(index)}>
+  <div class="team-item-image">
+    <a href={href} data-cursor-text="View">
+      <figure>
+        <Image
+          src={image}
+          alt={`${name}, ${role}`}
+          widths={[450]}
+          sizes="(max-width: 767px) 100vw, (max-width: 1199px) 50vw, 400px"
+        />
+      </figure>
+    </a>
+  </div>
+  <div class="team-item-body">
+    <div class="team-item-content">
+      <h2><a href={href}>{name}</a></h2>
+      <p>{role}</p>
+    </div>
+    <div class="team-item-social-list">
+      <ul>
+        {
+          site.social.map((s) => (
+            <li>
+              <a href={s.href} aria-label={`${name} on ${s.label}`}>
+                <Icon name={`brands:${s.icon}` as IconName} />
+              </a>
+            </li>
+          ))
+        }
+      </ul>
+    </div>
+  </div>
+</div>

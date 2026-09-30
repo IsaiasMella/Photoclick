@@ -1,0 +1,33 @@
+---
+/**
+ * /team/ — Listado del equipo (plantilla: team.html).
+ *
+ * Grilla con TODOS los integrantes de la colección, ordenados por `order`.
+ * Cada tarjeta (cards/TeamItem, Agente A) enlaza a su detalle.
+ * Equivalente en Next.js: app/team/page.tsx (Server Component).
+ */
+import { getCollection } from 'astro:content';
+import BaseLayout from '@/layouts/BaseLayout.astro';
+import PageHeader from '@/components/global/PageHeader.astro';
+import TeamItem from '@/components/cards/TeamItem.astro';
+
+const team = (await getCollection('team')).sort((a, b) => a.data.order - b.data.order);
+---
+
+<BaseLayout title="Our Team" description="Meet the photographers, videographers and editors behind Photoclick.">
+  <PageHeader title="Our" accent="team" crumbs={[{ label: 'Team' }]} />
+
+  <div class="page-team">
+    <div class="container">
+      <div class="row">
+        {
+          team.map((entry, index) => (
+            <div class="col-xl-4 col-md-6">
+              <TeamItem entry={entry} index={index} />
+            </div>
+          ))
+        }
+      </div>
+    </div>
+  </div>
+</BaseLayout>

@@ -1,0 +1,57 @@
+---
+/**
+ * OurPortfolio.astro — Sección "Our Portfolio" (.our-portfolio).
+ *
+ * Se usa en: las 3 home.
+ *
+ * Props:
+ *   limit — cuántos proyectos mostrar (default 3), de la colección
+ *           `portfolio` ordenada por `order`.
+ *
+ * El texto del pie ("Strong, Stylish, and Durable Roofing Solutions") es un
+ * resto de otra plantilla del autor; se conserva para que se vea igual.
+ * El delay del pie (0.6s) es fijo en el original, no depende de `limit`.
+ */
+import { getCollection } from 'astro:content';
+import PortfolioItem from '@/components/cards/PortfolioItem.astro';
+import { routes } from '@/data/site';
+
+interface Props {
+  limit?: number;
+}
+
+const { limit = 3 } = Astro.props;
+const projects = (await getCollection('portfolio')).sort((a, b) => a.data.order - b.data.order).slice(0, limit);
+---
+
+<div class="our-portfolio">
+  <div class="container">
+    <div class="row section-row">
+      <div class="col-lg-12">
+        <div class="section-title section-title-center">
+          <span class="section-sub-title wow fadeInUp">Our Portfolio</span>
+          <h2 class="text-anime-style-2" data-cursor="-opaque">Our portfolio of <span>love stories</span></h2>
+          <p class="wow fadeInUp" data-wow-delay="0.2s">
+            Explore a collection of beautifully captured moments that reflect real emotions, genuine connections, and timeless love.
+          </p>
+        </div>
+      </div>
+    </div>
+
+    <div class="row">
+      {
+        projects.map((entry, i) => (
+          <div class="col-xl-4 col-md-6">
+            <PortfolioItem entry={entry} index={i} />
+          </div>
+        ))
+      }
+
+      <div class="col-lg-12">
+        <div class="section-footer-text wow fadeInUp" data-wow-delay="0.6s">
+          <p><span>Free</span>Strong, Stylish, and Durable Roofing Solutions - <a href={routes.portfolio}>View all portfolio.</a></p>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

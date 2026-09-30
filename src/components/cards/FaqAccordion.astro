@@ -1,0 +1,74 @@
+---
+/**
+ * FaqAccordion.astro — Acordeón de preguntas frecuentes (.faq-accordion).
+ *
+ * Se usa en: sections/OurFaqs (home, /about, /services, /testimonials),
+ * /faqs (un acordeón por grupo) y los detalles (servicio, etc.).
+ *
+ * Props:
+ *   items  — entradas de la colección `faqs`, ya filtradas y ordenadas.
+ *   id     — OBLIGATORIO y único en la página. De él salen los ids de cada
+ *            pregunta ({id}-heading-N / {id}-collapse-N). El original repetía
+ *            id="accordion" y collapse1… en varios acordeones de la misma
+ *            página (HTML inválido y botones que abrían el panel equivocado).
+ *   open   — (opcional, extensión del contrato) índice de la pregunta que
+ *            arranca abierta. Default 0 (así en la home y los detalles);
+ *            en faqs.html el original abre la segunda de cada grupo (open={1}).
+ *
+ * La numeración "1. …" reinicia en cada acordeón, como en el original.
+ * El abrir/cerrar lo pone src/scripts/accordion.ts (Bootstrap collapse,
+ * data-API con data-bs-toggle / data-bs-target / data-bs-parent).
+ */
+import type { CollectionEntry } from 'astro:content';
+import { delay } from '@/lib/wow';
+
+interface Props {
+  items: CollectionEntry<'faqs'>[];
+  id: string;
+  open?: number;
+}
+
+const { items, id, open = 0 } = Astro.props;
+---
+
+<div class="faq-accordion" id={id}>
+  {
+    items.map((item, i) => {
+      const n = i + 1;
+      const isOpen = i === open;
+      const headingId = `${id}-heading-${n}`;
+      const collapseId = `${id}-collapse-${n}`;
+      return (
+        <div class="accordion-item wow fadeInUp" data-wow-delay={delay(i)}>
+          <h2 class="accordion-header" id={headingId}>
+            <button
+              class:list={['accordion-button', !isOpen && 'collapsed']}
+              type="button"
+              data-bs-toggle="collapse"
+              data-bs-target={`#${collapseId}`}
+              aria-expanded={isOpen ? 'true' : 'false'}
+              aria-controls={collapseId}
+            >
+              {n}. {item.data.question}
+            </button>
+          </h2>
+          <div
+            id={collapseId}
+            class:list={['accordion-collapse collapse', isOpen && 'show']}
+            role="region"
+            aria-labelledby={headingId}
+            data-bs-parent={`#${id}`}
+          >
+            <div class="accordion-body">
+              <p>{item.data.answer}</p>
+            </div>
+          </div>
+        </div>
+      );
+    })
+  }
+</div>
+
+<script>
+  import '@/scripts/accordion';
+</script>

@@ -1,0 +1,109 @@
+---
+/**
+ * AboutUs.astro — Sección "About Our Photography" (.about-us).
+ *
+ * Se usa en: las 3 home y /about.
+ *
+ * Props:
+ *   button — { label, href } del botón. Default "More About us" → /about/.
+ *            En /about el original muestra "View all portfolio" → /portfolio/.
+ *
+ * Decisiones:
+ *   - El texto curvo "WEDDING PHOTOGRAPHY" es un SVG decorativo (textPath);
+ *     el id del <path> pasa de "arc" a "about-us-arc" para que sea único.
+ *     Lleva aria-hidden: el texto no aporta información.
+ *   - El contador "500" queda escrito en el HTML (sin JS se ve el valor
+ *     final); la animación la pone src/scripts/counters.ts.
+ */
+import { Image } from 'astro:assets';
+import { routes } from '@/data/site';
+import aboutImage1 from '@/assets/images/about-us-image-1.jpg';
+import aboutImage2 from '@/assets/images/about-us-image-2.jpg';
+import counterImage from '@/assets/images/about-us-counter-image.png';
+
+interface Props {
+  button?: { label: string; href: string };
+}
+
+const { button = { label: 'More About us', href: routes.about } } = Astro.props;
+---
+
+<div class="about-us">
+  <div class="container">
+    <div class="row align-items-center">
+      <div class="col-xl-6">
+        <div class="about-us-image-box wow fadeInUp">
+          <div class="about-us-image-box-1">
+            <div class="about-us-image">
+              <figure class="image-anime">
+                <Image src={aboutImage1} alt="Wedding couple holding hands during their ceremony" />
+              </figure>
+            </div>
+
+            <div class="about-image-title-box" aria-hidden="true">
+              <svg viewBox="0 0 220 220">
+                <defs>
+                  <path id="about-us-arc" d="M 20,190 A 195,155 50 0,1 200,30"></path>
+                </defs>
+                <text>
+                  <textPath href="#about-us-arc" startOffset="1%">WEDDING PHOTOGRAPHY</textPath>
+                </text>
+              </svg>
+            </div>
+          </div>
+
+          <div class="about-us-image-box-2">
+            <div class="about-us-image">
+              <figure class="image-anime">
+                <Image src={aboutImage2} alt="Bride smiling with her bouquet" />
+              </figure>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="col-xl-6">
+        <div class="about-us-content">
+          <div class="section-title">
+            <span class="section-sub-title wow fadeInUp">About Our Photography</span>
+            <h2 class="text-anime-style-2" data-cursor="-opaque">Passionate about preserving <span>your memories</span></h2>
+            <p class="wow fadeInUp" data-wow-delay="0.2s">
+              We are passionate about capturing the moments that matter most, turning your special day into a collection of timeless memories.
+            </p>
+          </div>
+
+          <div class="about-us-body">
+            <div class="about-us-body-content wow fadeInUp" data-wow-delay="0.4s">
+              <div class="about-us-body-list">
+                <ul>
+                  <li>Experienced Professional Team</li>
+                  <li>Modern Equipment & Techniques</li>
+                  <li>Affordable & Flexible Pricing</li>
+                </ul>
+              </div>
+              <div class="about-body-btn">
+                <a href={button.href} class="btn-default">{button.label}</a>
+              </div>
+            </div>
+
+            <div class="about-us-counter-box">
+              <div class="about-us-counter-content">
+                <h2><span class="counter">500</span>+</h2>
+                <p>Weddings Captured</p>
+              </div>
+              <div class="about-us-counter-image">
+                <figure>
+                  <Image src={counterImage} alt="" />
+                </figure>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+  import '@/scripts/counters';
+</script>

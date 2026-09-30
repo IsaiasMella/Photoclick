@@ -1,0 +1,55 @@
+---
+/**
+ * OurTeam.astro — Sección "Our Team" (.our-team).
+ *
+ * Se usa en: /about (la home no la tiene; el marcado sale de about.html).
+ *
+ * Props:
+ *   limit — cuántos integrantes mostrar (default 3), de la colección `team`
+ *           ordenada por `order`.
+ *
+ * El delay del pie (0.6s) es fijo en el original.
+ */
+import { getCollection } from 'astro:content';
+import TeamItem from '@/components/cards/TeamItem.astro';
+import { routes } from '@/data/site';
+
+interface Props {
+  limit?: number;
+}
+
+const { limit = 3 } = Astro.props;
+const members = (await getCollection('team')).sort((a, b) => a.data.order - b.data.order).slice(0, limit);
+---
+
+<div class="our-team">
+  <div class="container">
+    <div class="row section-row">
+      <div class="col-lg-12">
+        <div class="section-title section-title-center">
+          <span class="section-sub-title wow fadeInUp">Our Team</span>
+          <h2 class="text-anime-style-2" data-cursor="-opaque">Team crafting your <span>love story</span></h2>
+          <p class="wow fadeInUp" data-wow-delay="0.2s">
+            We are passionate creatives who believe in capturing emotions as they naturally unfold—turning your special day into memories you'll cherish forever.
+          </p>
+        </div>
+      </div>
+    </div>
+
+    <div class="row">
+      {
+        members.map((entry, i) => (
+          <div class="col-xl-4 col-md-6">
+            <TeamItem entry={entry} index={i} />
+          </div>
+        ))
+      }
+
+      <div class="col-lg-12">
+        <div class="section-footer-text wow fadeInUp" data-wow-delay="0.6s">
+          <p><span>Free</span>Let's connect and make your wedding moments truly unforgettable - <a href={routes.team}>View all team members.</a></p>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

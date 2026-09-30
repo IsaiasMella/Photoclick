@@ -1,0 +1,43 @@
+---
+/**
+ * IntroVideo.astro — Banda de video a todo el ancho con botón "Play"
+ * (.intro-video).
+ *
+ * Se usa en: las 3 home, /about, /services y /testimonials (idéntica).
+ * Sin props.
+ *
+ * Decisiones (D8 del plan):
+ *   - El <video> de fondo llega con preload="none" y SIN autoplay; lleva
+ *     data-lazy-video para que src/scripts/lazy-video.ts lo reproduzca al
+ *     entrar en pantalla y lo pause al salir. Así no se bajan 2+ MB de video
+ *     en la carga inicial.
+ *   - El botón "Play" (a.popup-video) abre el video de YouTube en el
+ *     lightbox de src/scripts/lightbox.ts. Sin JS, el enlace abre YouTube.
+ *   - Se conserva id="myvideo" del original (una sola vez por página).
+ */
+---
+
+<div class="intro-video">
+  <div class="container-fluid">
+    <div class="row">
+      <div class="col-lg-12">
+        <div class="intro-video-content-box">
+          <div class="intro-video-bg-video">
+            <video muted playsinline loop preload="none" id="myvideo" data-lazy-video aria-hidden="true">
+              <source src="/videos/photoclick-intro-video.mp4" type="video/mp4" />
+            </video>
+          </div>
+
+          <div class="video-play-button">
+            <a href="https://www.youtube.com/watch?v=Y-x0efG1seA" class="popup-video" data-cursor-text="Play" aria-label="Play our wedding photography video">Play</a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+  import '@/scripts/lazy-video';
+  import '@/scripts/lightbox';
+</script>

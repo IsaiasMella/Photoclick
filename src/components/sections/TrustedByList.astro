@@ -1,0 +1,30 @@
+---
+/**
+ * TrustedByList.astro — Lista "Trusted By 58,900+ Users ★★★★★ 4.9/5"
+ * (ul.section-footer-border-list) del pie de varias secciones.
+ *
+ * No está en el contrato: es un fragmento que el original repite idéntico en
+ * OurServices, WhyChooseUs y WeddingGallery (y en páginas internas). Se
+ * extrae para no copiar 5 estrellas en cada sección. Sin props.
+ *
+ * Espacios entre estrellas: Astro comprime el HTML y borra los espacios entre
+ * etiquetas; el original tenía un espacio (salto de línea) entre cada <i>, que
+ * se ve como separación. Por eso se escriben explícitos con {' '}.
+ *
+ * El "4.9" es un .counter (lo anima src/scripts/counters.ts; el valor final
+ * ya está en el HTML). Las estrellas son decorativas: el texto "4.9/5" ya
+ * dice la calificación.
+ */
+import Icon from '@/components/global/Icon.astro';
+---
+
+<ul class="section-footer-border-list">
+  <li>Trusted By <b>58,900+</b> Users</li>
+  <li>
+    {Array.from({ length: 5 }, () => <><Icon name="solid:star" />{' '}</>)}<b><span class="counter">4.9</span>/5</b>
+  </li>
+</ul>
+
+<script>
+  import '@/scripts/counters';
+</script>

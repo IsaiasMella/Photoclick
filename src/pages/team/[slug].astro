@@ -1,0 +1,231 @@
+---
+/**
+ * /team/[slug]/ — Detalle de un integrante del equipo (plantilla: team-single.html).
+ *
+ * Una página por entrada de la colección `team` (getStaticPaths).
+ * Equivalente en Next.js: app/team/[slug]/page.tsx + generateStaticParams().
+ *
+ * De dónde sale cada parte:
+ *   - <h1>: `heading` o el nombre partido (última palabra en cursiva);
+ *     breadcrumb y SEO: el nombre de la colección (el del listado).
+ *   - "About me": cuerpo Markdown (<Content />).
+ *   - Contacto (email, phone, website, experience), "Expertise & role"
+ *     (`expertise`) y "Working skill" (`skills`, `skillImage`): frontmatter.
+ *     Cada bloque se omite si la entrada no lo define.
+ *   - "Follow Me On": redes del estudio (site.social); el original no tenía
+ *     redes por persona.
+ *   - Formulario: ui/ContactForm.astro (Agente C), dentro de .contact-us-form.
+ *
+ * Las barras de habilidades llevan data-percent en .skillbar (como el
+ * original); las anima src/scripts/counters.ts (Agente D).
+ * Las 5 entradas que el original no tiene repiten el texto de demostración
+ * de elena-rossi con su propio nombre (y pronombres) y foto.
+ */
+import { Image } from 'astro:assets';
+import { getCollection, render, type CollectionEntry } from 'astro:content';
+import BaseLayout from '@/layouts/BaseLayout.astro';
+import PageHeader from '@/components/global/PageHeader.astro';
+import Icon, { type IconName } from '@/components/global/Icon.astro';
+import ContactForm from '@/components/ui/ContactForm.astro';
+import { splitHeading } from '@/components/detail/format';
+import { routes, site } from '@/data/site';
+import { delay } from '@/lib/wow';
+
+import iconMail from '@/assets/images/icon-mail-accent.svg';
+import iconPhone from '@/assets/images/icon-phone-accent.svg';
+import iconWeb from '@/assets/images/icon-worldwide-accent.svg';
+import iconExperience from '@/assets/images/icon-experience-accent.svg';
+import expertiseIcon1 from '@/assets/images/icon-team-experience-list-item-1.svg';
+import expertiseIcon2 from '@/assets/images/icon-team-experience-list-item-2.svg';
+import expertiseIcon3 from '@/assets/images/icon-team-experience-list-item-3.svg';
+import expertiseIcon4 from '@/assets/images/icon-team-experience-list-item-4.svg';
+
+export async function getStaticPaths() {
+  const team = await getCollection('team');
+  return team.map((entry) => ({ params: { slug: entry.id }, props: { entry } }));
+}
+
+interface Props {
+  entry: CollectionEntry<'team'>;
+}
+
+const { entry } = Astro.props;
+const { name, role, image, email, phone, website, experience, expertise, skills, skillImage } = entry.data;
+const heading = splitHeading(name, entry.data.heading);
+const { Content } = await render(entry);
+
+/** Lista de contacto: íconos decorativos, el dato se lee solo. */
+const contact = [
+  { value: email, icon: iconMail, label: 'Email' },
+  { value: phone, icon: iconPhone, label: 'Phone' },
+  { value: website, icon: iconWeb, label: 'Website' },
+  { value: experience, icon: iconExperience, label: 'Experience' },
+].filter((row) => row.value);
+
+/** Íconos de "Expertise & role" por posición (se repiten si hay más de 4). */
+const expertiseIcons = [expertiseIcon1, expertiseIcon2, expertiseIcon3, expertiseIcon4];
+---
+
+<BaseLayout title={name} description={`${name}, ${role} at ${site.name}.`} image={image}>
+  <PageHeader {...heading} crumbs={[{ label: 'Team', href: routes.team }, { label: name }]} />
+
+  <div class="page-team-single">
+    <div class="container">
+      <div class="row">
+        <div class="col-lg-12">
+          <div class="page-team-single-box">
+            <div class="team-member-about">
+              <div class="team-member-image-box">
+                <div class="team-single-image">
+                  <figure class="image-anime reveal">
+                    <Image
+                      src={image}
+                      alt={`${name}, ${role}`}
+                      widths={[450]}
+                      sizes="(max-width: 767px) calc(100vw - 30px), 450px"
+                      loading="eager"
+                      fetchpriority="high"
+                    />
+                  </figure>
+                </div>
+
+                <div class="team-member-social-list wow fadeInUp">
+                  <h2>Follow Me On:</h2>
+                  <ul>
+                    {
+                      site.social.map((s) => (
+                        <li>
+                          <a href={s.href} aria-label={s.label}>
+                            <Icon name={`brands:${s.icon}` as IconName} />
+                          </a>
+                        </li>
+                      ))
+                    }
+                  </ul>
+                </div>
+              </div>
+
+              <div class="team-about-content">
+                <div class="section-title">
+                  <h2 class="text-anime-style-2" data-cursor="-opaque">About <span>me</span></h2>
+                  <Content />
+                </div>
+
+                {
+                  contact.length > 0 && (
+                    <div class="team-about-contact-list wow fadeInUp" data-wow-delay="0.4s">
+                      <ul>
+                        {contact.map((row) => (
+                          <li>
+                            <Image src={row.icon} alt="" />
+                            <span class="sr-only">{row.label}: </span>
+                            {row.value}
+                          </li>
+                        ))}
+                      </ul>
+                    </div>
+                  )
+                }
+              </div>
+            </div>
+
+            {
+              expertise && (
+                <div class="team-experience-info">
+                  <div class="section-title">
+                    <h2 class="text-anime-style-2" data-cursor="-opaque">
+                      {expertise.title} <span>{expertise.accent}</span>
+                    </h2>
+                    <p class="wow fadeInUp">{expertise.text}</p>
+                  </div>
+
+                  {expertise.items.length > 0 && (
+                    <div class="team-experience-list">
+                      {expertise.items.map((item, i) => (
+                        <div class="team-experience-list-item wow fadeInUp" data-wow-delay={delay(i)}>
+                          <div class="icon-box">
+                            <Image src={expertiseIcons[i % expertiseIcons.length]!} alt="" />
+                          </div>
+                          <div class="team-experience-list-content">
+                            <h3>{item.title}</h3>
+                            <p>{item.text}</p>
+                          </div>
+                        </div>
+                      ))}
+                    </div>
+                  )}
+
+                  {expertise.note && (
+                    <div class="team-experience-info-content wow fadeInUp">
+                      <p>{expertise.note}</p>
+                    </div>
+                  )}
+                </div>
+              )
+            }
+
+            <div class="team-skill-box">
+              {
+                (skillImage || skills.length > 0) && (
+                  <div class="team-skill-image-box">
+                    {skillImage && (
+                      <div class="team-skill-image">
+                        <figure>
+                          <Image
+                            src={skillImage}
+                            alt={`${name} at work during a photo shoot`}
+                            widths={[400, 650]}
+                            sizes="(max-width: 991px) calc(100vw - 30px), 400px"
+                          />
+                        </figure>
+                      </div>
+                    )}
+
+                    <div class="team-skill-content">
+                      <div class="section-title">
+                        <h2 class="text-anime-style-2" data-cursor="-opaque">
+                          Working <span>skill</span>
+                        </h2>
+                      </div>
+
+                      <div class="team-skills-list">
+                        {skills.map((skill) => (
+                          <div class="skills-progress-bar">
+                            <div class="skillbar" data-percent={`${skill.percent}%`}>
+                              <div class="skill-data">
+                                <div class="skill-title">{skill.title}</div>
+                                <div class="skill-no">{skill.percent}%</div>
+                              </div>
+                              <div
+                                class="skill-progress"
+                                role="progressbar"
+                                aria-label={skill.title}
+                                aria-valuenow={skill.percent}
+                                aria-valuemin="0"
+                                aria-valuemax="100"
+                              >
+                                <div class="count-bar"></div>
+                              </div>
+                            </div>
+                          </div>
+                        ))}
+                      </div>
+                    </div>
+                  </div>
+                )
+              }
+
+              <div class="contact-us-form">
+                <ContactForm />
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</BaseLayout>
+
+<script>
+  import '@/scripts/counters';
+</script>

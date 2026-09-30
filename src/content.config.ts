@@ -16,6 +16,22 @@ import { defineCollection } from 'astro:content';
 import { glob, file } from 'astro/loaders';
 import { z } from 'astro/zod';
 
+
+/**
+ * Campos AGREGADOS por el Agente B (Fase 3) para las páginas de detalle.
+ * Todos son opcionales o tienen default: una entrada sin ellos sigue siendo
+ * válida y su detalle simplemente omite ese bloque.
+ *
+ * Por qué hay bloques en el frontmatter y no todo en el cuerpo Markdown:
+ * Markdown no optimiza las imágenes escritas como <img> HTML, y la sintaxis
+ * ![](...) las envuelve en un <p> que rompe el marcado del diseño. Las fotos
+ * y los ítems con ícono van tipados acá (image() → astro:assets); el texto
+ * corrido (párrafos, citas, listas) va en el cuerpo Markdown.
+ */
+
+/** <h1> del detalle partido en texto + palabra en cursiva (<span>). Si falta, se usa el título. */
+const heading = z.object({ title: z.string(), accent: z.string().optional() }).optional();
+
 /** Colecciones con página de detalle → un .md por entrada (el cuerpo es la página). */
 const services = defineCollection({
   loader: glob({ pattern: '*.md', base: './src/content/services' }),
@@ -28,6 +44,26 @@ const services = defineCollection({
       image: image(),
       /** Posición en listados (el original no ordena por fecha). */
       order: z.number().int(),
+      heading,
+      /** Bloque "What we offer" (.service-offer-box). Los íconos los pone la plantilla. */
+      offer: z
+        .object({
+          title: z.string().default('What we'),
+          accent: z.string().default('offer'),
+          text: z.string(),
+          items: z.array(z.string()),
+        })
+        .optional(),
+      /** Bloque "Why choose us" (.service-why-choose-box). */
+      whyChoose: z
+        .object({
+          title: z.string().default('Why choose'),
+          accent: z.string().default('us'),
+          text: z.string(),
+          points: z.array(z.string()).default([]),
+          images: z.array(image()).default([]),
+        })
+        .optional(),
     }),
 });
 
@@ -40,6 +76,24 @@ const portfolio = defineCollection({
       category: z.string(),
       image: image(),
       order: z.number().int(),
+      heading,
+      /** Ficha del sidebar del detalle ("Portfolio Information"). */
+      client: z.string().optional(),
+      duration: z.string().optional(),
+      location: z.string().optional(),
+      /** Bloque "Creative vision behind the shoot" (.portfolio-creative-box). */
+      creative: z
+        .object({
+          title: z.string().default('Creative vision behind'),
+          accent: z.string().default('the shoot'),
+          text: z.string(),
+          image: image(),
+          points: z.array(z.string()).default([]),
+          note: z.string().optional(),
+        })
+        .optional(),
+      /** Galería al pie del detalle (.portfolio-image-gallary-box). */
+      gallery: z.array(image()).default([]),
     }),
 });
 
@@ -54,6 +108,7 @@ const posts = defineCollection({
       tags: z.array(z.string()).default([]),
       /** Para SEO; si falta se usa el título. */
       description: z.string().optional(),
+      heading,
     }),
 });
 
@@ -65,6 +120,25 @@ const team = defineCollection({
       role: z.string(),
       image: image(),
       order: z.number().int(),
+      heading,
+      /** Lista de contacto del detalle (.team-about-content). */
+      email: z.string().optional(),
+      phone: z.string().optional(),
+      website: z.string().optional(),
+      experience: z.string().optional(),
+      /** Bloque "Expertise & role" (.team-experience-info). Los íconos los pone la plantilla. */
+      expertise: z
+        .object({
+          title: z.string().default('Expertise &'),
+          accent: z.string().default('role'),
+          text: z.string(),
+          items: z.array(z.object({ title: z.string(), text: z.string() })).default([]),
+          note: z.string().optional(),
+        })
+        .optional(),
+      /** Bloque "Working skill" (.team-skill-box). percent: 0–100. */
+      skillImage: image().optional(),
+      skills: z.array(z.object({ title: z.string(), percent: z.number().min(0).max(100) })).default([]),
     }),
 });
 

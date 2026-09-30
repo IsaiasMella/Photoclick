@@ -1,0 +1,153 @@
+---
+/**
+ * /services/[slug]/ — Detalle de un servicio (plantilla: service-single.html).
+ *
+ * Una página por entrada de la colección `services` (getStaticPaths).
+ * Equivalente en Next.js: app/services/[slug]/page.tsx + generateStaticParams().
+ *
+ * De dónde sale cada parte:
+ *   - <h1>: `heading` del frontmatter (o el título partido, ver detail/format.ts).
+ *   - Foto principal: `image`.
+ *   - Párrafos de introducción: cuerpo Markdown de la entrada (<Content />).
+ *   - "What we offer" y "Why choose us": bloques `offer` y `whyChoose` del
+ *     frontmatter (tienen fotos e íconos: en Markdown no se optimizarían).
+ *     Si una entrada no los define, el bloque no se muestra.
+ *   - Sidebar: detail/ServiceSidebar (todos los servicios) y FAQ destacadas.
+ *
+ * Las 5 entradas que el original no tiene repiten el texto de demostración
+ * de pre-wedding-photography con su propio título y foto.
+ */
+import { Image } from 'astro:assets';
+import { getCollection, render, type CollectionEntry } from 'astro:content';
+import BaseLayout from '@/layouts/BaseLayout.astro';
+import PageHeader from '@/components/global/PageHeader.astro';
+import ServiceSidebar from '@/components/detail/ServiceSidebar.astro';
+import SingleFaqs from '@/components/detail/SingleFaqs.astro';
+import { splitHeading } from '@/components/detail/format';
+import { routes } from '@/data/site';
+import { delay } from '@/lib/wow';
+
+import offerIcon1 from '@/assets/images/icon-service-offer-box-item-1.svg';
+import offerIcon2 from '@/assets/images/icon-service-offer-box-item-2.svg';
+import offerIcon3 from '@/assets/images/icon-service-offer-box-item-3.svg';
+import offerIcon4 from '@/assets/images/icon-service-offer-box-item-4.svg';
+
+export async function getStaticPaths() {
+  const services = await getCollection('services');
+  return services.map((entry) => ({ params: { slug: entry.id }, props: { entry } }));
+}
+
+interface Props {
+  entry: CollectionEntry<'services'>;
+}
+
+const { entry } = Astro.props;
+const { title, summary, image, offer, whyChoose } = entry.data;
+const heading = splitHeading(title, entry.data.heading);
+const { Content } = await render(entry);
+
+/** Íconos decorativos de la lista "What we offer" (se repiten si hay más de 4 ítems). */
+const offerIcons = [offerIcon1, offerIcon2, offerIcon3, offerIcon4];
+---
+
+<BaseLayout title={title} description={summary} image={image}>
+  <PageHeader
+    {...heading}
+    crumbs={[{ label: 'Services', href: routes.services }, { label: title }]}
+  />
+
+  <div class="page-service-single">
+    <div class="container">
+      <div class="row">
+        <div class="col-lg-4">
+          <ServiceSidebar current={entry.id} />
+        </div>
+
+        <div class="col-lg-8">
+          <div class="service-single-content">
+            <div class="page-single-image">
+              <figure class="image-anime reveal">
+                <Image
+                  src={image}
+                  alt={`${title} session`}
+                  widths={[400, 800, 1200]}
+                  sizes="(max-width: 991px) calc(100vw - 30px), 850px"
+                  loading="eager"
+                  fetchpriority="high"
+                />
+              </figure>
+            </div>
+
+            <div class="service-entry">
+              <Content />
+
+              {
+                offer && (
+                  <div class="service-offer-box">
+                    <h2 class="text-anime-style-2">
+                      {offer.title} <span>{offer.accent}</span>
+                    </h2>
+                    <p class="wow fadeInUp">{offer.text}</p>
+
+                    <div class="service-offer-box-list">
+                      {offer.items.map((item, i) => (
+                        <div class="service-offer-box-item wow fadeInUp" data-wow-delay={delay(i)}>
+                          <div class="icon-box">
+                            <Image src={offerIcons[i % offerIcons.length]!} alt="" />
+                          </div>
+                          <div class="service-offer-box-item-title">
+                            <h3>{item}</h3>
+                          </div>
+                        </div>
+                      ))}
+                    </div>
+                  </div>
+                )
+              }
+
+              {
+                whyChoose && (
+                  <div class="service-why-choose-box">
+                    <h2 class="text-anime-style-2">
+                      {whyChoose.title} <span>{whyChoose.accent}</span>
+                    </h2>
+                    <p class="wow fadeInUp">{whyChoose.text}</p>
+
+                    {whyChoose.points.length > 0 && (
+                      <div class="service-why-choose-list wow fadeInUp" data-wow-delay="0.2s">
+                        <ul>
+                          {whyChoose.points.map((point) => (
+                            <li>{point}</li>
+                          ))}
+                        </ul>
+                      </div>
+                    )}
+
+                    {whyChoose.images.length > 0 && (
+                      <div class="service-why-choose-images">
+                        {whyChoose.images.map((img, i) => (
+                          <div class="service-why-choose-image">
+                            <figure class="image-anime reveal">
+                              <Image
+                                src={img}
+                                alt={`${title}: moment captured by our team (${i + 1})`}
+                                widths={[414, 828]}
+                                sizes="(max-width: 767px) calc(100vw - 30px), 414px"
+                              />
+                            </figure>
+                          </div>
+                        ))}
+                      </div>
+                    )}
+                  </div>
+                )
+              }
+            </div>
+
+            <SingleFaqs id="service-faqs" />
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</BaseLayout>

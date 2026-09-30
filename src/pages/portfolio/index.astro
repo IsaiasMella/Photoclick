@@ -1,0 +1,33 @@
+---
+/**
+ * /portfolio/ — Listado de proyectos (plantilla: portfolio.html).
+ *
+ * Grilla con TODOS los proyectos de la colección, ordenados por `order`.
+ * Cada tarjeta (cards/PortfolioItem, Agente A) enlaza a su detalle.
+ * Equivalente en Next.js: app/portfolio/page.tsx (Server Component).
+ */
+import { getCollection } from 'astro:content';
+import BaseLayout from '@/layouts/BaseLayout.astro';
+import PageHeader from '@/components/global/PageHeader.astro';
+import PortfolioItem from '@/components/cards/PortfolioItem.astro';
+
+const projects = (await getCollection('portfolio')).sort((a, b) => a.data.order - b.data.order);
+---
+
+<BaseLayout title="Our Portfolio" description="A selection of our wedding, pre-wedding, destination and ceremony photography projects.">
+  <PageHeader title="Our" accent="portfolio" crumbs={[{ label: 'Portfolio' }]} />
+
+  <div class="page-portfolio">
+    <div class="container">
+      <div class="row">
+        {
+          projects.map((entry, index) => (
+            <div class="col-xl-4 col-md-6">
+              <PortfolioItem entry={entry} index={index} />
+            </div>
+          ))
+        }
+      </div>
+    </div>
+  </div>
+</BaseLayout>

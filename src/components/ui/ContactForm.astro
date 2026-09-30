@@ -1,0 +1,78 @@
+---
+/**
+ * ContactForm.astro — Formulario de contacto (`#contactForm`).
+ *
+ * Dónde se usa: /contact (dentro de `.contact-us-form`) y el detalle de un
+ * integrante del equipo, /team/[slug] (dentro de `.team-skill-box .contact-us-form`).
+ * Renderiza SOLO el <form>: el contenedor `.contact-us-form` lo pone cada
+ * página, porque en el original cambia el padre y el CSS depende de él.
+ *
+ * Props (todas opcionales):
+ *   - action: URL a la que se envía. Default: site.formEndpoint
+ *             (PUBLIC_FORM_ENDPOINT, decisión D6) o '#' si no está configurada.
+ *   - delay:  data-wow-delay de la animación de aparición. Default '0.2s'
+ *             (el mismo valor en /contact y en team-single).
+ *
+ * Marcado idéntico al original (`.form-group`, `.help-block.with-errors`,
+ * `#msgSubmit.h3.hidden`), que es lo que engancha src/scripts/contact-form.ts
+ * (Agente D): validación nativa + mensajes + envío con fetch.
+ * Diferencias con el original, sin cambio visual:
+ *   - cada <label> se asocia a su campo con `for` (antes estaban sueltos);
+ *   - `autocomplete` en los campos personales (ayuda a autocompletar);
+ *   - se quitó `data-toggle="validator"` (era del plugin jQuery eliminado);
+ *   - `#msgSubmit` anuncia el resultado con `aria-live`.
+ * Los ids (`fname`, `email`…) son los del original: el formulario aparece
+ * una sola vez por página.
+ */
+import { site } from '@/data/site';
+
+interface Props {
+  action?: string;
+  delay?: string;
+}
+
+const { action = site.formEndpoint ?? '#', delay = '0.2s' } = Astro.props;
+---
+
+<form id="contactForm" action={action} method="POST" class="contact-form wow fadeInUp" data-wow-delay={delay}>
+  <div class="row">
+    <div class="form-group col-md-6 mb-4">
+      <label for="fname">First Name *</label>
+      <input type="text" name="fname" class="form-control" id="fname" placeholder="Enter First Name *" required autocomplete="given-name" />
+      <div class="help-block with-errors"></div>
+    </div>
+
+    <div class="form-group col-md-6 mb-4">
+      <label for="lname">Last Name *</label>
+      <input type="text" name="lname" class="form-control" id="lname" placeholder="Enter Last Name *" required autocomplete="family-name" />
+      <div class="help-block with-errors"></div>
+    </div>
+
+    <div class="form-group col-md-6 mb-4">
+      <label for="phone">Phone Number *</label>
+      <input type="text" name="phone" class="form-control" id="phone" placeholder="Enter Phone Number *" required autocomplete="tel" inputmode="tel" />
+      <div class="help-block with-errors"></div>
+    </div>
+
+    <div class="form-group col-md-6 mb-4">
+      <label for="email">Email Address *</label>
+      <input type="email" name="email" class="form-control" id="email" placeholder="Enter Email Address *" required autocomplete="email" />
+      <div class="help-block with-errors"></div>
+    </div>
+
+    <div class="form-group col-md-12 mb-5">
+      <label for="message">Message *</label>
+      <textarea name="message" class="form-control" id="message" rows="5" placeholder="Any Message..."></textarea>
+      <div class="help-block with-errors"></div>
+    </div>
+
+    <div class="col-md-12">
+      <button type="submit" class="btn-default">submit Message</button>
+      <div id="msgSubmit" class="h3 hidden" aria-live="polite"></div>
+    </div>
+  </div>
+</form>
+
+<script>
+  import '@/scripts/contact-form';
+</script>

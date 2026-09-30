@@ -1,0 +1,81 @@
+---
+/**
+ * OurFaqs.astro — Sección de preguntas frecuentes (.our-faqs.light-section):
+ * caja del fundador con redes + acordeón.
+ *
+ * Se usa en: las 3 home, /about, /services y /testimonials (idéntica).
+ * Sin props. Las preguntas salen de la colección `faqs` con featured === true
+ * (ordenadas por grupo y orden) y se pintan con cards/FaqAccordion
+ * (id "home-faq-accordion": ninguna de esas páginas tiene otro acordeón).
+ *
+ * Las redes salen de site.ts, con aria-label (enlaces de solo ícono).
+ */
+import { Image } from 'astro:assets';
+import { getCollection } from 'astro:content';
+import Icon, { type IconName } from '@/components/global/Icon.astro';
+import FaqAccordion from '@/components/cards/FaqAccordion.astro';
+import { routes, site } from '@/data/site';
+import faqImage from '@/assets/images/faq-image.png';
+
+const faqs = (await getCollection('faqs', (e) => e.data.featured)).sort(
+  (a, b) => a.data.groupOrder - b.data.groupOrder || a.data.order - b.data.order,
+);
+---
+
+<div class="our-faqs light-section">
+  <div class="container">
+    <div class="row">
+      <div class="col-xl-6">
+        <div class="faq-cta-box wow fadeInUp">
+          <div class="faq-cta-image-box">
+            <div class="faq-cta-image">
+              <figure>
+                <Image src={faqImage} alt="Portrait of Robert Fox, founder" />
+              </figure>
+            </div>
+            <div class="faq-cta-image-content">
+              <h2>Robert Fox</h2>
+              <p>( Founder )</p>
+            </div>
+          </div>
+
+          <div class="faq-cta-body">
+            <div class="faq-cta-body-content">
+              <h3>Do you Have Any Question?</h3>
+              <p>
+                Have a question about our wedding photography services? We're here to help! Whether you need details about packages, availability
+              </p>
+            </div>
+            <div class="faq-social-links">
+              <ul>
+                {
+                  site.social.map((s) => (
+                    <li>
+                      <a href={s.href} aria-label={s.label}>
+                        <Icon name={`brands:${s.icon}` as IconName} />
+                      </a>
+                    </li>
+                  ))
+                }
+              </ul>
+            </div>
+            <div class="our-faq-btn">
+              <a href={routes.faqs} class="btn-default">View all FAQ's</a>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="col-xl-6">
+        <div class="faq-content">
+          <div class="section-title">
+            <span class="section-sub-title wow fadeInUp">Frequently Asked Question</span>
+            <h2 class="text-anime-style-2" data-cursor="-opaque">Your wedding photography <span>questions answered</span></h2>
+          </div>
+
+          <FaqAccordion items={faqs} id="home-faq-accordion" />
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
