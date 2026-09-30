@@ -66,7 +66,7 @@ async function snapshot(browser, url, width) {
   return data;
 }
 
-const browser = await chromium.launch();
+const browser = await chromium.launch({ executablePath: process.env.PW_CHROMIUM_PATH || undefined }) // PW_CHROMIUM_PATH: Chromium ya instalado (entornos sin descarga);
 const report = [];
 let total = 0;
 for (const p of pages) {

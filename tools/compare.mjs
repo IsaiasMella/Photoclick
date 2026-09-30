@@ -78,7 +78,7 @@ function diff(a, b, outFile) {
   return { pct: Number((100 * n / (w * h)).toFixed(3)), ha: A.height, hb: B.height };
 }
 
-const browser = await chromium.launch();
+const browser = await chromium.launch({ executablePath: process.env.PW_CHROMIUM_PATH || undefined }) // PW_CHROMIUM_PATH: Chromium ya instalado (entornos sin descarga);
 const rows = [];
 const jobs = pages.flatMap((p) => widths.map((w) => ({ p, w })));
 // 3 comparaciones en paralelo: más rápido sin saturar la máquina.

@@ -12,7 +12,7 @@
 import { chromium } from 'playwright';
 
 const [selector, urlA, urlB] = process.argv.slice(2);
-const browser = await chromium.launch();
+const browser = await chromium.launch({ executablePath: process.env.PW_CHROMIUM_PATH || undefined }) // PW_CHROMIUM_PATH: Chromium ya instalado (entornos sin descarga);
 const ctx = await browser.newContext({ javaScriptEnabled: false });
 const page = await ctx.newPage();
 

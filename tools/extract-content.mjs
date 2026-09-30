@@ -34,7 +34,7 @@ function writeJson(name, items) {
   fs.writeFileSync(path.join(content, `${name}.json`), JSON.stringify(items, null, 2) + '\n');
 }
 
-const browser = await chromium.launch();
+const browser = await chromium.launch({ executablePath: process.env.PW_CHROMIUM_PATH || undefined }) // PW_CHROMIUM_PATH: Chromium ya instalado (entornos sin descarga);
 const page = await browser.newPage();
 async function grab(file, fn) {
   await page.goto(BASE + file, { waitUntil: 'domcontentloaded' });
