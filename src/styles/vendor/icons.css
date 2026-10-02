@@ -20,13 +20,15 @@
 	font-style: normal;
 }
 
-/* El SVG ocupa el cuadro "em" completo, igual que el glifo de la fuente:
-   los viewBox de FA cubren todo el em (ascent + descent). */
+/* El SVG se ubica como el glifo de la fuente: alto 1em y bajado 0.125em
+   (el "descent" de Font Awesome), igual que .svg-inline--fa de FA. Con
+   display: block el <i> perdía su línea base de texto y la fila de estrellas
+   crecía 2 px (lo detectó tools/section-heights.mjs). */
 :is(.fa, .fa-solid, .fa-regular, .fa-brands) > svg {
-	display: block;
+	display: inline-block;
 	height: 1em;
 	width: auto;
-	margin-inline: auto;
+	vertical-align: -0.125em;
 	overflow: visible;
 	fill: currentColor;
 }

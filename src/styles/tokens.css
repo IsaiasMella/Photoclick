@@ -207,4 +207,7 @@
 	--surface: var(--color-white-a04);
 	--border: var(--color-white-a10);
 	--border-subtle: var(--color-white-a00);
+	/* El texto sin color propio hereda el color YA CALCULADO del <body> (oscuro
+	   en tema claro); redefinir --foreground no alcanza: hay que reaplicarlo acá. */
+	color: var(--foreground);
 }

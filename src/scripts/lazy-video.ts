@@ -2,8 +2,8 @@
  * lazy-video.ts — Videos de fondo que se reproducen solo cuando se ven.
  * (Nuevo: no existe en el original. Decisión D8 de docs/PLAN.md.)
  *
- * Lo importan las secciones con video decorativo (intro y paquetes):
- *   <script>import '@/scripts/lazy-video';</script>
+ * Lo carga src/scripts/global.ts con loadWhenNear() cuando la sección se acerca
+ * a la pantalla (ningún componente lo importa directo; ver load-when-near.ts).
  *
  * Engancha:
  *   <video data-lazy-video muted playsinline loop preload="none">

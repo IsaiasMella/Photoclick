@@ -74,7 +74,7 @@ const posts = await grab('blog.html', () => [...document.querySelectorAll('.post
 posts.forEach((p, i) => {
   const dir = path.join(content, 'posts');
   const d = new Date(Date.UTC(2026, 0, 15 - i * 2)).toISOString().slice(0, 10);
-  writeMd('posts', slugify(p.title), { title: p.title, image: img(p.image, dir), pubDate: d, author: 'Admin', tags: ['Wedding', 'Photography'] });
+  writeMd('posts', slugify(p.title), { title: p.title, image: img(p.image, dir), pubDate: d, author: 'Admin', tags: ['Wedding Photography', 'Candid Moments', 'Modern Poses'] /* las del detalle del original ("Morder" corregido) */ });
 });
 
 // ---- Equipo ---------------------------------------------------------------

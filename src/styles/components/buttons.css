@@ -14,7 +14,7 @@
 	color: var(--on-accent);
 	background: var(--accent);
 	border-radius: var(--radius-md);
-	padding: 17px 59px 17px 24px;
+	padding: 17px 59px 17px 24px;          /* óptico: deja lugar a la flecha de 40 px */
 	border: none;
 	overflow: hidden;
 	transition: all var(--duration-base) var(--ease-in-out);

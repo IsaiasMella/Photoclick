@@ -304,3 +304,11 @@
 		margin-top: var(--space-4);
 	}
 }
+
+/* --- Añadido (tema claro, D1): el pie es una "isla oscura" (ver tokens.css),
+   pero a diferencia del hero no tiene una foto detrás: su fondo era el del
+   <body> (.light-section solo suma un velo --surface). En tema claro se le
+   pinta debajo el negro del tema oscuro para que se vea igual que en oscuro. --- */
+:root[data-theme="light"] .main-footer {
+	background: linear-gradient(var(--surface), var(--surface)), var(--color-ink-950);
+}

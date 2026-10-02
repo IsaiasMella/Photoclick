@@ -22,6 +22,10 @@
  *   - El <h1> lleva data-wow-delay="0.2s" solo en la variante image (así
  *     está en el original; no tiene efecto visible, se conserva igual).
  *   - Primera foto del slider: loading eager + fetchpriority high (es el LCP).
+ *   - Círculo "Book your date": loading eager. Está en la primera pantalla y su
+ *     CSS (width: 100% dentro de un <a> inline-block) hace que la caja mida 0
+ *     hasta que llega el SVG: con lazy, el texto del hero saltaba 74 px
+ *     (CLS 0,044 en Lighthouse).
  *   - El video del hero suma playsinline (sin él, iOS lo abre a pantalla
  *     completa); no cambia el aspecto.
  *   - El círculo "Book your date" es una imagen dentro de un enlace: su alt
@@ -53,8 +57,10 @@ const classes = {
   slider: 'hero hero-slider-layout parallaxie',
   video: 'hero hero-video',
 }[variant];
+import PreloadBackground from '@/components/global/PreloadBackground.astro';
 ---
 
+{style && <PreloadBackground src={heroBg} />}
 <div class={classes} style={style}>
   {
     variant === 'slider' && (
@@ -101,7 +107,7 @@ const classes = {
           </div>
 
           <div class="book-your-date-circle">
-            <a href={routes.contact}><Image src={bookCircle} alt="Book your date" /></a>
+            <a href={routes.contact}><Image src={bookCircle} alt="Book your date" loading="eager" /></a>
           </div>
         </div>
       </div>
@@ -119,9 +125,3 @@ const classes = {
     </div>
   </div>
 </div>
-
-<script>
-  // Swiper del slider (solo actúa si hay .hero-image-slider). En las 3 home
-  // el slider de testimonios ya lo importa: Astro lo carga una sola vez.
-  import '@/scripts/sliders';
-</script>

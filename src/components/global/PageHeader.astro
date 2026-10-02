@@ -31,8 +31,10 @@ interface Props {
 
 const { title, accent, crumbs = [] } = Astro.props;
 const style = await backgroundImageStyle('page-header', bg);
+import PreloadBackground from '@/components/global/PreloadBackground.astro';
 ---
 
+<PreloadBackground src={bg} />
 <div class="page-header dark-section parallaxie" style={style}>
   <div class="container">
     <div class="row">

@@ -3,8 +3,8 @@
  * Reemplaza a jquery.counterup.min.js + jquery.waypoints.min.js (y al
  * $.animate de las barras en function.js).
  *
- * Lo importan los componentes que tienen números animados o barras:
- *   <script>import '@/scripts/counters';</script>
+ * Lo carga src/scripts/global.ts con loadWhenNear() cuando la sección se acerca
+ * a la pantalla (ningún componente lo importa directo; ver load-when-near.ts).
  *
  * Engancha:
  *   .counter  → <span class="counter">500</span>+ (enteros, decimales como

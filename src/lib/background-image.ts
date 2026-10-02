@@ -31,7 +31,48 @@ async function imageSet(src: ImageMetadata, width: number) {
  *   --{name}-bg-image     (escritorio)
  *   --{name}-bg-image-sm  (celular, lo usa el @media de --bp-sm)
  */
-export async function backgroundImageStyle(name: string, src: ImageMetadata): Promise<string> {
-  const [lg, sm] = await Promise.all([imageSet(src, WIDTHS.lg), imageSet(src, WIDTHS.sm)]);
+export async function backgroundImageStyle(
+  name: string,
+  src: ImageMetadata,
+  /**
+   * false → sin versión chica para celular. Obligatorio cuando el CSS del
+   * componente NO usa background-size: cover (p. ej. .cta-box): ahí la foto se
+   * pinta a su tamaño natural, y achicarla cambiaría el encuadre y la haría
+   * repetirse.
+   */
+  { mobile = true }: { mobile?: boolean } = {},
+): Promise<string> {
+  const lg = await imageSet(src, WIDTHS.lg);
+  if (!mobile) return `--${name}-bg-image: ${lg};`;
+  const sm = await imageSet(src, WIDTHS.sm);
   return `--${name}-bg-image: ${lg}; --${name}-bg-image-sm: ${sm};`;
+}
+
+export interface PreloadLink {
+  href: string;
+  media: string;
+}
+
+/**
+ * Enlaces <link rel="preload"> para el fondo que es el LCP de la página
+ * (hero o cabecera de página).
+ *
+ * Por qué: una imagen que solo aparece en el CSS se descubre tarde (primero
+ * hay que bajar y aplicar el CSS). Lighthouse lo marcaba ("Request is
+ * discoverable in initial document: no"). Con el preload, el navegador la pide
+ * apenas lee el HTML, en paralelo con el CSS.
+ * Se precarga solo la AVIF (si el navegador no la soporta, ignora el preload
+ * por el atributo type) y una por ancho de pantalla (media), para no bajar dos.
+ * Las URLs son las mismas que usa backgroundImageStyle (getImage las cachea).
+ */
+export async function backgroundPreloadLinks(src: ImageMetadata): Promise<PreloadLink[]> {
+  const [lg, sm] = await Promise.all([
+    getImage({ src, width: Math.min(WIDTHS.lg, src.width), format: 'avif', quality: 60 }),
+    getImage({ src, width: Math.min(WIDTHS.sm, src.width), format: 'avif', quality: 60 }),
+  ]);
+  // --bp-sm: 767px (mismo corte que el @media que elige la versión chica)
+  return [
+    { href: sm.src, media: '(max-width: 767px)' },
+    { href: lg.src, media: '(min-width: 768px)' },
+  ];
 }

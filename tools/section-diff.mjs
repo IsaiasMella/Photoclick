@@ -25,7 +25,8 @@ async function lines(url) {
       .replace(/<!--.*?-->/gs, '')
       .replace(/\s(data-astro-[\w-]+|data-image-component)(="[^"]*")?/g, '') // atributos internos de Astro
       .replace(/\s+/g, ' ')
-      .replace(/> </g, '>\n<')
+      .replace(/>\s*</g, '>\n<') // sirve tanto para HTML con sangría como minificado
+      .replace(/<svg[^]*?<\/svg>/g, '<svg…/>') // el SVG de los íconos no aporta al diff
       .split('\n');
   }, selector);
 }

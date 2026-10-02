@@ -1,9 +1,8 @@
 /**
  * sliders.ts — Carruseles de la plantilla (reemplaza a swiper-bundle.min.js del CDN).
  *
- * Lo importan los componentes que tienen un slider:
- *   <script>import '@/scripts/sliders';</script>
- * Astro lo empaqueta una sola vez aunque lo importen varios componentes.
+ * Lo carga src/scripts/global.ts con loadWhenNear() cuando la sección se acerca
+ * a la pantalla (ningún componente lo importa directo; ver load-when-near.ts).
  *
  * Engancha (mismo marcado que el original):
  *   .hero-image-slider .swiper        → hero de index-slider (fundido)

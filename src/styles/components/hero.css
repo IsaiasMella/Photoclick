@@ -125,6 +125,15 @@
 	}
 }
 
+/* Añadido (CLS): con "width: 100%" dentro de un <a> inline-block la imagen
+   mide 0 hasta que el SVG termina de bajar, y al llegar empuja el texto del
+   hero 74 px (Lighthouse: CLS 0,044). Un ancho fijo da el MISMO resultado
+   final (200 px, o el max-width de 130/90 px de cada breakpoint) pero
+   reservado desde el primer pintado. */
+.book-your-date-circle a img {
+	width: 200px;
+}
+
 .book-your-date-circle a:hover img {
 	animation-play-state: paused;
 }

@@ -1,8 +1,8 @@
 /**
  * gallery-filter.ts — Galería de bodas filtrable (masonry + filtro por categoría).
  *
- * Lo importa sections/WeddingGallery.astro:
- *   <script>import '@/scripts/gallery-filter';</script>
+ * Lo carga src/scripts/global.ts con loadWhenNear() cuando la sección se acerca
+ * a la pantalla (ningún componente lo importa directo; ver load-when-near.ts).
  *
  * Engancha (mismo marcado que el original):
  *   .our-wedding-gallery-nav li a[data-filter="*" | ".pre-wedding" | …]

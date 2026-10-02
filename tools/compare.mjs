@@ -45,14 +45,25 @@ async function shoot(browser, url, width, file) {
   await page.goto(url, { waitUntil: 'load', timeout: 180000 });
   if (theme === 'light') await page.evaluate(() => { document.documentElement.dataset.theme = 'light'; });
   await page.evaluate(() => document.fonts.ready);
-  await page.evaluate(async () => {
-    for (let y = 0; y < document.documentElement.scrollHeight; y += 400) {
-      window.scrollTo(0, y);
-      await new Promise((r) => setTimeout(r, 120));
-    }
-    window.scrollTo(0, 0);
-  });
+  // El scroll se hace paso a paso DESDE Node (no dentro de un único
+  // page.evaluate): durante un evaluate largo, Chromium headless no entrega
+  // los IntersectionObserver, y el sitio nuevo carga sliders, visor, etc.
+  // recién cuando su sección se acerca (load-when-near.ts).
+  const total = await page.evaluate(() => document.documentElement.scrollHeight);
+  for (let y = 0; y < total; y += 400) {
+    await page.evaluate((v) => window.scrollTo(0, v), y);
+    await page.waitForTimeout(120);
+  }
+  await page.evaluate(() => window.scrollTo(0, 0));
   await page.waitForTimeout(3500);
+  // Imágenes con loading="lazy" (el sitio nuevo las usa; el original no):
+  // con el scroll rápido algunas no llegan a pedirse. Se fuerzan y se espera
+  // a que terminen, para comparar la página "ya cargada" en ambos lados.
+  await page.evaluate(() => Promise.all([...document.images].map((img) => {
+    if (img.complete) return null;
+    img.loading = 'eager';
+    return new Promise((r) => { img.onload = img.onerror = r; setTimeout(r, 8000); });
+  })));
   // Estado final de las animaciones de aparición, igual en A y en B. WOW.js
   // (original) y reveal-on-scroll (nuevo) dejan ocultos los elementos que no
   // "vio" durante el scroll rápido; eso es ruido, no diferencia de diseño.

@@ -13,6 +13,14 @@ export default defineConfig({
 
   integrations: [sitemap()],
 
+  build: {
+    // 'auto' (default): el CSS va en un archivo aparte, cacheable entre páginas.
+    // Se probó 'always' (CSS dentro de cada HTML, sin viaje de red extra):
+    // en Lighthouse celular dio PEOR (home: 89 y LCP 3,7 s contra 90 y 3,5 s),
+    // porque el HTML pasa de ~10 a ~45 KB y retrasa todo lo demás.
+    inlineStylesheets: 'auto',
+  },
+
   // Fuentes servidas desde el propio sitio (reemplaza el <link> a Google Fonts).
   // Astro las descarga al compilar, genera los @font-face, hace preload y crea
   // una fuente de respaldo con métricas ajustadas para evitar saltos de diseño.
@@ -22,7 +30,9 @@ export default defineConfig({
       name: 'Mona Sans',
       cssVariable: '--font-mona-sans',
       weights: ['200 900'],
-      styles: ['normal', 'italic'],
+      // Solo "normal": medido en todas las páginas, Mona Sans nunca se usa en
+      // cursiva. El original igual bajaba la cursiva (Google Fonts, ital 0..1).
+      styles: ['normal'],
       subsets: ['latin'],
       fallbacks: ['sans-serif'],
     },
@@ -31,7 +41,9 @@ export default defineConfig({
       name: 'Playfair Display',
       cssVariable: '--font-playfair',
       weights: ['400 900'],
-      styles: ['normal', 'italic'],
+      // Solo "italic": Playfair aparece únicamente en los <span> en cursiva de
+      // los títulos. Precargar 2 fuentes en vez de 4 ahorra ~77 KB en la carga.
+      styles: ['italic'],
       subsets: ['latin'],
       fallbacks: ['serif'],
     },

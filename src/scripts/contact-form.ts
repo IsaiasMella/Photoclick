@@ -3,8 +3,8 @@
  * Reemplaza a validator.min.js (Bootstrap Validator 0.11.9, jQuery) y al
  * $.ajax de function.js.
  *
- * Lo importa ui/ContactForm.astro:
- *   <script>import '@/scripts/contact-form';</script>
+ * Lo carga src/scripts/global.ts con loadWhenNear() cuando la sección se acerca
+ * a la pantalla (ningún componente lo importa directo; ver load-when-near.ts).
  *
  * Engancha (mismo marcado que el original):
  *   <form id="contactForm" action="…" method="POST">

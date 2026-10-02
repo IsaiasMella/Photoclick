@@ -3,7 +3,7 @@ title: "Top Wedding Photography Trends to Follow Today"
 image: "../../assets/images/post-4.jpg"
 pubDate: "2026-01-09"
 author: "Admin"
-tags: ["Wedding", "Photography"]
+tags: ["Wedding Photography", "Candid Moments", "Modern Poses"]
 ---
 
 <p class="wow fadeInUp">Your wedding day is filled with real emotions, genuine smiles, and unforgettable moments. The best photos come when you feel comfortable and natural in front of the camera. But if you're unsure how to pose, don't worry—you don't need to be a model to look amazing in your wedding photos. This guide will help you feel confident, relaxed, and completely yourself, so your photos reflect your true connection.</p>

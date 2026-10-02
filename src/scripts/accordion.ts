@@ -1,8 +1,8 @@
 /**
  * accordion.ts — Acordeones de FAQs (reemplaza a bootstrap.bundle / bootstrap.min.js).
  *
- * Lo importa cards/FaqAccordion.astro (y cualquier componente con un collapse):
- *   <script>import '@/scripts/accordion';</script>
+ * Lo carga src/scripts/global.ts con loadWhenNear() cuando la sección se acerca
+ * a la pantalla (ningún componente lo importa directo; ver load-when-near.ts).
  *
  * Engancha (data-API de Bootstrap 5, mismo marcado que el original):
  *   <button data-bs-toggle="collapse" data-bs-target="#collapse2"

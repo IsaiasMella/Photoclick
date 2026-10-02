@@ -23,6 +23,13 @@ import Icon from '@/components/global/Icon.astro';
 import { delay } from '@/lib/wow';
 
 const packages = (await getCollection('packages')).sort((a, b) => a.data.order - b.data.order);
+import { getImage } from 'astro:assets';
+import packagePosterSrc from '@/assets/images/poster-our-package.jpg';
+
+// Póster = primer fotograma del video (extraído con ffmpeg), en WebP liviano.
+// Con preload="none" el <video> no pinta nada hasta reproducirse; el póster
+// hace que se vea igual que el original desde el primer instante (sin hueco negro).
+const packagePoster = await getImage({ src: packagePosterSrc, width: 960, format: 'webp', quality: 70 });
 ---
 
 <div class="our-packages light-section">
@@ -57,7 +64,7 @@ const packages = (await getCollection('packages')).sort((a, b) => a.data.order -
       <div class="col-xl-6">
         <div class="package-video-content-box wow fadeInUp" data-wow-delay="0.2s">
           <div class="package-video-box">
-            <video muted playsinline loop preload="none" id="package_video" data-lazy-video aria-hidden="true">
+            <video muted playsinline loop preload="none" poster={packagePoster.src} id="package_video" data-lazy-video aria-hidden="true">
               <source src="/videos/photoclick-our-package.mp4" type="video/mp4" />
             </video>
           </div>
@@ -74,7 +81,3 @@ const packages = (await getCollection('packages')).sort((a, b) => a.data.order -
     </div>
   </div>
 </div>
-
-<script>
-  import '@/scripts/lazy-video';
-</script>

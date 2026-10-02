@@ -2,8 +2,8 @@
  * lightbox.ts — Visor de fotos y popup de YouTube.
  * Reemplaza a Magnific Popup 1.1 (jquery.magnific-popup.min.js).
  *
- * Lo importan los componentes con fotos ampliables o botón de video:
- *   <script>import '@/scripts/lightbox';</script>
+ * Lo carga src/scripts/global.ts con loadWhenNear() cuando la sección se acerca
+ * a la pantalla (ningún componente lo importa directo; ver load-when-near.ts).
  *
  * Engancha (mismo marcado que el original):
  *   .gallery-items a[href]  → galería de imágenes (delegado: cualquier <a>

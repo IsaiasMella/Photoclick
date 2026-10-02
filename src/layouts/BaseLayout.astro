@@ -42,9 +42,12 @@ const seo = Astro.props;
 <html lang={site.lang}>
   <head>
     <meta charset="utf-8" />
-    <!-- El original tenía maximum-scale=1, que impide hacer zoom (falla de accesibilidad WCAG 1.4.4). -->
+    {/* El original tenía maximum-scale=1, que impide hacer zoom (falla de accesibilidad WCAG 1.4.4). */}
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <ThemeScript />
+    {/* Fuentes propias con preload. Solo se declaran (y precargan) las 2 caras que
+         usa el diseño: ver `styles` en astro.config.mjs. Antes eran 4 (156 KB con
+         prioridad alta, compitiendo con la foto del hero). */}
     <Font cssVariable="--font-mona-sans" preload />
     <Font cssVariable="--font-playfair" preload />
     <Seo {...seo} />

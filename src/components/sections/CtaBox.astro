@@ -18,7 +18,7 @@ import { backgroundImageStyle } from '@/lib/background-image';
 import { routes, site } from '@/data/site';
 import ctaBg from '@/assets/images/cta-box-bg-image.jpg';
 
-const style = await backgroundImageStyle('cta', ctaBg);
+const style = await backgroundImageStyle('cta', ctaBg, { mobile: false }) // sin background-size: cover → tamaño natural;
 const clients = (await getCollection('testimonials')).sort((a, b) => a.data.order - b.data.order).slice(0, 3);
 ---
 

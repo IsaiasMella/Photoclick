@@ -1,0 +1,19 @@
+---
+/**
+ * PreloadBackground.astro — Precarga la foto de fondo que es el LCP.
+ * Ver backgroundPreloadLinks() en src/lib/background-image.ts.
+ *
+ * Se renderiza justo antes del hero / la cabecera de página. <link
+ * rel="preload"> es válido dentro de <body> y el navegador lo ve casi al
+ * principio del HTML, que es lo que importa.
+ */
+import type { ImageMetadata } from 'astro';
+import { backgroundPreloadLinks } from '@/lib/background-image';
+
+interface Props {
+  src: ImageMetadata;
+}
+const links = await backgroundPreloadLinks(Astro.props.src);
+---
+
+{links.map((l) => <link rel="preload" as="image" type="image/avif" href={l.href} media={l.media} fetchpriority="high" />)}

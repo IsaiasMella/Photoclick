@@ -120,11 +120,3 @@
 	}
 }
 
-/* --- Añadido: fondo optimizado más liviano en celular (ver src/lib/background-image.ts).
-   Si el componente no pasó la variable, se usa la de escritorio o el JPG original. --- */
-/* --bp-sm */
-@media only screen and (max-width: 767px) {
-	.cta-box {
-		background-image: var(--cta-bg-image-sm, var(--cta-bg-image, url('../../assets/images/cta-box-bg-image.jpg')));
-	}
-}
