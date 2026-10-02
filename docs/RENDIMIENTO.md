@@ -15,11 +15,11 @@ Para regenerar la tabla: `node tools/lh-summary.mjs docs/lighthouse/antes-local-
 
 | Celular | Original | Nuevo | Mejora |
 |---|---|---|---|
-| Puntaje de rendimiento (home) | **45** | **93** | +48 puntos |
-| LCP: cuándo se ve lo principal (home) | **9,0 s** | **3,2 s** | 2,8× más rápido |
+| Puntaje de rendimiento (home) | **45** | **92** | +47 puntos |
+| LCP: cuándo se ve lo principal (home) | **9,0 s** | **3,3 s** | 2,7× más rápido |
 | FCP: primer contenido (home) | 4,1 s | 1,2 s | 3,4× más rápido |
 | Speed Index (home) | 5,1 s | 1,3 s | 3,9× más rápido |
-| Bloqueo del hilo principal (home) | 755 ms | 29 ms | 26× menos |
+| Bloqueo del hilo principal (home) | 755 ms | 47 ms | 16× menos |
 | Peso de la home | **4,65 MB** | **0,71 MB** | 6,5× más liviana |
 | Pedidos de red (home) | 77 | 35 | menos de la mitad |
 | Accesibilidad / SEO / Buenas prácticas | 84 / 91 / 96 | **100 / 100 / 100** | |
@@ -30,7 +30,7 @@ Para regenerar la tabla: `node tools/lh-summary.mjs docs/lighthouse/antes-local-
 
 | Página | Formato | Perf antes → después | LCP | FCP | Speed Index | TBT | CLS | Peso | Pedidos | A11y | SEO | BP |
 |---|---|---|---|---|---|---|---|---|---|---|---|---|
-| index | celular | 45 → **93** | 9,0 → **3,2 s** | 4,1 → 1,2 s | 5,1 → 1,3 s | 755 → 29 ms | 0 → 0 | 4,65 → **0,71 MB** | 77 → 35 | 84 → 100 | 91 → 100 | 96 → 100 |
+| index | celular | 45 → **92** | 9,0 → **3,3 s** | 4,1 → 1,2 s | 5,1 → 1,3 s | 755 → 47 ms | 0 → 0 | 4,65 → **0,71 MB** | 77 → 35 | 84 → 100 | 91 → 100 | 96 → 100 |
 | index | escritorio | 91 → **100** | 1,7 → 0,7 s | 0,7 → 0,3 s | 1,3 → 0,4 s | 107 → 18 ms | 0 → 0 | 4,65 → 0,76 MB | 78 → 41 | 84 → 100 | 91 → 100 | 96 → 100 |
 | index-slider | celular | 58 → **92** | 7,9 → **3,4 s** | 4,1 → 1,4 s | 6,5 → 1,4 s | 227 → 26 ms | 0 → 0 | 4,29 → 0,82 MB | 79 → 38 | 86 → 100 | 91 → 100 | 96 → 100 |
 | index-slider | escritorio | 93 → **100** | 1,4 → 0,8 s | 0,7 → 0,3 s | 1,5 → 0,5 s | 84 → 21 ms | 0 → 0 | 4,29 → 1,01 MB | 79 → 44 | 85 → 100 | 91 → 100 | 96 → 100 |
@@ -45,7 +45,7 @@ Para regenerar la tabla: `node tools/lh-summary.mjs docs/lighthouse/antes-local-
 
 | Objetivo (`PLAN.md` §6) | Resultado |
 |---|---|
-| Performance ≥ 95 | ✅ escritorio (99–100) y blog en celular (96). ⚠️ home, slider y about en celular: 92–93 |
+| Performance ≥ 95 | ✅ escritorio (99–100) y blog en celular (96). ⚠️ home, slider y about en celular: 92–93 (varía ±1 entre corridas) |
 | LCP < 2,5 s | ✅ escritorio (0,6–0,8 s). ⚠️ celular simulado: 2,7–3,4 s |
 | Home < 1,5 MB sin videos | ✅ 0,71 MB (slider: 0,82 MB) |
 

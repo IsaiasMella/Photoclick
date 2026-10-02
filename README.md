@@ -1,6 +1,6 @@
 # Photoclick en Astro
 
-Reconstrucción de la plantilla **Photoclick** (Awaiken, ThemeForest) en **Astro 7 + TypeScript estricto**. Mismo diseño, píxel por píxel, con código tokenizado, por componentes y unas **3 veces más rápido en celular** (Lighthouse: 45 → 93 en la home, 4,65 → 0,71 MB).
+Reconstrucción de la plantilla **Photoclick** (Awaiken, ThemeForest) en **Astro 7 + TypeScript estricto**. Mismo diseño, píxel por píxel, con código tokenizado, por componentes y unas **3 veces más rápido en celular** (Lighthouse: 45 → 92 en la home, 4,65 → 0,71 MB).
 
 ```bash
 npm install

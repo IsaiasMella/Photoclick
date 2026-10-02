@@ -12,7 +12,7 @@ Rama `rebuild/astro`. El detalle de cada parte está en `ARQUITECTURA.md`, `TOKE
 | CSS que baja el navegador | 8 archivos, ~510 KB sin comprimir (Bootstrap completo + 6 plugins + custom) | 1 archivo, 180 KB sin comprimir (35 KB con gzip) |
 | JS | ~1,1 MB entre CSS y JS bloqueantes, con jQuery | ~10 KB propios + Swiper, GSAP e Isotope **solo donde se usan** y cuando la sección se acerca |
 | Fuentes | Google Fonts (4 caras, bloqueante) + Font Awesome (~400 KB) | 2 caras propias precargadas + 1 subconjunto de íconos de **776 bytes** |
-| Rendimiento en celular (home) | 45, LCP 9,0 s, 4,65 MB | **93**, LCP 3,2 s, **0,71 MB** |
+| Rendimiento en celular (home) | 45, LCP 9,0 s, 4,65 MB | **92**, LCP 3,3 s, **0,71 MB** |
 | Accesibilidad / SEO / Buenas prácticas | 84 / 91 / 96 | **100 / 100 / 100** |
 | `astro check` / `npm run build` | — | 0 errores, 0 advertencias |
 
